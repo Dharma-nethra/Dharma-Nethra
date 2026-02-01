@@ -195,6 +195,149 @@
         /* Ping Potha Form */
         .merit-box { background: var(--card-bg); padding: 20px; border-radius: 20px; margin-bottom: 15px; }
         input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; }
+
+/* ===== WhatsApp Channel Popup Styles (NEW) ===== */
+#whatsapp-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    animation: fadeIn 0.5s ease-in;
+}
+
+#whatsapp-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #fff8f0 0%, #ffffff 50%, #fff0e6 100%);
+    border-radius: 25px;
+    padding: 30px 25px;
+    max-width: 90%;
+    width: 400px;
+    box-shadow: 0 20px 60px rgba(211, 84, 0, 0.3);
+    border: 3px solid #FFD700;
+    animation: popupZoom 0.6s ease-out;
+}
+
+.popup-header {
+    text-align: center;
+    border-bottom: 2px solid #d35400;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.popup-icons {
+    font-size: 28px;
+    letter-spacing: 10px;
+    animation: glowPulse 2s infinite;
+}
+
+.popup-title {
+    color: #d35400;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 10px 0 5px 0;
+}
+
+.popup-subtitle {
+    color: #e74c3c;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.popup-message {
+    color: #2c3e50;
+    font-size: 14px;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+.popup-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.popup-benefits li {
+    color: #27ae60;
+    font-size: 13px;
+    padding: 5px 0;
+    padding-left: 5px;
+}
+
+.popup-button {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+    animation: buttonPulse 1.5s infinite;
+    margin-top: 10px;
+}
+
+.popup-button:active {
+    transform: scale(0.98);
+}
+
+.popup-countdown {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #7f8c8d;
+}
+
+.countdown-number {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.countdown-green { color: #27ae60; }
+.countdown-yellow { color: #f39c12; }
+.countdown-red { color: #e74c3c; }
+
+.popup-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #d35400;
+    color: #d35400;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popupZoom {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+@keyframes glowPulse {
+    0%, 100% { text-shadow: 0 0 10px #FFD700, 0 0 20px #d35400; }
+    50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #d35400; }
+}
+
+@keyframes buttonPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6); }
+}
+/* ===== End WhatsApp Popup Styles ===== */
+
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -329,7 +472,7 @@
     </div>
 
     <div class="bottom-nav">
-    <div class="nav-item on" onclick="nav('home')">
+    <div class="nav-item active" onclick="nav('home')">
         <span class="material-icons-round">home</span>
         <b>මුල</b>
     </div>
@@ -354,6 +497,43 @@
         <b>අප ගැන</b>
     </div>
 </div>
+
+<!-- ===== WhatsApp Channel Popup (NEW) ===== -->
+<div id="whatsapp-popup-overlay">
+    <div id="whatsapp-popup">
+        <div class="popup-header">
+            <div class="popup-icons">✨ ☸️ 🪔 ☸️ ✨</div>
+            <div class="popup-title">ධර්ම නේත්‍රා</div>
+        </div>
+        
+        <div class="popup-subtitle">🔔 විශේෂ දැනුම්දීමයි.!</div>
+        
+        <div class="popup-message">
+            දෛනික ධර්ම දේශනා, යාවත්කාලීන කිරීම් සහ විශේෂ දැනුම්දීම් ලබා ගැනීමට අපගේ WhatsApp Channel එකට ඔබත් අනිවාර්යයෙන් එක්වන්න.
+        </div>
+        
+        <ul class="popup-benefits">
+            <li>✅ දෛනික දහම් මතක් කිරීම්</li>
+            <li>✅ නව ධර්ම ලිපි දැනුම්දීම්</li>
+            <li>✅ යෙදුම් යාවත්කාලීන කිරීම්</li>
+            <li>✅ විශේෂ ධර්ම වැඩසටහන්</li>
+            <li>✅ භාවනා මතක් කිරීම්</li>
+        </ul>
+        
+        <button class="popup-button" onclick="joinWhatsAppChannel()">
+            💚 Channel එකට Join වන්න
+        </button>
+        
+        <div class="popup-countdown">
+            ⏳ ස්වයංක්‍රීයව වසා දමයි: <span id="countdown-timer" class="countdown-number countdown-green">6</span>s
+        </div>
+        
+        <div class="popup-footer">
+            තෙරුවන් සරණයි.! 🙏
+        </div>
+    </div>
+</div>
+<!-- ===== End WhatsApp Popup ===== -->
 
     <script>
         // --- Firebase Configuration ---
@@ -587,6 +767,62 @@
                 alert("ආරක්‍ෂිත හේතූන් මත මෙය අවහිර කර ඇත.");
             }
         });
+
+        // ===== WhatsApp Channel Popup Logic (NEW) =====
+        let countdownTimer;
+        let timeLeft = 6;
+
+        function showWhatsAppPopup() {
+            const overlay = document.getElementById('whatsapp-popup-overlay');
+            if(overlay) {
+                overlay.style.display = 'block';
+                startCountdown();
+            }
+        }
+
+        function startCountdown() {
+            const timerElement = document.getElementById('countdown-timer');
+            
+            countdownTimer = setInterval(() => {
+                timeLeft--;
+                if(timerElement) {
+                    timerElement.innerText = timeLeft;
+                    
+                    // කාලය අනුව වර්ණ වෙනස් කිරීම
+                    timerElement.className = 'countdown-number';
+                    if (timeLeft > 3) {
+                        timerElement.classList.add('countdown-green');
+                    } else if (timeLeft > 1) {
+                        timerElement.classList.add('countdown-yellow');
+                    } else {
+                        timerElement.classList.add('countdown-red');
+                    }
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdownTimer);
+                    closeWhatsAppPopup();
+                }
+            }, 1000);
+        }
+
+        function closeWhatsAppPopup() {
+            const overlay = document.getElementById('whatsapp-popup-overlay');
+            if(overlay) overlay.style.display = 'none';
+            timeLeft = 6; 
+        }
+
+        function joinWhatsAppChannel() {
+            clearInterval(countdownTimer);
+            window.open('https://whatsapp.com/channel/0029Vb73W2Q89iniAgEwUl3S', '_blank');
+            closeWhatsAppPopup();
+        }
+
+        // App එක Load වී තත්පර 1.5 කින් Popup පෙන්වීම
+        window.addEventListener('load', function() {
+            setTimeout(showWhatsAppPopup, 1500); 
+        });
+        // ===== End WhatsApp Popup Logic =====
     </script>
 </body>
 </html>
