@@ -338,6 +338,268 @@
 }
 /* ===== End WhatsApp Popup Styles ===== */
 
+/* ===== Payment Announcement Popup - FIXED VERSION ===== */
+#payment-announcement-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10000;
+    animation: fadeIn 0.6s ease-in;
+    overflow-y: auto;
+    padding: 20px 0;
+}
+
+#payment-announcement {
+    position: relative;
+    margin: 20px auto;
+    background: #ffffff;
+    border-radius: 25px;
+    padding: 30px 20px;
+    max-width: 95%;
+    width: 420px;
+    box-shadow: 0 25px 70px rgba(211, 84, 0, 0.6);
+    border: 5px solid #d35400;
+    animation: announceEntrance 0.8s ease-out;
+}
+
+.announce-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.announce-icon-main {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    animation: iconPulse 2s infinite;
+    box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
+}
+
+.announce-title-main {
+    color: #e74c3c;
+    font-size: 24px;
+    font-weight: 900;
+    margin: 10px 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.announce-divider {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #f39c12, #e74c3c);
+    margin: 20px auto;
+    border-radius: 2px;
+}
+
+.announce-greeting {
+    background: #fff5eb;
+    border-left: 5px solid #f39c12;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.greeting-text {
+    color: #d35400;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.announce-message-main {
+    color: #2c3e50;
+    font-size: 14px;
+    line-height: 1.9;
+    text-align: justify;
+    font-weight: 500;
+    margin: 20px 0;
+}
+
+.announce-date-main {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 18px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+    text-align: center;
+}
+
+.date-label-main {
+    font-size: 14px;
+    opacity: 0.95;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.date-value-main {
+    font-size: 32px;
+    font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: 1px;
+}
+
+.announce-price-main {
+    background: linear-gradient(135deg, #f39c12, #d35400);
+    color: white;
+    padding: 25px 20px;
+    border-radius: 18px;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+    text-align: center;
+}
+
+.price-label-main {
+    font-size: 14px;
+    opacity: 0.95;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.price-value-main {
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.price-sub-main {
+    font-size: 14px;
+    opacity: 0.95;
+    font-weight: 600;
+}
+
+.highlight-box {
+    background: #fff3cd;
+    border: 3px solid #f39c12;
+    padding: 18px;
+    border-radius: 15px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.highlight-text {
+    color: #856404;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.7;
+}
+
+.announce-signature {
+    background: #ecf0f1;
+    border-left: 4px solid #34495e;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.signature-text {
+    color: #2c3e50;
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 600;
+}
+
+.signature-name {
+    color: #d35400;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+.announce-countdown-main {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid #ecf0f1;
+}
+
+.countdown-text-main {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.countdown-dots-main {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.countdown-dot-main {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    transition: all 0.4s;
+    box-shadow: 0 3px 8px rgba(231, 76, 60, 0.3);
+}
+
+.countdown-dot-main.inactive {
+    background: #ecf0f1;
+    transform: scale(0.7);
+    box-shadow: none;
+}
+
+@keyframes announceEntrance {
+    0% { 
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes iconPulse {
+    0%, 100% { 
+        transform: scale(1);
+    }
+    50% { 
+        transform: scale(1.1);
+    }
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 480px) {
+    #payment-announcement {
+        padding: 25px 18px;
+        max-width: 90%;
+    }
+    
+    .announce-title-main {
+        font-size: 20px;
+    }
+    
+    .announce-message-main {
+        font-size: 13px;
+    }
+    
+    .date-value-main {
+        font-size: 28px;
+    }
+    
+    .price-value-main {
+        font-size: 36px;
+    }
+    
+    .highlight-text {
+        font-size: 13px;
+    }
+}
+/* ===== End Payment Announcement Styles ===== */
+
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -502,11 +764,11 @@
 <div id="whatsapp-popup-overlay">
     <div id="whatsapp-popup">
         <div class="popup-header">
-            <div class="popup-icons">✨ ☸️ 🪔 ☸️ ✨</div>
+            <div class="popup-icons">✨ 🕉️ 🪔 🕉️ ✨</div>
             <div class="popup-title">ධර්ම නේත්‍රා</div>
         </div>
         
-        <div class="popup-subtitle">🔔 විශේෂ දැනුම්දීමයි.!</div>
+        <div class="popup-subtitle">🔔 විශේෂ දැනුම්දීමක්!</div>
         
         <div class="popup-message">
             දෛනික ධර්ම දේශනා, යාවත්කාලීන කිරීම් සහ විශේෂ දැනුම්දීම් ලබා ගැනීමට අපගේ WhatsApp Channel එකට ඔබත් අනිවාර්යයෙන් එක්වන්න.
@@ -529,11 +791,74 @@
         </div>
         
         <div class="popup-footer">
-            තෙරුවන් සරණයි.! 🙏
+            පින් සිද්ධ වේවා! 🙏
         </div>
     </div>
 </div>
 <!-- ===== End WhatsApp Popup ===== -->
+
+<!-- ===== Payment Announcement Popup - FIXED ===== -->
+<div id="payment-announcement-overlay">
+    <div id="payment-announcement">
+        <div class="announce-header">
+            <div class="announce-icon-main">⚠️</div>
+            <div class="announce-title-main">විශේෂ දැනුම්දීමයි!</div>
+        </div>
+        
+        <div class="announce-divider"></div>
+        
+        <div class="announce-greeting">
+            <div class="greeting-text">පින්වත් 'ධර්ම නේත්‍රා' පරිශීලකයිනි,</div>
+        </div>
+        
+        <div class="announce-message-main">
+            'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික පිරිවැය දිනෙන් දින ඉහළ යාම හේතුවෙන් (පරිශීලකයින්ගේ ප්‍රමාණය නොසිතූ ලෙස ඉහළ යමින් පවතින නිසාවෙන්), එය අඛණ්ඩව පවත්වාගෙන යාම සඳහා:
+        </div>
+        
+        <div class="announce-date-main">
+            <div class="date-label-main">📅 ක්‍රියාත්මක වන දිනය</div>
+            <div class="date-value-main">2026 මාර්තු 01</div>
+        </div>
+        
+        <div class="announce-price-main">
+            <div class="price-label-main">💰 දායකත්ව මුදල</div>
+            <div class="price-value-main">රු. 150</div>
+            <div class="price-sub-main">මසකට (දිනකට රු. 5 පමණයි)</div>
+        </div>
+        
+        <div class="highlight-box">
+            <div class="highlight-text">
+                ගෞරවණීය ස්වාමින් වහන්සේගේ ධර්ම දානය<br>
+                බාධාවකින් තොරව ඔබ වෙත ගෙන ඒමට අප ගන්නා<br>
+                මෙම උත්සාහයට ඔබගේ සහයෝගය බලාපොරොත්තු වන්නෙමු.
+            </div>
+        </div>
+        
+        <div class="announce-signature">
+            <div class="signature-text">
+                තාක්ෂණික කණ්ඩායම,<br>
+                <span class="signature-name">GMU STUDIO (PVT) LTD.</span>
+            </div>
+        </div>
+        
+        <div class="announce-countdown-main">
+            <div class="countdown-text-main">⏳ ස්වයංක්‍රීයව වසා දමයි</div>
+            <div class="countdown-dots-main" id="payment-dots">
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+                <div class="countdown-dot-main"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ===== End Payment Announcement ===== -->
 
     <script>
         // --- Firebase Configuration ---
@@ -817,12 +1142,68 @@
             window.open('https://whatsapp.com/channel/0029Vb73W2Q89iniAgEwUl3S', '_blank');
             closeWhatsAppPopup();
         }
-
-        // App එක Load වී තත්පර 1.5 කින් Popup පෙන්වීම
-        window.addEventListener('load', function() {
-            setTimeout(showWhatsAppPopup, 1500); 
-        });
         // ===== End WhatsApp Popup Logic =====
+
+        // ===== Payment Announcement Popup Logic (FIXED) =====
+        let paymentCountdown;
+        let paymentTimeLeft = 10;
+
+        function showPaymentAnnouncement() {
+            const overlay = document.getElementById('payment-announcement-overlay');
+            if(overlay) {
+                overlay.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+                startPaymentCountdown();
+            }
+        }
+
+        function startPaymentCountdown() {
+            const dots = document.querySelectorAll('#payment-dots .countdown-dot-main');
+            let currentDot = 0;
+            
+            paymentCountdown = setInterval(() => {
+                paymentTimeLeft--;
+                
+                // Deactivate current dot
+                if(dots[currentDot]) {
+                    dots[currentDot].classList.add('inactive');
+                    currentDot++;
+                }
+                
+                if (paymentTimeLeft <= 0) {
+                    clearInterval(paymentCountdown);
+                    closePaymentAnnouncement();
+                }
+            }, 1000);
+        }
+
+        function closePaymentAnnouncement() {
+            const overlay = document.getElementById('payment-announcement-overlay');
+            if(overlay) {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    overlay.style.opacity = '1';
+                    document.body.style.overflow = ''; // Restore scroll
+                }, 400);
+            }
+            paymentTimeLeft = 10;
+            
+            // Reset dots for next time
+            document.querySelectorAll('#payment-dots .countdown-dot-main').forEach(dot => {
+                dot.classList.remove('inactive');
+            });
+        }
+
+        // App Load වූ විට Popups පෙන්වීම
+        window.addEventListener('load', function() {
+            // Payment announcement පළමුව (0.5s කින්)
+            setTimeout(showPaymentAnnouncement, 500);
+            
+            // WhatsApp popup දෙවනුව (11.5s කින්)
+            setTimeout(showWhatsAppPopup, 11500);
+        });
+        // ===== End Payment Announcement Logic =====
     </script>
 </body>
 </html>
