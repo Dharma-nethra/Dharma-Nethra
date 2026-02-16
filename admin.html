@@ -26,7 +26,6 @@
 <div class="container">
     <h2 style="color:#d35400; text-align:center;">සදහම් ලිපි කළමනාකරණය</h2>
     
-    <!-- සංස්කරණ මාදිලිය දර්ශකය -->
     <div id="editMode">
         <strong>🔄 සංස්කරණ මාදිලිය:</strong> <span id="editTitle"></span>
         <button onclick="cancelEdit()" class="btn-cancel" style="margin-top: 10px;">❌ සංස්කරණය අවලංගු කරන්න</button>
@@ -34,6 +33,9 @@
 
     <input type="text" id="t" placeholder="මාතෘකාව...">
     <textarea id="c" rows="8" placeholder="ලිපිය මෙතැනට පේස්ට් කරන්න..."></textarea>
+    
+    <input type="text" id="pdfUrl" placeholder="PDF සබැඳිය (Google Drive Link) මෙතැනට පේස්ට් කරන්න...">
+    
     <button id="saveBtn" onclick="save()">ඇප් එකට එක් කරන්න (Upload)</button>
     <p id="msg" style="text-align:center; font-weight:bold;"></p>
 
@@ -63,6 +65,7 @@
     function save() {
         const title = document.getElementById('t').value;
         const content = document.getElementById('c').value;
+        const pdf_link = document.getElementById('pdfUrl').value; // PDF Link එක ලබා ගැනීම
         const msg = document.getElementById('msg');
 
         if(title && content) {
@@ -71,6 +74,7 @@
                 db.ref('articles/' + editingArticleId).update({
                     title: title,
                     content: content,
+                    pdf_link: pdf_link, // PDF යාවත්කාලීන කිරීම
                     time: Date.now()
                 }).then(() => {
                     msg.style.color = "green";
@@ -85,6 +89,7 @@
                 db.ref('articles').push({
                     title: title,
                     content: content,
+                    pdf_link: pdf_link, // PDF ඇතුළත් කිරීම
                     time: Date.now()
                 }).then(() => {
                     msg.style.color = "green";
@@ -96,7 +101,7 @@
                 });
             }
         } else { 
-            alert("කරුණාකර සියල්ල පුරවන්න."); 
+            alert("කරුණාකර මාතෘකාව සහ ලිපිය පුරවන්න."); 
         }
     }
 
@@ -109,6 +114,9 @@
                 editingArticleId = id;
                 document.getElementById('t').value = article.title;
                 document.getElementById('c').value = article.content;
+                // PDF ලින්ක් එක තිබේ නම් එය පෙන්නන්න, නැත්නම් හිස්ව තබන්න
+                document.getElementById('pdfUrl').value = article.pdf_link ? article.pdf_link : "";
+                
                 document.getElementById('editMode').style.display = 'block';
                 document.getElementById('editTitle').innerText = article.title;
                 document.getElementById('saveBtn').innerText = '✏️ යාවත්කාලීන කරන්න (Update)';
@@ -131,6 +139,7 @@
         editingArticleId = null;
         document.getElementById('t').value = "";
         document.getElementById('c').value = "";
+        document.getElementById('pdfUrl').value = ""; // PDF කොටුව හිස් කිරීම
         document.getElementById('editMode').style.display = 'none';
         document.getElementById('saveBtn').innerText = 'ඇප් එකට එක් කරන්න (Upload)';
         document.getElementById('saveBtn').style.background = '#d35400';
