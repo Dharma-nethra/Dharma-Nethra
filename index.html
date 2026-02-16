@@ -143,6 +143,27 @@
         .audio-btn { background: #9b59b6; color: white; border: none; padding: 8px 15px; border-radius: 20px; font-size: 13px; }
         .article-text { font-size: 18px; line-height: 2.1; text-align: justify; white-space: pre-wrap; color: var(--text-main); }
 
+        /* PDF Download Button Style */
+        .pdf-btn-container {
+            margin-top: 30px;
+            text-align: center;
+            display: none; /* By default hidden */
+        }
+        .pdf-btn {
+            text-decoration: none;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            transition: transform 0.2s;
+        }
+        .pdf-btn:active { transform: scale(0.95); }
+
         /* Bank Chart */
         .chart { width: 100%; border-collapse: collapse; margin-top: 15px; border-radius: 12px; overflow: hidden; background: white; }
         .chart td { padding: 15px; border: 1px solid #f1f1f1; font-size: 14px; color: #333; }
@@ -670,7 +691,7 @@
             <h3>🙏 ගෞරවණීය ස්වාමින් වහන්සේ</h3>
             <p style="color:#e67e22; font-weight:bold; margin-bottom:10px;">⚠️ කරුණාකර දුරකථන ඇමතුම් ලබා ගැනීමෙන් වළකින්න.</p>
             <a href="https://wa.me/94778803779" style="text-decoration:none; color:#25D366; font-weight:bold; font-size:18px;">💬 +94 77 880 3779 (WhatsApp)</a>
-            <p style="margin-top:15px; font-size:13px;">📧 anhettigamapodihamuduruwo@gmail.com</p>
+            <p style="margin-top:15px; font-size:13px;">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1d0dfd9d4c5c5d8d6d0dcd0c1ded5d8d9d0dcc4d5c4c3c4c6def1d6dcd0d8dd9fd2dedc">[email&#160;protected]</a></p>
         </div>
         <div class="card" style="border:none;">
             <h3>⚙️ තාක්ෂණික කණ්ඩායම</h3>
@@ -711,6 +732,13 @@
         
         <h2 id="full-title" style="color:var(--p-color); line-height:1.4;"></h2>
         <div id="full-content" class="article-text"></div>
+        
+        <div id="pdf-download-section" class="pdf-btn-container">
+            <a id="pdf-link" href="#" target="_blank" class="pdf-btn">
+                <span class="material-icons-round">picture_as_pdf</span> 
+                මෙම ලිපියේ PDF එක ලබා ගන්න
+            </a>
+        </div>
 
         <div style="margin-top:40px; padding:25px; background:var(--card-bg); border-radius:25px; text-align:center; border:1px solid #eee; box-shadow: 0 8px 20px rgba(0,0,0,0.05);">
     <p style="font-weight:bold; margin-bottom:20px; color:#2c3e50; font-size:16px;">ලිපිය පිළිබඳව විමසීමට:</p>
@@ -760,7 +788,6 @@
     </div>
 </div>
 
-<!-- ===== WhatsApp Channel Popup (NEW) ===== -->
 <div id="whatsapp-popup-overlay">
     <div id="whatsapp-popup">
         <div class="popup-header">
@@ -795,9 +822,6 @@
         </div>
     </div>
 </div>
-<!-- ===== End WhatsApp Popup ===== -->
-
-<!-- ===== Payment Announcement Popup - FIXED ===== -->
 <div id="payment-announcement-overlay">
     <div id="payment-announcement">
         <div class="announce-header">
@@ -858,9 +882,7 @@
         </div>
     </div>
 </div>
-<!-- ===== End Payment Announcement ===== -->
-
-    <script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // --- Firebase Configuration ---
         const firebaseConfig = {
             apiKey: "AIzaSyDEiwhtAIdoqdMIV5n_bdDoKuIrCkjqr3M",
@@ -986,6 +1008,18 @@
                 document.getElementById('full-title').innerText = a.title;
                 document.getElementById('full-content').innerText = a.content;
                 
+                // --- PDF Button Control Logic (NEW) ---
+                const pdfSection = document.getElementById('pdf-download-section');
+                const pdfLink = document.getElementById('pdf-link');
+
+                if (a.pdf_link && a.pdf_link !== "") {
+                    pdfSection.style.display = 'block';
+                    pdfLink.href = a.pdf_link;
+                } else {
+                    pdfSection.style.display = 'none';
+                }
+                // -------------------------------------
+
                 document.getElementById('wa-inquiry').href = `https://wa.me/94778803779?text=ගෞරවනීය ස්වාමින් වහන්ස, '${a.title}' ලිපිය පිළිබඳවයි:`;
                 document.getElementById('mail-inquiry').href = `mailto:anhettigamapodihamuduruwo@gmail.com?subject=ලිපිය පිළිබඳ විමසීම&body=ගෞරවනීය ස්වාමින් වහන්ස, '${a.title}' ලිපිය පිළිබඳවයි:`;
 
