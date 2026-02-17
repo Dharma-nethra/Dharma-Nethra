@@ -127,6 +127,7 @@
         .heart-icon { position: absolute; right: 15px; top: 18px; font-size: 24px; color: #ccc; cursor: pointer; transition: 0.3s; z-index: 10; }
         .heart-icon.fav-on { color: #e74c3c; }
         .read-status { font-size: 9px; background: #27ae60; color: white; padding: 2px 7px; border-radius: 10px; margin-left: 8px; font-weight: bold; vertical-align: middle; }
+        .pdf-tag { display: inline-block; vertical-align: middle; margin-left: 6px; }
 
         /* Detail Page */
         #detail-overlay {
@@ -975,11 +976,12 @@
                     // හදවත් සලකුණ පරීක්ෂාව
                     const favClass = favs.includes(id) ? 'fav-on' : '';
                     const readBadge = readList.includes(id) ? '<span class="read-status">කියවන ලදී</span>' : '';
+                    const pdfTag = (a.pdf_link && a.pdf_link !== "") ? '<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-tag" title="PDF ඇතුළත් කර ඇත">' : '';
 
                     list.innerHTML += `
                         <div class="card" onclick="openFull('${id}')" style="margin-bottom:15px; cursor:pointer;">
                             <span class="material-icons-round heart-icon ${favClass}" onclick="doFav('${id}', event)">favorite</span>
-                            <h3>${a.title} ${readBadge}</h3>
+                            <h3>${a.title} ${readBadge} ${pdfTag}</h3>
                             <p style="font-size:14px; opacity:0.8;">${a.content.substring(0, 100)}...</p>
                         </div>
                     `;
