@@ -19,6 +19,7 @@
         .btn-delete { background: #e74c3c; }
         .btn-cancel { background: #95a5a6; }
         #editMode { display: none; background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 2px solid #ffc107; }
+        .pdf-badge { display: inline-block; vertical-align: middle; margin-left: 6px; }
     </style>
 </head>
 <body>
@@ -153,9 +154,13 @@
             snap.forEach(child => {
                 const a = child.val();
                 
+                const pdfBadge = (a.pdf_link && a.pdf_link !== "") 
+                    ? `<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-badge" title="PDF ඇතුළත් කර ඇත">` 
+                    : '';
+
                 list.innerHTML += `
                     <div class="list-item">
-                        <div class="list-item-title">${a.title}</div>
+                        <div class="list-item-title">${a.title} ${pdfBadge}</div>
                         <div class="list-item-buttons">
                             <button onclick="editArticle('${child.key}')" class="btn-edit">✏️ සංස්කරණය</button>
                             <button onclick="del('${child.key}')" class="btn-delete">🗑️ මකන්න</button>
