@@ -622,6 +622,170 @@
 }
 /* ===== End Payment Announcement Styles ===== */
 
+/* ===== Donation Popup Styles (NEW) ===== */
+#donation-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9998;
+    animation: fadeIn 0.5s ease-out;
+    align-items: center;
+    justify-content: center;
+}
+
+#donation-popup {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 25px;
+    padding: 35px 25px;
+    max-width: 88%;
+    width: 400px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    animation: popupZoom 0.5s ease-out;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.donation-close-x {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.donation-close-x:hover {
+    background: rgba(255,255,255,0.3);
+    transform: rotate(90deg);
+}
+
+.donation-icon-box {
+    font-size: 55px;
+    margin-bottom: 18px;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    10%, 30% { transform: scale(1.1); }
+    20%, 40% { transform: scale(1); }
+}
+
+.donation-popup h3 {
+    font-size: 22px;
+    margin: 0 0 18px 0;
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.donation-popup p {
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 0 0 12px 0;
+    opacity: 0.95;
+}
+
+.donation-message-box {
+    background: rgba(255,255,255,0.15);
+    padding: 18px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border-left: 4px solid rgba(255,255,255,0.5);
+    text-align: left;
+}
+
+.donation-message-box p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0 0 8px 0;
+}
+
+.donation-whatsapp-btn {
+    background: #25D366;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto 15px auto;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    transition: transform 0.2s;
+    width: 100%;
+    max-width: 280px;
+}
+
+.donation-whatsapp-btn:active {
+    transform: scale(0.95);
+}
+
+.donation-countdown-box {
+    background: rgba(255,255,255,0.2);
+    padding: 8px 15px;
+    border-radius: 15px;
+    margin-top: 15px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.donation-countdown-number {
+    font-size: 22px;
+    font-weight: bold;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    background: rgba(255,255,255,0.3);
+}
+
+.donation-countdown-red {
+    background: #F44336;
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.donation-close-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+/* ===== End Donation Popup Styles ===== */
+
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -883,6 +1047,35 @@
         </div>
     </div>
 </div>
+
+<!-- ===== Donation Popup (NEW) ===== -->
+<div id="donation-popup-overlay">
+    <div id="donation-popup">
+        <button class="donation-close-x" onclick="closeDonationPopup()">×</button>
+        <div class="donation-icon-box">🙏</div>
+        <h3>ධර්ම නේත්‍රා ආධාර අංශය</h3>
+        <p>මෙම 'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් පින්වත් ඔබටත් සහය විය හැකියි.</p>
+        
+        <div class="donation-message-box">
+            <p><strong>පිනැති ඔබත් දායක වීමට කැමතිනම්:</strong></p>
+            <p>✦ 'ආධාර' පිටුවෙහි උපදෙස් අනුගමනය කරන්න</p>
+            <p>✦ හෝ පහත බොත්තම ඔබා WhatsApp හරහා අප වෙත පණිවිඩයක් යොමු කරන්න</p>
+        </div>
+
+        <button class="donation-whatsapp-btn" onclick="sendDonationWhatsApp()">
+            <span style="font-size:26px;">💬</span>
+            WhatsApp පණිවිඩය යවන්න
+        </button>
+        
+        <div class="donation-countdown-box">
+            <span>ස්වයංක්‍රීයව වැසෙනතුරු:</span>
+            <div class="donation-countdown-number" id="donation-countdown-timer">10</div>
+        </div>
+        
+        <button class="donation-close-btn" onclick="closeDonationPopup()">පසුව</button>
+    </div>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // --- Firebase Configuration ---
         const firebaseConfig = {
@@ -1238,8 +1431,66 @@
             
             // WhatsApp popup දෙවනුව (11.5s කින්)
             setTimeout(showWhatsAppPopup, 11500);
+            
+            // Donation popup තෙවනුව (2 minutes = 120000ms කින්)
+            setTimeout(showDonationPopup, 120000);
         });
         // ===== End Payment Announcement Logic =====
+
+        // ===== Donation Popup Logic (NEW) =====
+        let donationCountdownTimer;
+        let donationTimeLeft = 10;
+
+        function showDonationPopup() {
+            const overlay = document.getElementById('donation-popup-overlay');
+            if(overlay) {
+                overlay.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                startDonationCountdown();
+            }
+        }
+
+        function startDonationCountdown() {
+            const timerElement = document.getElementById('donation-countdown-timer');
+            donationTimeLeft = 10;
+            
+            donationCountdownTimer = setInterval(() => {
+                donationTimeLeft--;
+                if(timerElement) {
+                    timerElement.innerText = donationTimeLeft;
+                    
+                    timerElement.className = 'donation-countdown-number';
+                    if (donationTimeLeft <= 3) {
+                        timerElement.classList.add('donation-countdown-red');
+                    }
+                }
+                
+                if (donationTimeLeft <= 0) {
+                    clearInterval(donationCountdownTimer);
+                    closeDonationPopup();
+                }
+            }, 1000);
+        }
+
+        function closeDonationPopup() {
+            clearInterval(donationCountdownTimer);
+            const overlay = document.getElementById('donation-popup-overlay');
+            if(overlay) {
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+            donationTimeLeft = 10;
+        }
+
+        function sendDonationWhatsApp() {
+            clearInterval(donationCountdownTimer);
+            const message = encodeURIComponent("පින්වත් තාක්ෂණික කණ්ඩායම වෙත,\n\n'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් මා දායක වීමට කැමැත්තෙමි.\n\nකරුණාකර අදාළ විස්තර මා වෙත යොමු කරන ලෙස කාරුණිකව ඉල්ලා සිටිමි.");
+            const phoneNumber = "94763861339";
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+            window.open(whatsappURL, '_blank');
+            closeDonationPopup();
+        }
+        // ===== End Donation Popup Logic =====
     </script>
 </body>
 </html>
