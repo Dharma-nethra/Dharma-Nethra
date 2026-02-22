@@ -990,43 +990,27 @@
 <div id="payment-announcement-overlay">
     <div id="payment-announcement">
         <div class="announce-header">
-            <div class="announce-icon-main">⚠️</div>
-            <div class="announce-title-main">විශේෂ දැනුම්දීමයි!</div>
+            <div class="announce-icon-main">📢</div>
+            <div class="announce-title-main">විශේෂ නිවේදනයයි.!</div>
         </div>
         
         <div class="announce-divider"></div>
         
-        <div class="announce-greeting">
-            <div class="greeting-text">පින්වත් 'ධර්ම නේත්‍රා' පරිශීලකයිනි,</div>
-        </div>
-        
         <div class="announce-message-main">
-            'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික පිරිවැය දිනෙන් දින ඉහළ යාම හේතුවෙන් (පරිශීලකයින්ගේ ප්‍රමාණය නොසිතූ ලෙස ඉහළ යමින් පවතින නිසාවෙන්), එය අඛණ්ඩව පවත්වාගෙන යාම සඳහා:
+            <p style="margin:0 0 12px 0;">ධර්ම නේත්‍රා සදහම් අවකාශයේ ගුණාත්මකභාවය සහ තාක්ෂණික අඛණ්ඩතාව පවත්වා ගැනීම වෙනුවෙන්, <strong>2026 මාර්තු 01</strong> වන දින සිට <strong>රු. 150</strong> ක සුළු නඩත්තු දායකත්වයක් හඳුන්වා දී ඇති බව කාරුණිකව දන්වා සිටිමු.</p>
+            <p style="margin:0 0 12px 0;">මෙම සේවාව අඛණ්ඩව ලබාගැනීමට, පහත WhatsApp අංකය ඔස්සේ අප හා සම්බන්ධ වී ඔබගේ <strong>Access Key</strong> එක ලබාගන්නා ලෙස ගෞරවයෙන් ඇරයුම් කරමු.</p>
+            <p style="margin:0 0 12px 0;">සදහම් මගෙහි ඔබ සැමට නිරන්තර මගපෙන්වීම අපගේ අරමුණයි.<br>
+            <strong>තෙරුවන් සරණයි.!</strong></p>
         </div>
-        
-        <div class="announce-date-main">
-            <div class="date-label-main">📅 ක්‍රියාත්මක වන දිනය</div>
-            <div class="date-value-main">2026 මාර්තු 01</div>
-        </div>
-        
-        <div class="announce-price-main">
-            <div class="price-label-main">💰 දායකත්ව මුදල</div>
-            <div class="price-value-main">රු. 150</div>
-            <div class="price-sub-main">මසකට (දිනකට රු. 5 පමණයි)</div>
-        </div>
-        
-        <div class="highlight-box">
-            <div class="highlight-text">
-                ගෞරවණීය ස්වාමින් වහන්සේගේ ධර්ම දානය<br>
-                බාධාවකින් තොරව ඔබ වෙත ගෙන ඒමට අප ගන්නා<br>
-                මෙම උත්සාහයට ඔබගේ සහයෝගය බලාපොරොත්තු වන්නෙමු.
-            </div>
-        </div>
-        
+
+        <button onclick="openPaymentWhatsApp()" style="background: linear-gradient(135deg, #25D366, #128C7E); color: white; border: none; padding: 15px; width: 100%; border-radius: 15px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(37,211,102,0.4); display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0;">
+            <span style="font-size:24px;">💬</span> WhatsApp
+        </button>
+
         <div class="announce-signature">
             <div class="signature-text">
-                තාක්ෂණික කණ්ඩායම,<br>
-                <span class="signature-name">GMU STUDIO (PVT) LTD.</span>
+                මෙත් සිතින්,<br>
+                <span class="signature-name">ධර්ම නේත්‍රා සදහම් අවකාශය.</span>
             </div>
         </div>
         
@@ -1422,6 +1406,13 @@
             document.querySelectorAll('#payment-dots .countdown-dot-main').forEach(dot => {
                 dot.classList.remove('inactive');
             });
+        }
+
+        function openPaymentWhatsApp() {
+            const message = encodeURIComponent("ධර්ම නේත්‍රා සදහම් අවකාශය වෙත.\n\nමා හට ධර්ම නේත්‍රා සදහම් යෙදුම පරිශීලනය සඳහා වන මාසික දායකත්ව මුදල ගෙවා ACCESS KEY ලබා ගැනීමට අවශ්‍යයි.\n\nකරුණාකර ගෙවීම් විස්තර සහ වැඩිදුර විස්තර මා වෙත ලබා දෙන මෙන් ඉල්ලා සිටිමි.\n\nස්තූතියි.!");
+            const phoneNumber = "94763861339";
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+            window.open(whatsappURL, '_blank');
         }
 
         // App Load වූ විට Popups පෙන්වීම
