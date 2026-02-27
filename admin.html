@@ -7,42 +7,349 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <style>
-        body { font-family: sans-serif; background: #fffbf2; padding: 20px; }
-        .container { max-width: 600px; margin: auto; background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #d35400; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .list-item { background: #f9f9f9; padding: 10px; margin-top: 10px; border-radius: 8px; border: 1px solid #eee; }
+        * { box-sizing: border-box; }
+        body { font-family: sans-serif; background: #fffbf2; padding: 20px; margin: 0; }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            background: #ddd;
+            color: #555;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: #d35400;
+            color: white;
+            box-shadow: 0 4px 12px rgba(211,84,0,0.3);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Common container */
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .container h2 {
+            color: #d35400;
+            text-align: center;
+            margin-top: 0;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button.btn-primary {
+            width: 100%;
+            padding: 15px;
+            background: #d35400;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 5px;
+        }
+        button.btn-primary:hover { background: #b94600; }
+        .msg { text-align: center; font-weight: bold; margin-top: 10px; min-height: 22px; }
+
+        /* Article list */
+        .list-item {
+            background: #f9f9f9;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
         .list-item-title { font-weight: bold; margin-bottom: 8px; }
-        .list-item-buttons { display: flex; gap: 5px; }
-        .list-item-buttons button { width: auto; padding: 8px 15px; font-size: 14px; }
+        .list-item-buttons { display: flex; gap: 5px; flex-wrap: wrap; }
+        .list-item-buttons button { padding: 7px 14px; font-size: 13px; border: none; border-radius: 6px; cursor: pointer; color: white; font-weight: bold; }
         .btn-edit { background: #3498db; }
         .btn-delete { background: #e74c3c; }
         .btn-cancel { background: #95a5a6; }
-        #editMode { display: none; background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 2px solid #ffc107; }
+        .btn-green { background: #27ae60; }
+        .btn-orange { background: #e67e22; }
+        .btn-purple { background: #8e44ad; }
+        #editMode {
+            display: none;
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 2px solid #ffc107;
+        }
         .pdf-badge { display: inline-block; vertical-align: middle; margin-left: 6px; }
+
+        /* ACCESS KEY Panel Styles */
+        .ak-generate-box {
+            background: linear-gradient(135deg, #fff8f0, #fff3e0);
+            border: 2px solid #f39c12;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .ak-generate-box h3 { color: #d35400; margin-top: 0; }
+        
+        .generated-key-display {
+            background: #2c3e50;
+            color: #2ecc71;
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+        
+        .ak-stats {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .ak-stat-card {
+            flex: 1;
+            min-width: 120px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-top: 4px solid #d35400;
+        }
+        .ak-stat-number { font-size: 28px; font-weight: 900; color: #d35400; }
+        .ak-stat-label { font-size: 12px; color: #7f8c8d; margin-top: 4px; }
+
+        .ak-key-row {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .ak-key-row.used { border-left: 5px solid #27ae60; }
+        .ak-key-row.unused { border-left: 5px solid #95a5a6; }
+        .ak-key-row.inactive { border-left: 5px solid #e74c3c; opacity: 0.6; }
+
+        .ak-key-code {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .ak-key-meta { font-size: 12px; color: #7f8c8d; line-height: 1.6; }
+        .ak-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .badge-used { background: #d5f5e3; color: #27ae60; }
+        .badge-unused { background: #f0f0f0; color: #7f8c8d; }
+        .badge-inactive { background: #fde8e8; color: #e74c3c; }
+
+        .ak-key-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+        .ak-key-actions button { padding: 6px 12px; font-size: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; }
+
+        .copy-success { color: #27ae60; font-size: 12px; margin-left: 8px; display: none; }
+        
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-bar select, .filter-bar input {
+            flex: 1;
+            min-width: 120px;
+            margin: 0;
+        }
+
+        .note-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 13px;
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #2c3e50;
+            margin: 20px 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #f39c12;
+        }
+        
+        #ak-loading { text-align: center; color: #7f8c8d; padding: 20px; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            .generated-key-display { font-size: 18px; letter-spacing: 2px; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2 style="color:#d35400; text-align:center;">සදහම් ලිපි කළමනාකරණය</h2>
-    
-    <div id="editMode">
-        <strong>🔄 සංස්කරණ මාදිලිය:</strong> <span id="editTitle"></span>
-        <button onclick="cancelEdit()" class="btn-cancel" style="margin-top: 10px;">❌ සංස්කරණය අවලංගු කරන්න</button>
+<div style="max-width:700px; margin:auto;">
+    <div style="text-align:center; margin-bottom:20px;">
+        <h1 style="color:#d35400; margin:0;">⚙️ ධර්ම නේත්‍රා Admin</h1>
+        <p style="color:#7f8c8d; margin:5px 0 0 0; font-size:13px;">Administration Panel</p>
     </div>
 
-    <input type="text" id="t" placeholder="මාතෘකාව...">
-    <textarea id="c" rows="8" placeholder="ලිපිය මෙතැනට පේස්ට් කරන්න..."></textarea>
-    
-    <input type="text" id="pdfUrl" placeholder="PDF සබැඳිය (Google Drive Link) මෙතැනට පේස්ට් කරන්න...">
-    
-    <button id="saveBtn" onclick="save()">ඇප් එකට එක් කරන්න (Upload)</button>
-    <p id="msg" style="text-align:center; font-weight:bold;"></p>
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('articles')">📚 ලිපි කළමනාකරණය</button>
+        <button class="tab-btn" onclick="switchTab('access-keys')">🔐 ACCESS KEY</button>
+    </div>
 
-    <hr>
-    <h3>📚 දැනට ඇති ලිපි ලැයිස්තුව</h3>
-    <div id="article-list">පූරණය වෙමින් පවතී...</div>
+    <!-- ==================== ARTICLES TAB ==================== -->
+    <div id="tab-articles" class="tab-content active">
+        <div class="container">
+            <h2>සදහම් ලිපි කළමනාකරණය</h2>
+            
+            <div id="editMode">
+                <strong>🔄 සංස්කරණ මාදිලිය:</strong> <span id="editTitle"></span>
+                <button onclick="cancelEdit()" class="btn-cancel" style="margin-top:10px; padding:8px 15px; border:none; border-radius:6px; cursor:pointer; color:white; font-weight:bold;">❌ සංස්කරණය අවලංගු කරන්න</button>
+            </div>
+
+            <input type="text" id="t" placeholder="මාතෘකාව...">
+            <textarea id="c" rows="8" placeholder="ලිපිය මෙතැනට පේස්ට් කරන්න..."></textarea>
+            <input type="text" id="pdfUrl" placeholder="PDF සබැඳිය (Google Drive Link) - අවශ්‍ය නොවේ නම් හිස්ව තබන්න">
+            
+            <button id="saveBtn" class="btn-primary" onclick="save()">ඇප් එකට එක් කරන්න (Upload)</button>
+            <p id="msg" class="msg"></p>
+
+            <hr style="margin:20px 0; border:none; border-top:1px solid #eee;">
+            <h3 style="color:#d35400; margin-top:0;">📚 දැනට ඇති ලිපි ලැයිස්තුව</h3>
+            <div id="article-list">පූරණය වෙමින් පවතී...</div>
+        </div>
+    </div>
+
+    <!-- ==================== ACCESS KEYS TAB ==================== -->
+    <div id="tab-access-keys" class="tab-content">
+        
+        <!-- Stats -->
+        <div class="container" style="padding:20px;">
+            <h2>🔐 ACCESS KEY කළමනාකරණය</h2>
+            <div class="ak-stats" id="ak-stats">
+                <div class="ak-stat-card">
+                    <div class="ak-stat-number" id="stat-total">-</div>
+                    <div class="ak-stat-label">මුළු Keys</div>
+                </div>
+                <div class="ak-stat-card">
+                    <div class="ak-stat-number" id="stat-active" style="color:#27ae60;">-</div>
+                    <div class="ak-stat-label">ක්‍රියාකාරී</div>
+                </div>
+                <div class="ak-stat-card">
+                    <div class="ak-stat-number" id="stat-used" style="color:#3498db;">-</div>
+                    <div class="ak-stat-label">භාවිතා කළ</div>
+                </div>
+                <div class="ak-stat-card">
+                    <div class="ak-stat-number" id="stat-inactive" style="color:#e74c3c;">-</div>
+                    <div class="ak-stat-label">අක්‍රිය</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generate New Key -->
+        <div class="container">
+            <div class="ak-generate-box">
+                <h3>🆕 නව ACCESS KEY Generate කරන්න</h3>
+                
+                <div class="note-box">
+                    💡 Key Generate කිරීමෙන් පසු, WhatsApp හරහා පරිශීලකයාට Key එක යොමු කරන්න. Key එක දින 30ක් වලංගු වේ.
+                </div>
+
+                <label style="font-size:13px; color:#555; font-weight:bold;">Key ප්‍රමාණය:</label>
+                <select id="ak-length" style="margin-bottom:10px;">
+                    <option value="8">8 අකුරු (උදා: DN4X9K2M)</option>
+                    <option value="10" selected>10 අකුරු (උදා: DN4X9K2M8P)</option>
+                    <option value="12">12 අකුරු (උදා: DN4X9K2M8PQR)</option>
+                </select>
+                
+                <label style="font-size:13px; color:#555; font-weight:bold;">විවරණය (Optional - පරිශීලකයාගේ නම ඇතුළු කරන්න):</label>
+                <input type="text" id="ak-note" placeholder="උදා: Sunil Perera - 2026 March" style="margin-bottom:10px;">
+
+                <button class="btn-primary" onclick="generateKey()" style="background: linear-gradient(135deg, #d35400, #f39c12);">
+                    🔑 නව ACCESS KEY Generate කරන්න
+                </button>
+                
+                <div id="new-key-display" style="display:none; margin-top:15px;">
+                    <div style="font-size:13px; color:#555; font-weight:bold; margin-bottom:5px;">✅ Generate කළ KEY:</div>
+                    <div class="generated-key-display" id="generated-key-text">-</div>
+                    <div style="display:flex; gap:8px; margin-top:10px;">
+                        <button onclick="copyGeneratedKey()" style="flex:1; padding:12px; background:#27ae60; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; font-size:14px;">
+                            📋 KEY Copy කරන්න
+                        </button>
+                        <button onclick="sendKeyWhatsApp()" style="flex:1; padding:12px; background:#25D366; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; font-size:14px;">
+                            💬 WhatsApp
+                        </button>
+                    </div>
+                    <div id="copy-confirm" style="text-align:center; color:#27ae60; font-weight:bold; font-size:13px; margin-top:8px; display:none;">✅ Clipboard එකට Copy විය!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key List -->
+        <div class="container">
+            <h3 style="color:#d35400; margin-top:0;">📋 සියලු ACCESS KEYS ලැයිස්තුව</h3>
+
+            <div class="filter-bar">
+                <select id="ak-filter" onchange="filterKeys()">
+                    <option value="all">සියල්ල</option>
+                    <option value="active-unused">ක්‍රියාකාරී (භාවිතා නොකළ)</option>
+                    <option value="active-used">ක්‍රියාකාරී (භාවිතා කළ)</option>
+                    <option value="inactive">අක්‍රිය</option>
+                </select>
+                <input type="text" id="ak-search" placeholder="Key හෝ නම සොයන්න..." oninput="filterKeys()" style="flex:2;">
+            </div>
+
+            <div id="ak-loading">🔄 Keys පූරණය වෙමින් පවතී...</div>
+            <div id="ak-list"></div>
+            <div id="ak-empty" style="display:none; text-align:center; color:#7f8c8d; padding:30px;">
+                🔍 ගැළපෙන Keys නොමැත
+            </div>
+        </div>
+
+    </div><!-- end access-keys tab -->
 </div>
 
 <script>
@@ -59,105 +366,76 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // සංස්කරණය සඳහා වන global variable
+    // ==================== TAB SWITCHING ====================
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.getElementById('tab-' + tab).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    // ==================== ARTICLES ====================
     let editingArticleId = null;
 
-    // ලිපිය සුරැකීම හෝ යාවත්කාලීන කරීම
     function save() {
         const title = document.getElementById('t').value;
         const content = document.getElementById('c').value;
-        const pdf_link = document.getElementById('pdfUrl').value; // PDF Link එක ලබා ගැනීම
+        const pdf_link = document.getElementById('pdfUrl').value;
         const msg = document.getElementById('msg');
 
-        if(title && content) {
-            if(editingArticleId) {
-                // යාවත්කාලීන කරීම (Update)
-                db.ref('articles/' + editingArticleId).update({
-                    title: title,
-                    content: content,
-                    pdf_link: pdf_link, // PDF යාවත්කාලීන කිරීම
-                    time: Date.now()
-                }).then(() => {
-                    msg.style.color = "green";
-                    msg.innerText = "✅ සාර්ථකව යාවත්කාලීන කළා!";
-                    clearForm();
-                }).catch(err => {
-                    msg.style.color = "red";
-                    msg.innerText = "❌ දෝෂයක්: " + err.message;
-                });
+        if (title && content) {
+            if (editingArticleId) {
+                db.ref('articles/' + editingArticleId).update({ title, content, pdf_link, time: Date.now() })
+                    .then(() => { msg.style.color = "green"; msg.innerText = "✅ සාර්ථකව යාවත්කාලීන කළා!"; clearForm(); })
+                    .catch(err => { msg.style.color = "red"; msg.innerText = "❌ දෝෂයක්: " + err.message; });
             } else {
-                // නව ලිපියක් එකතු කරීම (Add New)
-                db.ref('articles').push({
-                    title: title,
-                    content: content,
-                    pdf_link: pdf_link, // PDF ඇතුළත් කිරීම
-                    time: Date.now()
-                }).then(() => {
-                    msg.style.color = "green";
-                    msg.innerText = "✅ සාර්ථකව ඇතුළත් කළා!";
-                    clearForm();
-                }).catch(err => {
-                    msg.style.color = "red";
-                    msg.innerText = "❌ දෝෂයක්: " + err.message;
-                });
+                db.ref('articles').push({ title, content, pdf_link, time: Date.now() })
+                    .then(() => { msg.style.color = "green"; msg.innerText = "✅ සාර්ථකව ඇතුළත් කළා!"; clearForm(); })
+                    .catch(err => { msg.style.color = "red"; msg.innerText = "❌ දෝෂයක්: " + err.message; });
             }
-        } else { 
-            alert("කරුණාකර මාතෘකාව සහ ලිපිය පුරවන්න."); 
+        } else {
+            alert("කරුණාකර මාතෘකාව සහ ලිපිය පුරවන්න.");
         }
     }
 
-    // සංස්කරණය කරන්න
     function editArticle(id) {
-        const articleRef = db.ref('articles/' + id);
-        articleRef.once('value').then((snapshot) => {
+        db.ref('articles/' + id).once('value').then(snapshot => {
             const article = snapshot.val();
-            if(article) {
+            if (article) {
                 editingArticleId = id;
                 document.getElementById('t').value = article.title;
                 document.getElementById('c').value = article.content;
-                // PDF ලින්ක් එක තිබේ නම් එය පෙන්නන්න, නැත්නම් හිස්ව තබන්න
-                document.getElementById('pdfUrl').value = article.pdf_link ? article.pdf_link : "";
-                
+                document.getElementById('pdfUrl').value = article.pdf_link || "";
                 document.getElementById('editMode').style.display = 'block';
                 document.getElementById('editTitle').innerText = article.title;
                 document.getElementById('saveBtn').innerText = '✏️ යාවත්කාලීන කරන්න (Update)';
                 document.getElementById('saveBtn').style.background = '#27ae60';
-                
-                // ඉහළට scroll කරන්න
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
     }
 
-    // සංස්කරණය අවලංගු කරන්න
-    function cancelEdit() {
-        clearForm();
-        document.getElementById('msg').innerText = '';
-    }
+    function cancelEdit() { clearForm(); document.getElementById('msg').innerText = ''; }
 
-    // ෆෝරම් එක clear කරන්න
     function clearForm() {
         editingArticleId = null;
         document.getElementById('t').value = "";
         document.getElementById('c').value = "";
-        document.getElementById('pdfUrl').value = ""; // PDF කොටුව හිස් කිරීම
+        document.getElementById('pdfUrl').value = "";
         document.getElementById('editMode').style.display = 'none';
         document.getElementById('saveBtn').innerText = 'ඇප් එකට එක් කරන්න (Upload)';
         document.getElementById('saveBtn').style.background = '#d35400';
     }
 
-    // ලිපි ලැයිස්තුව පෙන්වීම
     db.ref('articles').on('value', (snap) => {
         const list = document.getElementById('article-list');
         list.innerHTML = '';
-        if(snap.exists()) {
+        if (snap.exists()) {
             snap.forEach(child => {
                 const a = child.val();
-                
-                const pdfBadge = (a.pdf_link && a.pdf_link !== "") 
-                    ? `<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-badge" title="PDF ඇතුළත් කර ඇත">` 
+                const pdfBadge = (a.pdf_link && a.pdf_link !== "")
+                    ? `<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-badge" title="PDF ඇතුළත් කර ඇත">`
                     : '';
-
                 list.innerHTML += `
                     <div class="list-item">
                         <div class="list-item-title">${a.title} ${pdfBadge}</div>
@@ -165,23 +443,265 @@
                             <button onclick="editArticle('${child.key}')" class="btn-edit">✏️ සංස්කරණය</button>
                             <button onclick="del('${child.key}')" class="btn-delete">🗑️ මකන්න</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
-        } else { 
-            list.innerHTML = "තවමත් ලිපි කිසිවක් නැත."; 
+        } else {
+            list.innerHTML = "තවමත් ලිපි කිසිවක් නැත.";
         }
     }, err => {
         document.getElementById('article-list').innerText = "දෝෂයක්: " + err.message;
     });
 
-    // මකා දැමීම
     function del(id) {
-        if(confirm("මෙම ලිපිය මකා දැමීමට අවශ්‍යද?")) {
-            db.ref('articles/' + id).remove();
+        if (confirm("මෙම ලිපිය මකා දැමීමට අවශ්‍යද?")) db.ref('articles/' + id).remove();
+    }
+
+    // ==================== ACCESS KEYS ====================
+    let allKeys = [];
+    let lastGeneratedKey = '';
+    let lastKeyNote = '';
+
+    // Generate random key
+    function generateRandomKey(length) {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // Remove confusing chars O,0,I,1
+        let key = 'DN'; // Prefix for Dharma Nethra
+        for (let i = 0; i < length - 2; i++) {
+            key += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return key;
+    }
+
+    function generateKey() {
+        const length = parseInt(document.getElementById('ak-length').value);
+        const note = document.getElementById('ak-note').value.trim();
+
+        // Generate unique key (check against existing)
+        let newKey = generateRandomKey(length);
+        let attempts = 0;
+        const existingKeys = allKeys.map(k => k.key);
+        while (existingKeys.includes(newKey) && attempts < 20) {
+            newKey = generateRandomKey(length);
+            attempts++;
+        }
+
+        // Save to Firebase
+        const keyData = {
+            key: newKey,
+            active: true,
+            used: false,
+            note: note || '',
+            created: new Date().toISOString(),
+            first_used: null,
+            last_used: null,
+            valid_days: 30
+        };
+
+        db.ref('access_keys').push(keyData).then(() => {
+            lastGeneratedKey = newKey;
+            lastKeyNote = note;
+            document.getElementById('generated-key-text').innerText = newKey;
+            document.getElementById('new-key-display').style.display = 'block';
+            document.getElementById('copy-confirm').style.display = 'none';
+            document.getElementById('ak-note').value = '';
+        }).catch(err => {
+            alert("❌ Key save කිරීමේ දෝෂයක්: " + err.message);
+        });
+    }
+
+    function copyGeneratedKey() {
+        const key = document.getElementById('generated-key-text').innerText;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(key).then(() => {
+                document.getElementById('copy-confirm').style.display = 'block';
+                setTimeout(() => document.getElementById('copy-confirm').style.display = 'none', 2500);
+            });
+        } else {
+            // Fallback
+            const el = document.createElement('textarea');
+            el.value = key;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            document.getElementById('copy-confirm').style.display = 'block';
+            setTimeout(() => document.getElementById('copy-confirm').style.display = 'none', 2500);
+        }
+    }
+
+    function sendKeyWhatsApp() {
+        const key = lastGeneratedKey;
+        const note = lastKeyNote ? `\n(${lastKeyNote})` : '';
+        const msg = encodeURIComponent(
+            `ආයුබෝවන්.! 🙏\n\nධර්ම නේත්‍රා සදහම් අවකාශය\n\nඔබේ ACCESS KEY එක:\n\n🔑 ${key}${note}\n\n✅ මෙම KEY එක ඇප් එකේ ඉල්ලන විට ඇතුළු කරන්න.\n⏳ KEY එක දින 30ක් වලංගු වේ.\n\nතෙරුවන් සරණයි! 🙏`
+        );
+        window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+
+    // Load all keys
+    db.ref('access_keys').on('value', (snap) => {
+        allKeys = [];
+        if (snap.exists()) {
+            snap.forEach(child => {
+                allKeys.push({ id: child.key, ...child.val() });
+            });
+        }
+        // Sort: newest first
+        allKeys.sort((a, b) => new Date(b.created) - new Date(a.created));
+        updateStats();
+        renderKeys(allKeys);
+    });
+
+    function updateStats() {
+        const total = allKeys.length;
+        const active = allKeys.filter(k => k.active).length;
+        const used = allKeys.filter(k => k.used).length;
+        const inactive = allKeys.filter(k => !k.active).length;
+        document.getElementById('stat-total').innerText = total;
+        document.getElementById('stat-active').innerText = active;
+        document.getElementById('stat-used').innerText = used;
+        document.getElementById('stat-inactive').innerText = inactive;
+    }
+
+    function filterKeys() {
+        const filter = document.getElementById('ak-filter').value;
+        const search = document.getElementById('ak-search').value.trim().toUpperCase();
+
+        let filtered = allKeys.filter(k => {
+            let matchFilter = true;
+            if (filter === 'active-unused') matchFilter = k.active && !k.used;
+            else if (filter === 'active-used') matchFilter = k.active && k.used;
+            else if (filter === 'inactive') matchFilter = !k.active;
+
+            let matchSearch = true;
+            if (search) {
+                matchSearch = k.key.includes(search) || (k.note && k.note.toUpperCase().includes(search));
+            }
+            return matchFilter && matchSearch;
+        });
+
+        renderKeys(filtered);
+    }
+
+    function renderKeys(keys) {
+        const listEl = document.getElementById('ak-list');
+        const loadingEl = document.getElementById('ak-loading');
+        const emptyEl = document.getElementById('ak-empty');
+
+        loadingEl.style.display = 'none';
+
+        if (keys.length === 0) {
+            listEl.innerHTML = '';
+            emptyEl.style.display = 'block';
+            return;
+        }
+
+        emptyEl.style.display = 'none';
+        listEl.innerHTML = keys.map(k => {
+            let rowClass = 'ak-key-row';
+            let badge = '';
+            if (!k.active) {
+                rowClass += ' inactive';
+                badge = '<span class="ak-badge badge-inactive">අක්‍රිය</span>';
+            } else if (k.used) {
+                rowClass += ' used';
+                badge = '<span class="ak-badge badge-used">✅ භාවිතා කළ</span>';
+            } else {
+                rowClass += ' unused';
+                badge = '<span class="ak-badge badge-unused">⏳ භාවිතා නොකළ</span>';
+            }
+
+            const created = k.created ? new Date(k.created).toLocaleDateString('si-LK') : '-';
+            const firstUsed = k.first_used ? new Date(k.first_used).toLocaleDateString('si-LK') : 'භාවිතා කර නැත';
+            const lastUsed = k.last_used ? new Date(k.last_used).toLocaleDateString('si-LK') : '-';
+
+            // Calculate expiry if used
+            let expiryInfo = '';
+            if (k.first_used) {
+                const expDate = new Date(new Date(k.first_used).getTime() + 30 * 24 * 60 * 60 * 1000);
+                const now = new Date();
+                const daysLeft = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+                if (daysLeft > 0) {
+                    expiryInfo = `<br>⏳ ඉතිරි දින: <strong style="color:${daysLeft <= 5 ? '#e74c3c' : '#27ae60'}">${daysLeft}</strong>`;
+                } else {
+                    expiryInfo = `<br>⚠️ <strong style="color:#e74c3c">KEY කල් ඉකුත් වී ඇත</strong>`;
+                }
+            }
+
+            return `
+                <div class="${rowClass}" id="akrow-${k.id}">
+                    <div class="ak-key-code">${k.key} ${badge}</div>
+                    <div class="ak-key-meta">
+                        📅 Create: ${created}
+                        ${k.note ? `<br>👤 ${k.note}` : ''}
+                        <br>🔓 First Used: ${firstUsed}
+                        ${k.used ? `<br>🕐 Last Used: ${lastUsed}` : ''}
+                        ${expiryInfo}
+                    </div>
+                    <div class="ak-key-actions">
+                        <button onclick="copyKeyToClipboard('${k.key}', this)" style="background:#3498db;">📋 Copy</button>
+                        <button onclick="sendKeyViaWA('${k.key}', '${(k.note || '').replace(/'/g,"\\'")}');" style="background:#25D366;">💬 WA</button>
+                        ${k.active
+                            ? `<button onclick="toggleKeyStatus('${k.id}', false)" style="background:#e74c3c;">🚫 අක්‍රිය කරන්න</button>`
+                            : `<button onclick="toggleKeyStatus('${k.id}', true)" style="background:#27ae60;">✅ ක්‍රියාකාරී කරන්න</button>`
+                        }
+                        <button onclick="resetKeyUsage('${k.id}')" style="background:#e67e22;">🔄 Reset</button>
+                        <button onclick="deleteKey('${k.id}')" style="background:#7f8c8d;">🗑️ Delete</button>
+                    </div>
+                </div>`;
+        }).join('');
+    }
+
+    function copyKeyToClipboard(key, btn) {
+        const original = btn.innerText;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(key).then(() => {
+                btn.innerText = '✅ Copied!';
+                btn.style.background = '#27ae60';
+                setTimeout(() => { btn.innerText = original; btn.style.background = '#3498db'; }, 2000);
+            });
+        } else {
+            const el = document.createElement('textarea');
+            el.value = key;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            btn.innerText = '✅ Copied!';
+            setTimeout(() => { btn.innerText = original; }, 2000);
+        }
+    }
+
+    function sendKeyViaWA(key, note) {
+        const noteText = note ? `\n(${note})` : '';
+        const msg = encodeURIComponent(
+            `ආයුබෝවන්.! 🙏\n\nධර්ම නේත්‍රා සදහම් අවකාශය\n\nඔබේ ACCESS KEY එක:\n\n🔑 ${key}${noteText}\n\n✅ මෙම KEY එක ඇප් එකේ ඉල්ලන විට ඇතුළු කරන්න.\n⏳ KEY එක දින 30ක් වලංගු වේ.\n\nතෙරුවන් සරණයි! 🙏`
+        );
+        window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+
+    function toggleKeyStatus(id, setActive) {
+        const action = setActive ? "ක්‍රියාකාරී" : "අක්‍රිය";
+        if (confirm(`මෙම KEY එක ${action} කිරීමට අවශ්‍යද?`)) {
+            db.ref('access_keys/' + id).update({ active: setActive });
+        }
+    }
+
+    function resetKeyUsage(id) {
+        if (confirm("මෙම KEY එකේ භාවිතා ඉතිහාසය Reset කිරීමට අවශ්‍යද? (දින 30 නැවත ආරම්භ වේ)")) {
+            db.ref('access_keys/' + id).update({
+                used: false,
+                first_used: null,
+                last_used: null,
+                active: true
+            });
+        }
+    }
+
+    function deleteKey(id) {
+        if (confirm("මෙම KEY එක සදහටම Delete කිරීමට අවශ්‍යද?")) {
+            db.ref('access_keys/' + id).remove();
         }
     }
 </script>
-
 </body>
 </html>
