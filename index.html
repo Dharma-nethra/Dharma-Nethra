@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ධර්ම නේත්‍රා</title>
-
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    
     <style>
         :root {
             --p-color: #d35400;
@@ -18,42 +15,33 @@
             --text-main: #2c3e50;
             --header-bg: linear-gradient(135deg, #f39c12, #d35400);
         }
-
         .dark-mode {
             --bg-color: #121212;
             --card-bg: #1e1e1e;
             --text-main: #e0e0e0;
             --header-bg: linear-gradient(135deg, #2c3e50, #000000);
         }
-
-/* සෙවුම් කොටුවේ පෙනුම */
-.search-container {
-    background: var(--card-bg);
-    margin: 10px 0 20px 0;
-    padding: 10px 15px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    border: 1px solid #eee;
-}
-
-.search-container .material-icons-round {
-    color: #888;
-}
-
-#searchInput {
-    border: none;
-    outline: none;
-    background: transparent;
-    width: 100%;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-main);
-}
-
-        /* ආරක්‍ෂාව (Security) - Copy, Screenshot වැලැක්වීම */
+        .search-container {
+            background: var(--card-bg);
+            margin: 10px 0 20px 0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+        .search-container .material-icons-round { color: #888; }
+        #searchInput {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
         * {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -61,7 +49,6 @@
             user-select: none;
             -webkit-touch-callout: none;
         }
-
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background-color: var(--bg-color);
@@ -70,8 +57,6 @@
             padding: 0;
             transition: 0.3s;
         }
-
-        /* Header */
         .header-box {
             background: var(--header-bg);
             color: white;
@@ -82,14 +67,12 @@
             z-index: 1000;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-
         .header-top { display: flex; justify-content: space-between; align-items: center; }
         .app-title { font-size: 22px; font-weight: bold; margin: 0; }
         .dark-icon { cursor: pointer; font-size: 18px; }
         .slogan { font-size: 11px; display: block; opacity: 0.9; font-style: italic; margin-top: -2px; }
-        
         .meditation-bar {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255,255,255,0.15);
             padding: 4px 10px;
             border-radius: 12px;
             margin-top: 8px;
@@ -97,7 +80,6 @@
             font-size: 13px;
         }
         .timer-ctrl { background: white; color: var(--p-color); border: none; padding: 2px 8px; border-radius: 8px; font-size: 10px; margin-left: 5px; font-weight: bold; }
-
         .time-date-row {
             display: flex;
             justify-content: space-between;
@@ -106,13 +88,9 @@
             border-top: 1px solid rgba(255,255,255,0.2);
             padding-top: 5px;
         }
-
-        /* View Control - පිටු පාලනය */
         .view-section { display: none; padding: 15px; padding-bottom: 90px; min-height: 80vh; }
         .active-view { display: block; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        /* Article Cards */
         .card {
             background: var(--card-bg);
             border-radius: 18px;
@@ -128,8 +106,6 @@
         .heart-icon.fav-on { color: #e74c3c; }
         .read-status { font-size: 9px; background: #27ae60; color: white; padding: 2px 7px; border-radius: 10px; margin-left: 8px; font-weight: bold; vertical-align: middle; }
         .pdf-tag { display: inline-block; vertical-align: middle; margin-left: 6px; }
-
-        /* Detail Page */
         #detail-overlay {
             display: none;
             position: fixed;
@@ -143,13 +119,7 @@
         .control-panel { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--card-bg); padding: 10px; border-radius: 15px; }
         .audio-btn { background: #9b59b6; color: white; border: none; padding: 8px 15px; border-radius: 20px; font-size: 13px; }
         .article-text { font-size: 18px; line-height: 2.1; text-align: justify; white-space: pre-wrap; color: var(--text-main); }
-
-        /* PDF Download Button Style */
-        .pdf-btn-container {
-            margin-top: 30px;
-            text-align: center;
-            display: none; /* By default hidden */
-        }
+        .pdf-btn-container { margin-top: 30px; text-align: center; display: none; }
         .pdf-btn {
             text-decoration: none;
             background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -160,632 +130,309 @@
             align-items: center;
             gap: 10px;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            box-shadow: 0 4px 15px rgba(231,76,60,0.4);
             transition: transform 0.2s;
         }
         .pdf-btn:active { transform: scale(0.95); }
-
-        /* Bank Chart */
         .chart { width: 100%; border-collapse: collapse; margin-top: 15px; border-radius: 12px; overflow: hidden; background: white; }
         .chart td { padding: 15px; border: 1px solid #f1f1f1; font-size: 14px; color: #333; }
         .c-label { background: #fff8f0; color: var(--p-color); font-weight: bold; width: 35%; }
-
-        /* Bottom Nav */
-    .bottom-nav {
-        position: fixed;
-        bottom: 15px;
-        left: 10px;
-        right: 10px;
-        background: var(--card-bg);
-        display: flex;
-        justify-content: space-around;
-        padding: 12px 5px;
-        border-radius: 22px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        z-index: 1500;
-        border: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .nav-item {
-        text-align: center;
-        color: #95a5a6;
-        flex: 1;
-        cursor: pointer;
-        transition: 0.3s;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-item .material-icons-round {
-        font-size: 26px;
-        margin-bottom: 2px;
-    }
-
-    .nav-item b {
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.3px;
-        display: block;
-    }
-
-    .nav-item.active {
-        color: var(--p-color);
-        transform: translateY(-3px);
-    }
-
-        /* Ping Potha Form */
+        .bottom-nav {
+            position: fixed;
+            bottom: 15px;
+            left: 10px;
+            right: 10px;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 5px;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 1500;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .nav-item {
+            text-align: center;
+            color: #95a5a6;
+            flex: 1;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .nav-item .material-icons-round { font-size: 26px; margin-bottom: 2px; }
+        .nav-item b { font-size: 10px; font-weight: 800; letter-spacing: 0.3px; display: block; }
+        .nav-item.active { color: var(--p-color); transform: translateY(-3px); }
         .merit-box { background: var(--card-bg); padding: 20px; border-radius: 20px; margin-bottom: 15px; }
         input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; box-sizing: border-box; font-family: inherit; }
 
-/* ===== WhatsApp Channel Popup Styles (NEW) ===== */
-#whatsapp-popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 9999;
-    animation: fadeIn 0.5s ease-in;
-}
-
-#whatsapp-popup {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #fff8f0 0%, #ffffff 50%, #fff0e6 100%);
-    border-radius: 25px;
-    padding: 30px 25px;
-    max-width: 90%;
-    width: 400px;
-    box-shadow: 0 20px 60px rgba(211, 84, 0, 0.3);
-    border: 3px solid #FFD700;
-    animation: popupZoom 0.6s ease-out;
-}
-
-.popup-header {
-    text-align: center;
-    border-bottom: 2px solid #d35400;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-}
-
-.popup-icons {
-    font-size: 28px;
-    letter-spacing: 10px;
-    animation: glowPulse 2s infinite;
-}
-
-.popup-title {
-    color: #d35400;
-    font-size: 22px;
-    font-weight: bold;
-    margin: 10px 0 5px 0;
-}
-
-.popup-subtitle {
-    color: #e74c3c;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-.popup-message {
-    color: #2c3e50;
-    font-size: 14px;
-    line-height: 1.8;
-    text-align: justify;
-    margin-bottom: 15px;
-}
-
-.popup-benefits {
-    list-style: none;
-    padding: 0;
-    margin: 15px 0;
-}
-
-.popup-benefits li {
-    color: #27ae60;
-    font-size: 13px;
-    padding: 5px 0;
-    padding-left: 5px;
-}
-
-.popup-button {
-    background: linear-gradient(135deg, #25D366, #128C7E);
-    color: white;
-    border: none;
-    padding: 15px;
-    width: 100%;
-    border-radius: 15px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
-    animation: buttonPulse 1.5s infinite;
-    margin-top: 10px;
-}
-
-.popup-button:active {
-    transform: scale(0.98);
-}
-
-.popup-countdown {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 13px;
-    color: #7f8c8d;
-}
-
-.countdown-number {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.countdown-green { color: #27ae60; }
-.countdown-yellow { color: #f39c12; }
-.countdown-red { color: #e74c3c; }
-
-.popup-footer {
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 2px solid #d35400;
-    color: #d35400;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes popupZoom {
-    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
-
-@keyframes glowPulse {
-    0%, 100% { text-shadow: 0 0 10px #FFD700, 0 0 20px #d35400; }
-    50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #d35400; }
-}
-
-@keyframes buttonPulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); }
-    50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6); }
-}
-/* ===== End WhatsApp Popup Styles ===== */
-
-/* ===== Payment Announcement Popup - FIXED VERSION ===== */
-#payment-announcement-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 10000;
-    animation: fadeIn 0.6s ease-in;
-    overflow-y: auto;
-    padding: 20px 0;
-}
-
-#payment-announcement {
-    position: relative;
-    margin: 20px auto;
-    background: #ffffff;
-    border-radius: 25px;
-    padding: 30px 20px;
-    max-width: 95%;
-    width: 420px;
-    box-shadow: 0 25px 70px rgba(211, 84, 0, 0.6);
-    border: 5px solid #d35400;
-    animation: announceEntrance 0.8s ease-out;
-}
-
-.announce-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.announce-icon-main {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 15px;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 45px;
-    animation: iconPulse 2s infinite;
-    box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
-}
-
-.announce-title-main {
-    color: #e74c3c;
-    font-size: 24px;
-    font-weight: 900;
-    margin: 10px 0;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-}
-
-.announce-divider {
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(90deg, #f39c12, #e74c3c);
-    margin: 20px auto;
-    border-radius: 2px;
-}
-
-.announce-greeting {
-    background: #fff5eb;
-    border-left: 5px solid #f39c12;
-    padding: 15px;
-    border-radius: 12px;
-    margin: 20px 0;
-}
-
-.greeting-text {
-    color: #d35400;
-    font-size: 16px;
-    font-weight: 800;
-}
-
-.announce-message-main {
-    color: #2c3e50;
-    font-size: 14px;
-    line-height: 1.9;
-    text-align: justify;
-    font-weight: 500;
-    margin: 20px 0;
-}
-
-.announce-date-main {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
-    padding: 25px 20px;
-    border-radius: 18px;
-    margin: 20px 0;
-    box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
-    text-align: center;
-}
-
-.date-label-main {
-    font-size: 14px;
-    opacity: 0.95;
-    margin-bottom: 8px;
-    font-weight: 700;
-}
-
-.date-value-main {
-    font-size: 32px;
-    font-weight: 900;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    letter-spacing: 1px;
-}
-
-.announce-price-main {
-    background: linear-gradient(135deg, #f39c12, #d35400);
-    color: white;
-    padding: 25px 20px;
-    border-radius: 18px;
-    margin: 20px 0;
-    box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
-    text-align: center;
-}
-
-.price-label-main {
-    font-size: 14px;
-    opacity: 0.95;
-    margin-bottom: 8px;
-    font-weight: 700;
-}
-
-.price-value-main {
-    font-size: 42px;
-    font-weight: 900;
-    margin-bottom: 8px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-}
-
-.price-sub-main {
-    font-size: 14px;
-    opacity: 0.95;
-    font-weight: 600;
-}
-
-.highlight-box {
-    background: #fff3cd;
-    border: 3px solid #f39c12;
-    padding: 18px;
-    border-radius: 15px;
-    margin: 20px 0;
-    text-align: center;
-}
-
-.highlight-text {
-    color: #856404;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.7;
-}
-
-.announce-signature {
-    background: #ecf0f1;
-    border-left: 4px solid #34495e;
-    padding: 15px;
-    border-radius: 12px;
-    margin: 20px 0;
-}
-
-.signature-text {
-    color: #2c3e50;
-    font-size: 14px;
-    line-height: 1.6;
-    font-weight: 600;
-}
-
-.signature-name {
-    color: #d35400;
-    font-weight: 800;
-    margin-top: 5px;
-}
-
-.announce-countdown-main {
-    text-align: center;
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 2px solid #ecf0f1;
-}
-
-.countdown-text-main {
-    font-size: 13px;
-    color: #7f8c8d;
-    margin-bottom: 12px;
-    font-weight: 700;
-}
-
-.countdown-dots-main {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.countdown-dot-main {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    transition: all 0.4s;
-    box-shadow: 0 3px 8px rgba(231, 76, 60, 0.3);
-}
-
-.countdown-dot-main.inactive {
-    background: #ecf0f1;
-    transform: scale(0.7);
-    box-shadow: none;
-}
-
-@keyframes announceEntrance {
-    0% { 
-        transform: scale(0.8);
-        opacity: 0;
-    }
-    100% { 
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes iconPulse {
-    0%, 100% { 
-        transform: scale(1);
-    }
-    50% { 
-        transform: scale(1.1);
-    }
-}
-
-/* Mobile Responsive */
-@media screen and (max-width: 480px) {
-    #payment-announcement {
-        padding: 25px 18px;
-        max-width: 90%;
-    }
-    
-    .announce-title-main {
-        font-size: 20px;
-    }
-    
-    .announce-message-main {
-        font-size: 13px;
-    }
-    
-    .date-value-main {
-        font-size: 28px;
-    }
-    
-    .price-value-main {
-        font-size: 36px;
-    }
-    
-    .highlight-text {
-        font-size: 13px;
-    }
-}
-/* ===== End Payment Announcement Styles ===== */
-
-/* ===== Donation Popup Styles (NEW) ===== */
-#donation-popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 9998;
-    animation: fadeIn 0.5s ease-out;
-    align-items: center;
-    justify-content: center;
-}
-
-#donation-popup {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 25px;
-    padding: 35px 25px;
-    max-width: 88%;
-    width: 400px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    animation: popupZoom 0.5s ease-out;
-    color: white;
-    text-align: center;
-    position: relative;
-}
-
-.donation-close-x {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.donation-close-x:hover {
-    background: rgba(255,255,255,0.3);
-    transform: rotate(90deg);
-}
-
-.donation-icon-box {
-    font-size: 55px;
-    margin-bottom: 18px;
-    animation: heartbeat 1.5s infinite;
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    10%, 30% { transform: scale(1.1); }
-    20%, 40% { transform: scale(1); }
-}
-
-.donation-popup h3 {
-    font-size: 22px;
-    margin: 0 0 18px 0;
-    font-weight: 800;
-    line-height: 1.4;
-}
-
-.donation-popup p {
-    font-size: 15px;
-    line-height: 1.8;
-    margin: 0 0 12px 0;
-    opacity: 0.95;
-}
-
-.donation-message-box {
-    background: rgba(255,255,255,0.15);
-    padding: 18px;
-    border-radius: 15px;
-    margin: 20px 0;
-    border-left: 4px solid rgba(255,255,255,0.5);
-    text-align: left;
-}
-
-.donation-message-box p {
-    font-size: 14px;
-    line-height: 1.7;
-    margin: 0 0 8px 0;
-}
-
-.donation-whatsapp-btn {
-    background: #25D366;
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px auto 15px auto;
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-    transition: transform 0.2s;
-    width: 100%;
-    max-width: 280px;
-}
-
-.donation-whatsapp-btn:active {
-    transform: scale(0.95);
-}
-
-.donation-countdown-box {
-    background: rgba(255,255,255,0.2);
-    padding: 8px 15px;
-    border-radius: 15px;
-    margin-top: 15px;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.donation-countdown-number {
-    font-size: 22px;
-    font-weight: bold;
-    min-width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-    background: rgba(255,255,255,0.3);
-}
-
-.donation-countdown-red {
-    background: #F44336;
-    animation: pulse 0.5s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-.donation-close-btn {
-    background: rgba(255,255,255,0.2);
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 20px;
-    font-size: 13px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-/* ===== End Donation Popup Styles ===== */
-
+        /* ===== WhatsApp Channel Popup ===== */
+        #whatsapp-popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            animation: fadeIn 0.5s ease-in;
+        }
+        #whatsapp-popup {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #fff8f0 0%, #ffffff 50%, #fff0e6 100%);
+            border-radius: 25px;
+            padding: 30px 25px;
+            max-width: 90%; width: 400px;
+            box-shadow: 0 20px 60px rgba(211,84,0,0.3);
+            border: 3px solid #FFD700;
+            animation: popupZoom 0.6s ease-out;
+        }
+        .popup-header { text-align: center; border-bottom: 2px solid #d35400; padding-bottom: 15px; margin-bottom: 20px; }
+        .popup-icons { font-size: 28px; letter-spacing: 10px; animation: glowPulse 2s infinite; }
+        .popup-title { color: #d35400; font-size: 22px; font-weight: bold; margin: 10px 0 5px 0; }
+        .popup-subtitle { color: #e74c3c; font-size: 16px; font-weight: bold; margin: 15px 0; }
+        .popup-message { color: #2c3e50; font-size: 14px; line-height: 1.8; text-align: justify; margin-bottom: 15px; }
+        .popup-benefits { list-style: none; padding: 0; margin: 15px 0; }
+        .popup-benefits li { color: #27ae60; font-size: 13px; padding: 5px 0; padding-left: 5px; }
+        .popup-button {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white; border: none; padding: 15px; width: 100%;
+            border-radius: 15px; font-size: 16px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(37,211,102,0.4);
+            animation: buttonPulse 1.5s infinite; margin-top: 10px;
+        }
+        .popup-button:active { transform: scale(0.98); }
+        .popup-countdown { text-align: center; margin-top: 15px; font-size: 13px; color: #7f8c8d; }
+        .countdown-number { font-weight: bold; font-size: 16px; }
+        .countdown-green { color: #27ae60; }
+        .countdown-yellow { color: #f39c12; }
+        .countdown-red { color: #e74c3c; }
+        .popup-footer { text-align: center; margin-top: 20px; padding-top: 15px; border-top: 2px solid #d35400; color: #d35400; font-weight: bold; font-size: 14px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popupZoom {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 10px #FFD700, 0 0 20px #d35400; }
+            50% { text-shadow: 0 0 20px #FFD700, 0 0 30px #d35400; }
+        }
+        @keyframes buttonPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(37,211,102,0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(37,211,102,0.6); }
+        }
+
+        /* ===== ACCESS KEY Popup ===== */
+        #access-key-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.88);
+            z-index: 10000;
+        }
+        #access-key-popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 22px 18px;
+            width: 85%;
+            max-width: 320px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(211,84,0,0.45);
+            border: 3px solid #d35400;
+            animation: akZoom 0.5s ease-out;
+        }
+        @keyframes akZoom {
+            0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        .ak-header { text-align: center; margin-bottom: 12px; }
+        .ak-logo { font-size: 38px; margin-bottom: 6px; animation: floatAnim 3s ease-in-out infinite; }
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-7px); }
+        }
+        .ak-title { color: #d35400; font-size: 18px; font-weight: 900; margin: 0 0 3px 0; }
+        .ak-subtitle { color: #7f8c8d; font-size: 11px; margin: 0; }
+        .ak-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #f39c12, #d35400, #f39c12);
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .ak-section {
+            background: #fff8f0;
+            border: 2px solid #f39c12;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+        .ak-label {
+            color: #d35400;
+            font-size: 13px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #accessKeyInput {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid #f39c12;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 3px;
+            color: #2c3e50;
+            box-sizing: border-box;
+            background: white;
+            outline: none;
+            transition: border-color 0.3s;
+            margin-bottom: 0;
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+        }
+        #accessKeyInput:focus { border-color: #d35400; box-shadow: 0 0 0 3px rgba(211,84,0,0.15); }
+        #accessKeyInput.shake { animation: shake 0.4s ease; border-color: #e74c3c; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+        .ak-enter-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #d35400, #f39c12);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 12px;
+            box-shadow: 0 6px 20px rgba(211,84,0,0.35);
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .ak-enter-btn:active { transform: scale(0.97); }
+        #ak-error {
+            color: #e74c3c;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            min-height: 20px;
+            display: none;
+        }
+        .ak-payment-section {
+            background: #fef9f0;
+            border: 2px dashed #f39c12;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .ak-payment-title { color: #e74c3c; font-size: 13px; font-weight: 800; margin: 0 0 8px 0; }
+        .ak-payment-text { color: #5d4037; font-size: 12px; line-height: 1.6; margin: 0 0 12px 0; }
+        .ak-wa-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(37,211,102,0.35);
+            transition: transform 0.2s;
+            box-sizing: border-box;
+        }
+        .ak-wa-btn:active { transform: scale(0.97); }
+        .ak-footer { text-align: center; color: #d35400; font-size: 12px; font-weight: bold; padding-top: 10px; border-top: 2px solid #f8e5d0; }
+
+        /* ===== Donation Popup ===== */
+        #donation-popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9998;
+            animation: fadeIn 0.5s ease-out;
+            align-items: center;
+            justify-content: center;
+        }
+        #donation-popup {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 25px;
+            padding: 35px 25px;
+            max-width: 88%; width: 400px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: popupZoom 0.5s ease-out;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        .donation-close-x {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(255,255,255,0.2); border: none; color: white;
+            width: 35px; height: 35px; border-radius: 50%; font-size: 20px;
+            font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .donation-close-x:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
+        .donation-icon-box { font-size: 55px; margin-bottom: 18px; animation: heartbeat 1.5s infinite; }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+        .donation-popup h3 { font-size: 22px; margin: 0 0 18px 0; font-weight: 800; line-height: 1.4; }
+        .donation-popup p { font-size: 15px; line-height: 1.8; margin: 0 0 12px 0; opacity: 0.95; }
+        .donation-message-box { background: rgba(255,255,255,0.15); padding: 18px; border-radius: 15px; margin: 20px 0; border-left: 4px solid rgba(255,255,255,0.5); text-align: left; }
+        .donation-message-box p { font-size: 14px; line-height: 1.7; margin: 0 0 8px 0; }
+        .donation-whatsapp-btn {
+            background: #25D366; color: white; padding: 15px 30px; border: none; border-radius: 30px;
+            font-size: 16px; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            margin: 20px auto 15px auto;
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4); transition: transform 0.2s;
+            width: 100%; max-width: 280px;
+        }
+        .donation-whatsapp-btn:active { transform: scale(0.95); }
+        .donation-countdown-box {
+            background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 15px;
+            margin-top: 15px; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .donation-countdown-number {
+            font-size: 22px; font-weight: bold; min-width: 32px; height: 32px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            transition: all 0.3s; background: rgba(255,255,255,0.3);
+        }
+        .donation-countdown-red { background: #F44336; animation: dpulse 0.5s infinite; }
+        @keyframes dpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .donation-close-btn {
+            background: rgba(255,255,255,0.2); color: white; border: none;
+            padding: 10px 25px; border-radius: 20px; font-size: 13px; cursor: pointer; margin-top: 10px;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -796,15 +443,13 @@
             <div class="dark-icon" onclick="toggleDark()">🌓</div>
         </div>
         <span class="slogan">"ප්‍රඥාවේ ආලෝකය පතුරුවන සදහම් අවකාශය"</span>
-        
         <div class="meditation-bar">
-    🧘 භාවනා කාලය: <b id="timer-val">00:00:00</b>
-    <div style="display: inline-flex; gap: 5px; margin-left: 10px;">
-        <button class="timer-ctrl" onclick="controlTimer()" id="timer-btn">අරඹන්න</button>
-        <button class="timer-ctrl" onclick="resetTimer()" style="background: rgba(255,255,255,0.2); color: white;">මුලට</button>
-    </div>
-</div>
-
+            🧘 භාවනා කාලය: <b id="timer-val">00:00:00</b>
+            <div style="display: inline-flex; gap: 5px; margin-left: 10px;">
+                <button class="timer-ctrl" onclick="controlTimer()" id="timer-btn">අරඹන්න</button>
+                <button class="timer-ctrl" onclick="resetTimer()" style="background: rgba(255,255,255,0.2); color: white;">මුලට</button>
+            </div>
+        </div>
         <div class="time-date-row">
             <span id="si-time">⏱ පූරණය වේ...</span>
             <span id="si-date">📅 පූරණය වේ...</span>
@@ -812,12 +457,10 @@
     </div>
 
     <div id="view-home" class="view-section active-view">
-
-<div class="search-container">
-    <span class="material-icons-round">search</span>
-    <input type="text" id="searchInput" onkeyup="filterArticles()" placeholder="ලිපි සොයන්න...">
-</div>
-
+        <div class="search-container">
+            <span class="material-icons-round">search</span>
+            <input type="text" id="searchInput" onkeyup="filterArticles()" placeholder="ලිපි සොයන්න...">
+        </div>
         <div id="article-list">
             <p style="text-align:center; opacity:0.5; margin-top:50px;">සදහම් ලිපි පූරණය වෙමින් පවතී...</p>
         </div>
@@ -834,14 +477,12 @@
         <div class="merit-box">
             <h2 style="color:var(--p-color); text-align:center; margin-top:0;">පින්කමට දායක වන්න</h2>
             <p style="text-align: justify; line-height: 1.7; font-size: 15px;">ධර්ම නේත්‍රා සදහම් සේවාව ලොව පුරා විසිරී සිටින සැදැහැවතුන් වෙත අඛණ්ඩව සහ නොමිලේ සමීප කරවීම සඳහා මෙම ජංගම යෙදුම නඩත්තු කිරීම සහ එහි නවීකරණ කටයුතු සිදු කිරීමට විශාල පිරිවැයක් වැය වේ. මෙම උතුම් ධර්ම ප්‍රචාරක කටයුත්තට ඔබගේ ශක්ති ප්‍රමාණයෙන් දායක වීම මහා පින්කමකි.</p>
-            
             <table class="chart">
                 <tr><td class="c-label">ගිණුම් අංකය</td><td>89862879</td></tr>
                 <tr><td class="c-label">හිමිකරු</td><td>A Udara Sandaruwan</td></tr>
                 <tr><td class="c-label">බැංකුව</td><td>Bank of Ceylon (BOC)</td></tr>
                 <tr><td class="c-label">ශාඛාව</td><td>Kiriella Branch</td></tr>
             </table>
-
             <div style="text-align:center; margin-top:25px;">
                 <p style="font-size:13px; font-weight:bold;">රිසිට්පත යොමු කිරීම සඳහා:</p>
                 <a href="https://wa.me/94763861339?text=පින්කම සඳහා ලබා දුන් ආධාරයේ රිසිට්පතයි:" style="text-decoration:none; background:#25D366; color:white; padding:12px 25px; border-radius:30px; display:inline-flex; align-items:center; gap:10px; font-weight:bold;">
@@ -856,7 +497,7 @@
             <h3>🙏 ගෞරවණීය ස්වාමින් වහන්සේ</h3>
             <p style="color:#e67e22; font-weight:bold; margin-bottom:10px;">⚠️ කරුණාකර දුරකථන ඇමතුම් ලබා ගැනීමෙන් වළකින්න.</p>
             <a href="https://wa.me/94778803779" style="text-decoration:none; color:#25D366; font-weight:bold; font-size:18px;">💬 +94 77 880 3779 (WhatsApp)</a>
-            <p style="margin-top:15px; font-size:13px;">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b1d0dfd9d4c5c5d8d6d0dcd0c1ded5d8d9d0dcc4d5c4c3c4c6def1d6dcd0d8dd9fd2dedc">[email&#160;protected]</a></p>
+            <p style="margin-top:15px; font-size:13px;">📧 anhettigamapodihamuduruwo@gmail.com</p>
         </div>
         <div class="card" style="border:none;">
             <h3>⚙️ තාක්ෂණික කණ්ඩායම</h3>
@@ -894,29 +535,25 @@
             </div>
             <button class="audio-btn" id="listen-btn" onclick="toggleAudio()">🔊 ශ්‍රවණය</button>
         </div>
-        
         <h2 id="full-title" style="color:var(--p-color); line-height:1.4;"></h2>
         <div id="full-content" class="article-text"></div>
-        
         <div id="pdf-download-section" class="pdf-btn-container">
             <a id="pdf-link" href="#" target="_blank" class="pdf-btn">
-                <span class="material-icons-round">picture_as_pdf</span> 
+                <span class="material-icons-round">picture_as_pdf</span>
                 මෙම ලිපියේ PDF එක ලබා ගන්න
             </a>
         </div>
-
         <div style="margin-top:40px; padding:25px; background:var(--card-bg); border-radius:25px; text-align:center; border:1px solid #eee; box-shadow: 0 8px 20px rgba(0,0,0,0.05);">
-    <p style="font-weight:bold; margin-bottom:20px; color:#2c3e50; font-size:16px;">ලිපිය පිළිබඳව විමසීමට:</p>
-    <div style="display:flex; justify-content:center; gap:40px;">
-        <a id="wa-inquiry" href="#" style="text-decoration:none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-            <img src="https://img.icons8.com/color/96/whatsapp.png" style="width:55px; height:55px;" alt="WhatsApp">
-        </a>
-        <a id="mail-inquiry" href="#" style="text-decoration:none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-            <img src="https://img.icons8.com/color/96/gmail-new.png" style="width:55px; height:55px;" alt="Email">
-        </a>
-    </div>
-</div>
-
+            <p style="font-weight:bold; margin-bottom:20px; color:#2c3e50; font-size:16px;">ලිපිය පිළිබඳව විමසීමට:</p>
+            <div style="display:flex; justify-content:center; gap:40px;">
+                <a id="wa-inquiry" href="#" style="text-decoration:none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <img src="https://img.icons8.com/color/96/whatsapp.png" style="width:55px; height:55px;" alt="WhatsApp">
+                </a>
+                <a id="mail-inquiry" href="#" style="text-decoration:none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <img src="https://img.icons8.com/color/96/gmail-new.png" style="width:55px; height:55px;" alt="Email">
+                </a>
+            </div>
+        </div>
         <div style="display:flex; justify-content:space-between; margin-top:30px; margin-bottom:50px;">
             <button style="background:#7f8c8d; color:white; border:none; padding:10px 20px; border-radius:20px;" onclick="closeDetail()">මුල් පිටුවට</button>
             <div style="display:flex; gap:10px;">
@@ -927,45 +564,41 @@
     </div>
 
     <div class="bottom-nav">
-    <div class="nav-item active" onclick="nav('home')">
-        <span class="material-icons-round">home</span>
-        <b>මුල</b>
+        <div class="nav-item active" onclick="nav('home')">
+            <span class="material-icons-round">home</span>
+            <b>මුල</b>
+        </div>
+        <div class="nav-item" onclick="nav('fav')">
+            <span class="material-icons-round">favorite</span>
+            <b>ප්‍රියතම</b>
+        </div>
+        <div class="nav-item" onclick="nav('merit')">
+            <span class="material-icons-round">auto_stories</span>
+            <b>පිං පොත</b>
+        </div>
+        <div class="nav-item" onclick="nav('donate')">
+            <span class="material-icons-round">volunteer_activism</span>
+            <b>ආධාර</b>
+        </div>
+        <div class="nav-item" onclick="nav('contact')">
+            <span class="material-icons-round">call</span>
+            <b>සම්බන්ධතා</b>
+        </div>
+        <div class="nav-item" onclick="nav('about')">
+            <span class="material-icons-round">info</span>
+            <b>අප ගැන</b>
+        </div>
     </div>
-    <div class="nav-item" onclick="nav('fav')">
-        <span class="material-icons-round">favorite</span>
-        <b>ප්‍රියතම</b>
-    </div>
-    <div class="nav-item" onclick="nav('merit')">
-        <span class="material-icons-round">auto_stories</span>
-        <b>පිං පොත</b>
-    </div>
-    <div class="nav-item" onclick="nav('donate')">
-        <span class="material-icons-round">volunteer_activism</span>
-        <b>ආධාර</b>
-    </div>
-    <div class="nav-item" onclick="nav('contact')">
-        <span class="material-icons-round">call</span>
-        <b>සම්බන්ධතා</b>
-    </div>
-    <div class="nav-item" onclick="nav('about')">
-        <span class="material-icons-round">info</span>
-        <b>අප ගැන</b>
-    </div>
-</div>
 
+<!-- ===== WhatsApp Channel Popup ===== -->
 <div id="whatsapp-popup-overlay">
     <div id="whatsapp-popup">
         <div class="popup-header">
             <div class="popup-icons">✨ 🕉️ 🪔 🕉️ ✨</div>
             <div class="popup-title">ධර්ම නේත්‍රා</div>
         </div>
-        
         <div class="popup-subtitle">🔔 විශේෂ දැනුම්දීමක්!</div>
-        
-        <div class="popup-message">
-            දෛනික ධර්ම දේශනා, යාවත්කාලීන කිරීම් සහ විශේෂ දැනුම්දීම් ලබා ගැනීමට අපගේ WhatsApp Channel එකට ඔබත් අනිවාර්යයෙන් එක්වන්න.
-        </div>
-        
+        <div class="popup-message">දෛනික ධර්ම දේශනා, යාවත්කාලීන කිරීම් සහ විශේෂ දැනුම්දීම් ලබා ගැනීමට අපගේ WhatsApp Channel එකට ඔබත් අනිවාර්යයෙන් එක්වන්න.</div>
         <ul class="popup-benefits">
             <li>✅ දෛනික දහම් මතක් කිරීම්</li>
             <li>✅ නව ධර්ම ලිපි දැනුම්දීම්</li>
@@ -973,515 +606,491 @@
             <li>✅ විශේෂ ධර්ම වැඩසටහන්</li>
             <li>✅ භාවනා මතක් කිරීම්</li>
         </ul>
-        
-        <button class="popup-button" onclick="joinWhatsAppChannel()">
-            💚 Channel එකට Join වන්න
-        </button>
-        
+        <button class="popup-button" onclick="joinWhatsAppChannel()">💚 Channel එකට Join වන්න</button>
         <div class="popup-countdown">
             ⏳ ස්වයංක්‍රීයව වසා දමයි: <span id="countdown-timer" class="countdown-number countdown-green">6</span>s
         </div>
-        
-        <div class="popup-footer">
-            පින් සිද්ධ වේවා! 🙏
-        </div>
-    </div>
-</div>
-<div id="payment-announcement-overlay">
-    <div id="payment-announcement">
-        <div class="announce-header">
-            <div class="announce-icon-main">📢</div>
-            <div class="announce-title-main">විශේෂ නිවේදනයයි.!</div>
-        </div>
-        
-        <div class="announce-divider"></div>
-        
-        <div class="announce-message-main">
-            <p style="margin:0 0 12px 0;">ධර්ම නේත්‍රා සදහම් අවකාශයේ ගුණාත්මකභාවය සහ තාක්ෂණික අඛණ්ඩතාව පවත්වා ගැනීම වෙනුවෙන්, <strong>2026 මාර්තු 01</strong> වන දින සිට <strong>රු. 150</strong> ක සුළු නඩත්තු දායකත්වයක් හඳුන්වා දී ඇති බව කාරුණිකව දන්වා සිටිමු.</p>
-            <p style="margin:0 0 12px 0;">මෙම සේවාව අඛණ්ඩව ලබාගැනීමට, පහත WhatsApp අංකය ඔස්සේ අප හා සම්බන්ධ වී ඔබගේ <strong>Access Key</strong> එක ලබාගන්නා ලෙස ගෞරවයෙන් ඇරයුම් කරමු.</p>
-            <p style="margin:0 0 12px 0;">සදහම් මගෙහි ඔබ සැමට නිරන්තර මගපෙන්වීම අපගේ අරමුණයි.<br>
-            <strong>තෙරුවන් සරණයි.!</strong></p>
-        </div>
-
-        <button onclick="openPaymentWhatsApp()" style="background: linear-gradient(135deg, #25D366, #128C7E); color: white; border: none; padding: 15px; width: 100%; border-radius: 15px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(37,211,102,0.4); display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0;">
-            <span style="font-size:24px;">💬</span> WhatsApp
-        </button>
-
-        <div class="announce-signature">
-            <div class="signature-text">
-                මෙත් සිතින්,<br>
-                <span class="signature-name">ධර්ම නේත්‍රා සදහම් අවකාශය.</span>
-            </div>
-        </div>
-        
-        <div class="announce-countdown-main">
-            <div class="countdown-text-main">⏳ ස්වයංක්‍රීයව වසා දමයි</div>
-            <div class="countdown-dots-main" id="payment-dots">
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-                <div class="countdown-dot-main"></div>
-            </div>
-        </div>
+        <div class="popup-footer">පින් සිද්ධ වේවා! 🙏</div>
     </div>
 </div>
 
-<!-- ===== Donation Popup (NEW) ===== -->
+<!-- ===== ACCESS KEY Popup ===== -->
+<div id="access-key-overlay">
+    <div id="access-key-popup">
+        <div class="ak-header">
+            <div class="ak-logo">🔐</div>
+            <div class="ak-title">ධර්ම නේත්‍රා</div>
+            <div class="ak-subtitle">ප්‍රවේශ යතුර ලබා දෙන්න</div>
+        </div>
+        <div class="ak-divider"></div>
+        <div class="ak-section">
+            <div class="ak-label">🗝️ ඔබේ ACCESS KEY එක ලබා දෙන්න</div>
+            <input
+                type="text"
+                id="accessKeyInput"
+                placeholder="ACCESS KEY ඇතුළු කරන්න"
+                maxlength="20"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="characters"
+                spellcheck="false"
+            >
+            <div id="ak-error"></div>
+            <button class="ak-enter-btn" onclick="verifyAccessKey()">
+                <span style="font-size:18px;">✅</span> ඇතුළු වන්න
+            </button>
+        </div>
+        <div class="ak-divider"></div>
+        <div class="ak-payment-section">
+            <div class="ak-payment-title">⚠️ ඔබ රු. 150 ක මාසික ගෙවීම සිදු කොට නැද්ද.?</div>
+            <div class="ak-payment-text">දැන්ම මෙම WhatsApp බොත්තම ඔබා ඔබේ ගෙවීම සිදු කොට ACCESS KEY ලබා ගන්න</div>
+            <button class="ak-wa-btn" onclick="openPaymentWhatsApp()">
+                <span style="font-size:20px;">💬</span> WhatsApp හරහා KEY ලබා ගන්න
+            </button>
+        </div>
+        <div class="ak-footer">🙏 ධර්ම නේත්‍රා සදහම් අවකාශය</div>
+    </div>
+</div>
+
+<!-- ===== Donation Popup ===== -->
 <div id="donation-popup-overlay">
     <div id="donation-popup">
         <button class="donation-close-x" onclick="closeDonationPopup()">×</button>
         <div class="donation-icon-box">🙏</div>
         <h3>ධර්ම නේත්‍රා ආධාර අංශය</h3>
         <p>මෙම 'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් පින්වත් ඔබටත් සහය විය හැකියි.</p>
-        
         <div class="donation-message-box">
             <p><strong>පිනැති ඔබත් දායක වීමට කැමතිනම්:</strong></p>
             <p>✦ 'ආධාර' පිටුවෙහි උපදෙස් අනුගමනය කරන්න</p>
             <p>✦ හෝ පහත බොත්තම ඔබා WhatsApp හරහා අප වෙත පණිවිඩයක් යොමු කරන්න</p>
         </div>
-
         <button class="donation-whatsapp-btn" onclick="sendDonationWhatsApp()">
             <span style="font-size:26px;">💬</span>
             WhatsApp පණිවිඩය යවන්න
         </button>
-        
         <div class="donation-countdown-box">
             <span>ස්වයංක්‍රීයව වැසෙනතුරු:</span>
             <div class="donation-countdown-number" id="donation-countdown-timer">10</div>
         </div>
-        
         <button class="donation-close-btn" onclick="closeDonationPopup()">පසුව</button>
     </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // --- Firebase Configuration ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyDEiwhtAIdoqdMIV5n_bdDoKuIrCkjqr3M",
-            authDomain: "dharma-nethra.firebaseapp.com",
-            databaseURL: "https://dharma-nethra-default-rtdb.firebaseio.com",
-            projectId: "dharma-nethra",
-            storageBucket: "dharma-nethra.firebasestorage.app",
-            messagingSenderId: "365410669829",
-            appId: "1:365410669829:web:d9a9465ed1f1f2b792936c"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+<script>
+    // --- Firebase Configuration ---
+    const firebaseConfig = {
+        apiKey: "AIzaSyDEiwhtAIdoqdMIV5n_bdDoKuIrCkjqr3M",
+        authDomain: "dharma-nethra.firebaseapp.com",
+        databaseURL: "https://dharma-nethra-default-rtdb.firebaseio.com",
+        projectId: "dharma-nethra",
+        storageBucket: "dharma-nethra.firebasestorage.app",
+        messagingSenderId: "365410669829",
+        appId: "1:365410669829:web:d9a9465ed1f1f2b792936c"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-        // App States
-        let favs = JSON.parse(localStorage.getItem('myFavs') || '[]');
-        let readList = JSON.parse(localStorage.getItem('myReads') || '[]');
-        let timerActive = false;
-        let timeCount = 0;
-        let timerPtr;
-        let synth = window.speechSynthesis;
-        let curArticle = "";
-        let allArticleIds = []; 
+    // App States
+    let favs = JSON.parse(localStorage.getItem('myFavs') || '[]');
+    let readList = JSON.parse(localStorage.getItem('myReads') || '[]');
+    let timerActive = false;
+    let timeCount = 0;
+    let timerPtr;
+    let synth = window.speechSynthesis;
+    let curArticle = "";
+    let allArticleIds = [];
 
-        // Clock Logic
-        function updateClock() {
-            const now = new Date();
-            const time = now.toLocaleTimeString('si-LK', { hour12: true, hour: '2-digit', minute: '2-digit' });
-            const date = now.toLocaleDateString('si-LK', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
-            document.getElementById('si-time').innerText = "⏱ " + time;
-            document.getElementById('si-date').innerText = "📅 " + date;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+    // Clock
+    function updateClock() {
+        const now = new Date();
+        const time = now.toLocaleTimeString('si-LK', { hour12: true, hour: '2-digit', minute: '2-digit' });
+        const date = now.toLocaleDateString('si-LK', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+        document.getElementById('si-time').innerText = "⏱ " + time;
+        document.getElementById('si-date').innerText = "📅 " + date;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-        // Timer Logic
-        function controlTimer() {
-            if(!timerActive) {
-                timerActive = true;
-                document.getElementById('timer-btn').innerText = "නවතන්න";
-                timerPtr = setInterval(() => {
-                    timeCount++;
-                    let h = Math.floor(timeCount/3600).toString().padStart(2,'0');
-                    let m = Math.floor((timeCount%3600)/60).toString().padStart(2,'0');
-                    let s = (timeCount%60).toString().padStart(2,'0');
-                    document.getElementById('timer-val').innerText = `${h}:${m}:${s}`;
-                }, 1000);
-            } else {
-                timerActive = false;
-                document.getElementById('timer-btn').innerText = "අරඹන්න";
-                clearInterval(timerPtr);
-            }
-        }
-
-        function resetTimer() {
+    // Timer
+    function controlTimer() {
+        if (!timerActive) {
+            timerActive = true;
+            document.getElementById('timer-btn').innerText = "නවතන්න";
+            timerPtr = setInterval(() => {
+                timeCount++;
+                let h = Math.floor(timeCount / 3600).toString().padStart(2, '0');
+                let m = Math.floor((timeCount % 3600) / 60).toString().padStart(2, '0');
+                let s = (timeCount % 60).toString().padStart(2, '0');
+                document.getElementById('timer-val').innerText = h + ':' + m + ':' + s;
+            }, 1000);
+        } else {
             timerActive = false;
-            clearInterval(timerPtr);
-            timeCount = 0;
-            document.getElementById('timer-val').innerText = "00:00:00";
             document.getElementById('timer-btn').innerText = "අරඹන්න";
+            clearInterval(timerPtr);
         }
+    }
 
-        // ලිපි සෙවීමේ ක්‍රියාවලිය
-        function filterArticles() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let container = document.getElementById('article-list');
-            let cards = container.getElementsByClassName('card');
+    function resetTimer() {
+        timerActive = false;
+        clearInterval(timerPtr);
+        timeCount = 0;
+        document.getElementById('timer-val').innerText = "00:00:00";
+        document.getElementById('timer-btn').innerText = "අරඹන්න";
+    }
 
-            for (let i = 0; i < cards.length; i++) {
-                let text = cards[i].innerText.toLowerCase();
-                if (text.includes(input)) {
-                    cards[i].style.display = "";
-                } else {
-                    cards[i].style.display = "none";
-                }
-            }
+    // Search
+    function filterArticles() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.getElementById('article-list').getElementsByClassName('card');
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].style.display = cards[i].innerText.toLowerCase().includes(input) ? "" : "none";
         }
+    }
 
-        // ලිපි දත්ත පද්ධතියෙන් ලබාගෙන පෙන්වීම
-        db.ref('articles').on('value', (snap) => {
-            const list = document.getElementById('article-list');
-            list.innerHTML = ''; 
-            allArticleIds = []; 
-
-            if (snap.exists()) {
-                snap.forEach((child) => {
-                    const a = child.val();
-                    const id = child.key;
-                    allArticleIds.push(id); 
-
-                    // හදවත් සලකුණ පරීක්ෂාව
-                    const favClass = favs.includes(id) ? 'fav-on' : '';
-                    const readBadge = readList.includes(id) ? '<span class="read-status">කියවන ලදී</span>' : '';
-                    const pdfTag = (a.pdf_link && a.pdf_link !== "") ? '<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-tag" title="PDF ඇතුළත් කර ඇත">' : '';
-
-                    list.innerHTML += `
-                        <div class="card" onclick="openFull('${id}')" style="margin-bottom:15px; cursor:pointer;">
-                            <span class="material-icons-round heart-icon ${favClass}" onclick="doFav('${id}', event)">favorite</span>
-                            <h3>${a.title} ${readBadge} ${pdfTag}</h3>
-                            <p style="font-size:14px; opacity:0.8;">${a.content.substring(0, 100)}...</p>
-                        </div>
-                    `;
-                });
-            } else {
-                list.innerHTML = '<p style="text-align:center; opacity:0.5;">තවමත් ලිපි ඇතුළත් කර නැත.</p>';
-            }
-        });
-
-        // Navigation
-        function nav(view) {
-            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active-view'));
-            document.getElementById('view-' + view).classList.add('active-view');
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            if(event) event.currentTarget.classList.add('active');
-            if(view === 'merit') showMerits();
-            if(view === 'fav') showFavs();
-            window.scrollTo(0,0);
-        }
-
-        // ලිපිය විවෘත කිරීම
-        function openFull(id) {
-            curArticle = id; 
-            db.ref('articles/' + id).once('value').then(snap => {
-                const a = snap.val();
-                document.getElementById('full-title').innerText = a.title;
-                document.getElementById('full-content').innerText = a.content;
-                
-                // --- PDF Button Control Logic (NEW) ---
-                const pdfSection = document.getElementById('pdf-download-section');
-                const pdfLink = document.getElementById('pdf-link');
-
-                if (a.pdf_link && a.pdf_link !== "") {
-                    pdfSection.style.display = 'block';
-                    pdfLink.href = a.pdf_link;
-                } else {
-                    pdfSection.style.display = 'none';
-                }
-                // -------------------------------------
-
-                document.getElementById('wa-inquiry').href = `https://wa.me/94778803779?text=ගෞරවනීය ස්වාමින් වහන්ස, '${a.title}' ලිපිය පිළිබඳවයි:`;
-                document.getElementById('mail-inquiry').href = `mailto:anhettigamapodihamuduruwo@gmail.com?subject=ලිපිය පිළිබඳ විමසීම&body=ගෞරවනීය ස්වාමින් වහන්ස, '${a.title}' ලිපිය පිළිබඳවයි:`;
-
-                // ලිපිය විවෘත කළ විට පමණක් කියවන ලද ලැයිස්තුවට එක් කිරීම
-                if(!readList.includes(id)) {
-                    readList.push(id);
-                    localStorage.setItem('myReads', JSON.stringify(readList));
-                }
-                document.getElementById('detail-overlay').style.display = 'block';
-                document.getElementById('detail-overlay').scrollTop = 0; 
+    // Load articles
+    db.ref('articles').on('value', function(snap) {
+        const list = document.getElementById('article-list');
+        list.innerHTML = '';
+        allArticleIds = [];
+        if (snap.exists()) {
+            snap.forEach(function(child) {
+                const a = child.val();
+                const id = child.key;
+                allArticleIds.push(id);
+                const favClass = favs.includes(id) ? 'fav-on' : '';
+                const readBadge = readList.includes(id) ? '<span class="read-status">කියවන ලදී</span>' : '';
+                const pdfTag = (a.pdf_link && a.pdf_link !== "") ? '<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-tag" title="PDF ඇතුළත් කර ඇත">' : '';
+                list.innerHTML += '<div class="card" onclick="openFull(\'' + id + '\')" style="cursor:pointer;">' +
+                    '<span class="material-icons-round heart-icon ' + favClass + '" onclick="doFav(\'' + id + '\', event)">favorite</span>' +
+                    '<h3>' + a.title + ' ' + readBadge + ' ' + pdfTag + '</h3>' +
+                    '<p style="font-size:14px; opacity:0.8;">' + a.content.substring(0, 100) + '...</p>' +
+                    '</div>';
             });
+        } else {
+            list.innerHTML = '<p style="text-align:center; opacity:0.5;">තවමත් ලිපි ඇතුළත් කර නැත.</p>';
         }
+    });
 
-        // "පෙර" සහ "මීළඟ" ලිපි අතර මාරුවීම
-        function changeArticle(dir) {
-            let currentIndex = allArticleIds.indexOf(curArticle);
-            let nextIndex = currentIndex + dir;
+    // Navigation
+    function nav(view) {
+        document.querySelectorAll('.view-section').forEach(function(s) { s.classList.remove('active-view'); });
+        document.getElementById('view-' + view).classList.add('active-view');
+        document.querySelectorAll('.nav-item').forEach(function(i) { i.classList.remove('active'); });
+        if (event) event.currentTarget.classList.add('active');
+        if (view === 'merit') showMerits();
+        if (view === 'fav') showFavs();
+        window.scrollTo(0, 0);
+    }
 
-            if (nextIndex >= 0 && nextIndex < allArticleIds.length) {
-                openFull(allArticleIds[nextIndex]);
+    // Open article
+    function openFull(id) {
+        curArticle = id;
+        db.ref('articles/' + id).once('value').then(function(snap) {
+            const a = snap.val();
+            document.getElementById('full-title').innerText = a.title;
+            document.getElementById('full-content').innerText = a.content;
+            const pdfSection = document.getElementById('pdf-download-section');
+            const pdfLink = document.getElementById('pdf-link');
+            if (a.pdf_link && a.pdf_link !== "") {
+                pdfSection.style.display = 'block';
+                pdfLink.href = a.pdf_link;
+            } else {
+                pdfSection.style.display = 'none';
             }
-        }
+            document.getElementById('wa-inquiry').href = 'https://wa.me/94778803779?text=ගෞරවනීය ස්වාමින් වහන්ස, \'' + a.title + '\' ලිපිය පිළිබඳවයි:';
+            document.getElementById('mail-inquiry').href = 'mailto:anhettigamapodihamuduruwo@gmail.com?subject=ලිපිය පිළිබඳ විමසීම&body=ගෞරවනීය ස්වාමින් වහන්ස, \'' + a.title + '\' ලිපිය පිළිබඳවයි:';
+            if (!readList.includes(id)) {
+                readList.push(id);
+                localStorage.setItem('myReads', JSON.stringify(readList));
+            }
+            document.getElementById('detail-overlay').style.display = 'block';
+            document.getElementById('detail-overlay').scrollTop = 0;
+        });
+    }
 
-        function closeDetail() { 
-            document.getElementById('detail-overlay').style.display = 'none'; 
+    function changeArticle(dir) {
+        let currentIndex = allArticleIds.indexOf(curArticle);
+        let nextIndex = currentIndex + dir;
+        if (nextIndex >= 0 && nextIndex < allArticleIds.length) openFull(allArticleIds[nextIndex]);
+    }
+
+    function closeDetail() {
+        document.getElementById('detail-overlay').style.display = 'none';
+        synth.cancel();
+        document.getElementById('listen-btn').innerText = "🔊 ශ්‍රවණය";
+        location.reload();
+    }
+
+    function doFav(id, e) {
+        if (e) e.stopPropagation();
+        if (favs.includes(id)) {
+            favs = favs.filter(function(i) { return i !== id; });
+        } else {
+            favs.push(id);
+        }
+        localStorage.setItem('myFavs', JSON.stringify(favs));
+        location.reload();
+    }
+
+    function showFavs() {
+        const list = document.getElementById('fav-list');
+        list.innerHTML = '';
+        if (favs.length === 0) {
+            list.innerHTML = '<p style="text-align:center; opacity:0.5;">තවමත් ප්‍රියතම ලිපි නැත.</p>';
+            return;
+        }
+        favs.forEach(function(id) {
+            db.ref('articles/' + id).once('value').then(function(s) {
+                const a = s.val();
+                list.innerHTML += '<div class="card" onclick="openFull(\'' + id + '\')">' +
+                    '<span class="material-icons-round heart-icon fav-on" onclick="doFav(\'' + id + '\', event)">favorite</span>' +
+                    '<h3>' + a.title + '</h3><p>' + a.content.substring(0, 100) + '...</p></div>';
+            });
+        });
+    }
+
+    function addMerit() {
+        const date = document.getElementById('merit-date').value;
+        const text = document.getElementById('merit-text').value;
+        if (date && text) {
+            let m = JSON.parse(localStorage.getItem('myMerits') || '[]');
+            m.push({date: date, text: text});
+            localStorage.setItem('myMerits', JSON.stringify(m));
+            document.getElementById('merit-text').value = '';
+            showMerits();
+        }
+    }
+
+    function showMerits() {
+        let m = JSON.parse(localStorage.getItem('myMerits') || '[]');
+        document.getElementById('merit-list-container').innerHTML = m.reverse().map(function(i) {
+            return '<div style="background:#eafaf1; padding:15px; border-radius:15px; margin-bottom:10px; border-left:4px solid #2ecc71; color:#2c3e50;"><b>' + i.date + '</b><br>' + i.text + '</div>';
+        }).join('');
+    }
+
+    function toggleDark() { document.body.classList.toggle('dark-mode'); }
+
+    let fSize = 18;
+    function zoom(v) {
+        fSize += v;
+        document.getElementById('full-content').style.fontSize = fSize + 'px';
+    }
+
+    function toggleAudio() {
+        if (synth.speaking) {
             synth.cancel();
             document.getElementById('listen-btn').innerText = "🔊 ශ්‍රවණය";
-            location.reload(); 
+        } else {
+            let utter = new SpeechSynthesisUtterance(document.getElementById('full-content').innerText);
+            utter.lang = 'si-LK';
+            synth.speak(utter);
+            document.getElementById('listen-btn').innerText = "🛑 නවතන්න";
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "PrintScreen" || (e.ctrlKey && (e.key === 'p' || e.key === 's'))) {
+            e.preventDefault();
+            alert("ආරක්‍ෂිත හේතූන් මත මෙය අවහිර කර ඇත.");
+        }
+    });
+
+    // ===== ACCESS KEY System =====
+    var AK_KEY  = 'dharma_access_key';
+    var AK_EXP  = 'dharma_access_expiry';
+    var AK_DAYS = 30;
+
+    function isAccessGranted() {
+        var k = localStorage.getItem(AK_KEY);
+        var e = localStorage.getItem(AK_EXP);
+        if (!k || !e) return false;
+        return new Date().getTime() < parseInt(e);
+    }
+
+    function showAccessKeyPopup() {
+        document.getElementById('access-key-overlay').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        setTimeout(function() {
+            var inp = document.getElementById('accessKeyInput');
+            if (inp) inp.focus();
+        }, 400);
+    }
+
+    function hideAccessKeyPopup() {
+        document.getElementById('access-key-overlay').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function verifyAccessKey() {
+        var inputKey = document.getElementById('accessKeyInput').value.trim().toUpperCase();
+        var errorDiv = document.getElementById('ak-error');
+
+        if (!inputKey) {
+            showKeyError("⚠️ කරුණාකර ACCESS KEY එක ඇතුළු කරන්න.");
+            return;
         }
 
-        // Favorites ක්‍රියාවලිය
-        function doFav(id, e) {
-            if(e) e.stopPropagation();
-            if(favs.includes(id)) {
-                favs = favs.filter(i => i !== id);
-            } else {
-                favs.push(id);
-            }
-            localStorage.setItem('myFavs', JSON.stringify(favs));
-            location.reload();
-        }
+        db.ref('access_keys/' + inputKey).once('value').then(function(snap) {
+            if (snap.exists()) {
+                var keyData = snap.val();
+                var now = new Date().getTime();
 
-        function showFavs() {
-            const list = document.getElementById('fav-list');
-            list.innerHTML = '';
-            if(favs.length === 0) { list.innerHTML = '<p style="text-align:center; opacity:0.5;">තවමත් ප්‍රියතම ලිපි නැත.</p>'; return; }
-            favs.forEach(id => {
-                db.ref('articles/' + id).once('value').then(s => {
-                    const a = s.val();
-                    list.innerHTML += `
-                        <div class="card" onclick="openFull('${id}')">
-                            <span class="material-icons-round heart-icon fav-on" onclick="doFav('${id}', event)">favorite</span>
-                            <h3>${a.title}</h3>
-                            <p>${a.content.substring(0,100)}...</p>
-                        </div>`;
-                });
-            });
-        }
-
-        // Merit Book
-        function addMerit() {
-            const date = document.getElementById('merit-date').value;
-            const text = document.getElementById('merit-text').value;
-            if(date && text) {
-                let m = JSON.parse(localStorage.getItem('myMerits') || '[]');
-                m.push({date, text});
-                localStorage.setItem('myMerits', JSON.stringify(m));
-                document.getElementById('merit-text').value = '';
-                showMerits();
-            }
-        }
-
-        function showMerits() {
-            const div = document.getElementById('merit-list-container');
-            let m = JSON.parse(localStorage.getItem('myMerits') || '[]');
-            div.innerHTML = m.reverse().map(i => `<div style="background:#eafaf1; padding:15px; border-radius:15px; margin-bottom:10px; border-left:4px solid #2ecc71; color:#2c3e50;"><b>${i.date}</b><br>${i.text}</div>`).join('');
-        }
-
-        // UI Extras
-        function toggleDark() { document.body.classList.toggle('dark-mode'); }
-        
-        let fSize = 18;
-        function zoom(v) {
-            fSize += v;
-            document.getElementById('full-content').style.fontSize = fSize + 'px';
-        }
-
-        function toggleAudio() {
-            if(synth.speaking) {
-                synth.cancel();
-                document.getElementById('listen-btn').innerText = "🔊 ශ්‍රවණය";
-            } else {
-                let utter = new SpeechSynthesisUtterance(document.getElementById('full-content').innerText);
-                utter.lang = 'si-LK';
-                synth.speak(utter);
-                document.getElementById('listen-btn').innerText = "🛑 නවතන්න";
-            }
-        }
-
-        // Anti-Screenshot / Key block
-        document.addEventListener('keydown', (e) => {
-            if(e.key === "PrintScreen" || (e.ctrlKey && (e.key === 'p' || e.key === 's'))) {
-                e.preventDefault();
-                alert("ආරක්‍ෂිත හේතූන් මත මෙය අවහිර කර ඇත.");
-            }
-        });
-
-        // ===== WhatsApp Channel Popup Logic (NEW) =====
-        let countdownTimer;
-        let timeLeft = 6;
-
-        function showWhatsAppPopup() {
-            const overlay = document.getElementById('whatsapp-popup-overlay');
-            if(overlay) {
-                overlay.style.display = 'block';
-                startCountdown();
-            }
-        }
-
-        function startCountdown() {
-            const timerElement = document.getElementById('countdown-timer');
-            
-            countdownTimer = setInterval(() => {
-                timeLeft--;
-                if(timerElement) {
-                    timerElement.innerText = timeLeft;
-                    
-                    // කාලය අනුව වර්ණ වෙනස් කිරීම
-                    timerElement.className = 'countdown-number';
-                    if (timeLeft > 3) {
-                        timerElement.classList.add('countdown-green');
-                    } else if (timeLeft > 1) {
-                        timerElement.classList.add('countdown-yellow');
+                if (keyData.used && keyData.expiry) {
+                    if (now < keyData.expiry) {
+                        // Valid and still active
+                        localStorage.setItem(AK_KEY, inputKey);
+                        localStorage.setItem(AK_EXP, keyData.expiry.toString());
+                        onKeySuccess();
                     } else {
-                        timerElement.classList.add('countdown-red');
+                        showKeyError("❌ ACCESS KEY කාලය ඉකුත් වී ඇත. නව KEY එකක් ලබා ගන්න.");
+                        shakeInput();
                     }
+                } else if (!keyData.used) {
+                    // First time use — activate
+                    var expiry = now + (AK_DAYS * 24 * 60 * 60 * 1000);
+                    db.ref('access_keys/' + inputKey).update({
+                        used: true,
+                        activated_at: now,
+                        expiry: expiry
+                    });
+                    localStorage.setItem(AK_KEY, inputKey);
+                    localStorage.setItem(AK_EXP, expiry.toString());
+                    onKeySuccess();
+                } else {
+                    showKeyError("❌ ACCESS KEY අවලංගු වී ඇත.");
+                    shakeInput();
                 }
-                
-                if (timeLeft <= 0) {
-                    clearInterval(countdownTimer);
-                    closeWhatsAppPopup();
-                }
-            }, 1000);
-        }
-
-        function closeWhatsAppPopup() {
-            const overlay = document.getElementById('whatsapp-popup-overlay');
-            if(overlay) overlay.style.display = 'none';
-            timeLeft = 6; 
-        }
-
-        function joinWhatsAppChannel() {
-            clearInterval(countdownTimer);
-            window.open('https://whatsapp.com/channel/0029Vb73W2Q89iniAgEwUl3S', '_blank');
-            closeWhatsAppPopup();
-        }
-        // ===== End WhatsApp Popup Logic =====
-
-        // ===== Payment Announcement Popup Logic (FIXED) =====
-        let paymentCountdown;
-        let paymentTimeLeft = 10;
-
-        function showPaymentAnnouncement() {
-            const overlay = document.getElementById('payment-announcement-overlay');
-            if(overlay) {
-                overlay.style.display = 'block';
-                document.body.style.overflow = 'hidden'; // Prevent background scroll
-                startPaymentCountdown();
+            } else {
+                showKeyError("❌ ACCESS KEY වැරදිය. නැවත උත්සාහ කරන්න.");
+                shakeInput();
             }
-        }
-
-        function startPaymentCountdown() {
-            const dots = document.querySelectorAll('#payment-dots .countdown-dot-main');
-            let currentDot = 0;
-            
-            paymentCountdown = setInterval(() => {
-                paymentTimeLeft--;
-                
-                // Deactivate current dot
-                if(dots[currentDot]) {
-                    dots[currentDot].classList.add('inactive');
-                    currentDot++;
-                }
-                
-                if (paymentTimeLeft <= 0) {
-                    clearInterval(paymentCountdown);
-                    closePaymentAnnouncement();
-                }
-            }, 1000);
-        }
-
-        function closePaymentAnnouncement() {
-            const overlay = document.getElementById('payment-announcement-overlay');
-            if(overlay) {
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    overlay.style.opacity = '1';
-                    document.body.style.overflow = ''; // Restore scroll
-                }, 400);
-            }
-            paymentTimeLeft = 10;
-            
-            // Reset dots for next time
-            document.querySelectorAll('#payment-dots .countdown-dot-main').forEach(dot => {
-                dot.classList.remove('inactive');
-            });
-        }
-
-        function openPaymentWhatsApp() {
-            const message = encodeURIComponent("ධර්ම නේත්‍රා සදහම් අවකාශය වෙත.\n\nමා හට ධර්ම නේත්‍රා සදහම් යෙදුම පරිශීලනය සඳහා වන මාසික දායකත්ව මුදල ගෙවා ACCESS KEY ලබා ගැනීමට අවශ්‍යයි.\n\nකරුණාකර ගෙවීම් විස්තර සහ වැඩිදුර විස්තර මා වෙත ලබා දෙන මෙන් ඉල්ලා සිටිමි.\n\nස්තූතියි.!");
-            const phoneNumber = "94763861339";
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
-            window.open(whatsappURL, '_blank');
-        }
-
-        // App Load වූ විට Popups පෙන්වීම
-        window.addEventListener('load', function() {
-            // Payment announcement පළමුව (0.5s කින්)
-            setTimeout(showPaymentAnnouncement, 500);
-            
-            // WhatsApp popup දෙවනුව (11.5s කින්)
-            setTimeout(showWhatsAppPopup, 11500);
-            
-            // Donation popup තෙවනුව (2 minutes = 120000ms කින්)
-            setTimeout(showDonationPopup, 120000);
+        }).catch(function() {
+            showKeyError("⚠️ සම්බන්ධතා දෝෂයක්. නැවත උත්සාහ කරන්න.");
         });
-        // ===== End Payment Announcement Logic =====
+    }
 
-        // ===== Donation Popup Logic (NEW) =====
-        let donationCountdownTimer;
-        let donationTimeLeft = 10;
+    function onKeySuccess() {
+        var errorDiv = document.getElementById('ak-error');
+        errorDiv.style.display = 'block';
+        errorDiv.style.color = '#27ae60';
+        errorDiv.innerText = "✅ ස්වාගතයි! ඇතුළු වෙමින්...";
+        setTimeout(function() {
+            hideAccessKeyPopup();
+            setTimeout(showWhatsAppPopup, 500);
+            setTimeout(showDonationPopup, 120000);
+        }, 1000);
+    }
 
-        function showDonationPopup() {
-            const overlay = document.getElementById('donation-popup-overlay');
-            if(overlay) {
-                overlay.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                startDonationCountdown();
+    function showKeyError(msg) {
+        var e = document.getElementById('ak-error');
+        e.innerText = msg;
+        e.style.display = 'block';
+        e.style.color = '#e74c3c';
+    }
+
+    function shakeInput() {
+        var input = document.getElementById('accessKeyInput');
+        input.classList.add('shake');
+        setTimeout(function() { input.classList.remove('shake'); }, 500);
+    }
+
+    document.getElementById('accessKeyInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') verifyAccessKey();
+    });
+
+    function openPaymentWhatsApp() {
+        var msg = encodeURIComponent("ආයුබෝවන්.!\n\nමා හට ධර්ම නේත්‍රා යෙදුම සඳහා වන මාසික රුපියල් 150 ක ගෙවීම සිදු කොට මෙම මස ACCESS KEY එක ලබා ගැනීමට අවශ්‍යයි.\n\nස්තූතියි.!");
+        window.open('https://wa.me/94763861339?text=' + msg, '_blank');
+    }
+
+    window.addEventListener('load', function() {
+        if (isAccessGranted()) {
+            setTimeout(showWhatsAppPopup, 500);
+            setTimeout(showDonationPopup, 120000);
+        } else {
+            setTimeout(showAccessKeyPopup, 300);
+        }
+    });
+    // ===== End ACCESS KEY =====
+
+    // ===== WhatsApp Channel Popup =====
+    var countdownTimer;
+    var timeLeft = 6;
+
+    function showWhatsAppPopup() {
+        var overlay = document.getElementById('whatsapp-popup-overlay');
+        if (overlay) { overlay.style.display = 'block'; startCountdown(); }
+    }
+
+    function startCountdown() {
+        var el = document.getElementById('countdown-timer');
+        countdownTimer = setInterval(function() {
+            timeLeft--;
+            if (el) {
+                el.innerText = timeLeft;
+                el.className = 'countdown-number';
+                if (timeLeft > 3) el.classList.add('countdown-green');
+                else if (timeLeft > 1) el.classList.add('countdown-yellow');
+                else el.classList.add('countdown-red');
             }
-        }
+            if (timeLeft <= 0) { clearInterval(countdownTimer); closeWhatsAppPopup(); }
+        }, 1000);
+    }
 
-        function startDonationCountdown() {
-            const timerElement = document.getElementById('donation-countdown-timer');
-            donationTimeLeft = 10;
-            
-            donationCountdownTimer = setInterval(() => {
-                donationTimeLeft--;
-                if(timerElement) {
-                    timerElement.innerText = donationTimeLeft;
-                    
-                    timerElement.className = 'donation-countdown-number';
-                    if (donationTimeLeft <= 3) {
-                        timerElement.classList.add('donation-countdown-red');
-                    }
-                }
-                
-                if (donationTimeLeft <= 0) {
-                    clearInterval(donationCountdownTimer);
-                    closeDonationPopup();
-                }
-            }, 1000);
-        }
+    function closeWhatsAppPopup() {
+        var overlay = document.getElementById('whatsapp-popup-overlay');
+        if (overlay) overlay.style.display = 'none';
+        timeLeft = 6;
+    }
 
-        function closeDonationPopup() {
-            clearInterval(donationCountdownTimer);
-            const overlay = document.getElementById('donation-popup-overlay');
-            if(overlay) {
-                overlay.style.display = 'none';
-                document.body.style.overflow = '';
+    function joinWhatsAppChannel() {
+        clearInterval(countdownTimer);
+        window.open('https://whatsapp.com/channel/0029Vb73W2Q89iniAgEwUl3S', '_blank');
+        closeWhatsAppPopup();
+    }
+    // ===== End WhatsApp Popup =====
+
+    // ===== Donation Popup =====
+    var donationCountdownTimer;
+    var donationTimeLeft = 10;
+
+    function showDonationPopup() {
+        var overlay = document.getElementById('donation-popup-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            startDonationCountdown();
+        }
+    }
+
+    function startDonationCountdown() {
+        var el = document.getElementById('donation-countdown-timer');
+        donationTimeLeft = 10;
+        donationCountdownTimer = setInterval(function() {
+            donationTimeLeft--;
+            if (el) {
+                el.innerText = donationTimeLeft;
+                el.className = 'donation-countdown-number';
+                if (donationTimeLeft <= 3) el.classList.add('donation-countdown-red');
             }
-            donationTimeLeft = 10;
-        }
+            if (donationTimeLeft <= 0) { clearInterval(donationCountdownTimer); closeDonationPopup(); }
+        }, 1000);
+    }
 
-        function sendDonationWhatsApp() {
-            clearInterval(donationCountdownTimer);
-            const message = encodeURIComponent("පින්වත් තාක්ෂණික කණ්ඩායම වෙත,\n\n'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් මා දායක වීමට කැමැත්තෙමි.\n\nකරුණාකර අදාළ විස්තර මා වෙත යොමු කරන ලෙස කාරුණිකව ඉල්ලා සිටිමි.");
-            const phoneNumber = "94763861339";
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
-            window.open(whatsappURL, '_blank');
-            closeDonationPopup();
-        }
-        // ===== End Donation Popup Logic =====
-    </script>
+    function closeDonationPopup() {
+        clearInterval(donationCountdownTimer);
+        var overlay = document.getElementById('donation-popup-overlay');
+        if (overlay) { overlay.style.display = 'none'; document.body.style.overflow = ''; }
+        donationTimeLeft = 10;
+    }
+
+    function sendDonationWhatsApp() {
+        clearInterval(donationCountdownTimer);
+        var msg = encodeURIComponent("පින්වත් තාක්ෂණික කණ්ඩායම වෙත,\n\n'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් මා දායක වීමට කැමැත්තෙමි.\n\nකරුණාකර අදාළ විස්තර මා වෙත යොමු කරන ලෙස කාරුණිකව ඉල්ලා සිටිමි.");
+        window.open('https://wa.me/94763861339?text=' + msg, '_blank');
+        closeDonationPopup();
+    }
+    // ===== End Donation Popup =====
+</script>
 </body>
 </html>
