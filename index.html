@@ -423,9 +423,51 @@
     </div>
 
     <div id="view-donate" class="view-section">
+
+        <!-- මාසික නඩත්තු ඉලක්කය + Progress -->
+        <div style="background:linear-gradient(135deg,#fff8f0,#ffffff);border:2px solid #f39c12;border-radius:20px;padding:20px;margin-bottom:15px;box-shadow:0 5px 15px rgba(211,84,0,0.1);">
+            <h2 style="color:var(--p-color);text-align:center;margin:0 0 5px 0;font-size:19px;">🙏 මාසික නඩත්තු ආධාර</h2>
+            <p style="text-align:center;font-size:12px;color:#7f8c8d;margin:0 0 15px 0;" id="donate-month-label">පූරණය වෙමින්...</p>
+
+            <!-- Progress bar -->
+            <div style="background:#f0f0f0;border-radius:30px;height:22px;overflow:hidden;margin-bottom:8px;box-shadow:inset 0 2px 5px rgba(0,0,0,0.08);">
+                <div id="donate-progress-bar" style="height:100%;background:linear-gradient(90deg,#f39c12,#d35400);border-radius:30px;width:0%;transition:width 1s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;">
+                    <span id="donate-progress-pct" style="color:white;font-size:11px;font-weight:bold;"></span>
+                </div>
+            </div>
+
+            <!-- Amounts row -->
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+                <div style="text-align:left;">
+                    <div style="font-size:11px;color:#7f8c8d;">ලැබුණු මුදල</div>
+                    <div id="donate-received" style="font-size:22px;font-weight:900;color:#27ae60;">රු. 0</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:11px;color:#7f8c8d;">ඉතිරි</div>
+                    <div id="donate-remaining" style="font-size:18px;font-weight:800;color:#e74c3c;">රු. 0</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:11px;color:#7f8c8d;">ඉලක්කය</div>
+                    <div id="donate-target" style="font-size:22px;font-weight:900;color:var(--p-color);">රු. 0</div>
+                </div>
+            </div>
+
+            <!-- Status message -->
+            <div id="donate-status-msg" style="text-align:center;font-size:13px;font-weight:bold;padding:8px;border-radius:10px;background:#fff3e0;color:#d35400;margin-bottom:0;"></div>
+        </div>
+
+        <!-- Top Donors Leaderboard -->
+        <div style="background:var(--card-bg);border-radius:20px;padding:18px;margin-bottom:15px;box-shadow:0 5px 15px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.05);">
+            <h3 style="color:var(--p-color);margin:0 0 15px 0;text-align:center;font-size:16px;">🏆 මාසික ප්‍රධාන දායකයින්</h3>
+            <div id="donors-leaderboard">
+                <p style="text-align:center;color:#aaa;font-size:14px;">පූරණය වෙමින්...</p>
+            </div>
+        </div>
+
+        <!-- Bank Details -->
         <div class="merit-box">
-            <h2 style="color:var(--p-color);text-align:center;margin-top:0;">පින්කමට දායක වන්න</h2>
-            <p style="text-align:justify;line-height:1.7;font-size:15px;">ධර්ම නේත්‍රා සදහම් සේවාව ලොව පුරා විසිරී සිටින සැදැහැවතුන් වෙත අඛණ්ඩව සහ නොමිලේ සමීප කරවීම සඳහා මෙම ජංගම යෙදුම නඩත්තු කිරීම සහ එහි නවීකරණ කටයුතු සිදු කිරීමට විශාල පිරිවැයක් වැය වේ. මෙම උතුම් ධර්ම ප්‍රචාරක කටයුත්තට ඔබගේ ශක්ති ප්‍රමාණයෙන් දායක වීම මහා පින්කමකි.</p>
+            <h3 style="color:var(--p-color);text-align:center;margin-top:0;">🏦 ගිණුම් විස්තර</h3>
+            <p style="text-align:justify;line-height:1.7;font-size:14px;color:var(--text-main);opacity:0.8;">ධර්ම නේත්‍රා සදහම් සේවාව ලොව පුරා විසිරී සිටින සැදැහැවතුන් වෙත අඛණ්ඩව සහ නොමිලේ සමීප කරවීම සඳහා මෙම ජංගම යෙදුම නඩත්තු කිරීම සහ එහි නවීකරණ කටයුතු සිදු කිරීමට විශාල පිරිවැයක් වැය වේ. මෙම උතුම් ධර්ම ප්‍රචාරක කටයුත්තට ඔබගේ ශක්ති ප්‍රමාණයෙන් දායක වීම මහා පින්කමකි.</p>
             <table class="chart">
                 <tr><td class="c-label">ගිණුම් අංකය</td><td>89862879</td></tr>
                 <tr><td class="c-label">හිමිකරු</td><td>A Udara Sandaruwan</td></tr>
@@ -446,7 +488,7 @@
             <h3>🙏 ගෞරවණීය ස්වාමින් වහන්සේ</h3>
             <p style="color:#e67e22;font-weight:bold;margin-bottom:10px;">⚠️ කරුණාකර දුරකථන ඇමතුම් ලබා ගැනීමෙන් වළකින්න.</p>
             <a href="https://wa.me/94778803779" style="text-decoration:none;color:#25D366;font-weight:bold;font-size:18px;">💬 +94 77 880 3779 (WhatsApp)</a>
-            <p style="margin-top:15px;font-size:13px;">📧 anhettigamapodihamuduruwo@gmail.com</p>
+            <p style="margin-top:15px;font-size:13px;">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="583936303d2c2c313f39353928373c313039352d3c2d2a2d2f37183f35393134763b3735">[email&#160;protected]</a></p>
         </div>
         <div class="card" style="border:none;">
             <h3>⚙️ තාක්ෂණික කණ්ඩායම</h3>
@@ -591,7 +633,7 @@
     </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     var firebaseConfig = {
         apiKey: "AIzaSyDEiwhtAIdoqdMIV5n_bdDoKuIrCkjqr3M",
         authDomain: "dharma-nethra.firebaseapp.com",
@@ -679,6 +721,8 @@
         }
     });
 
+    var donateLoaded = false;
+
     function nav(view) {
         document.querySelectorAll('.view-section').forEach(function(s){ s.classList.remove('active-view'); });
         document.getElementById('view-'+view).classList.add('active-view');
@@ -686,6 +730,7 @@
         if (event) event.currentTarget.classList.add('active');
         if (view === 'merit') showMerits();
         if (view === 'fav') showFavs();
+        if (view === 'donate' && !donateLoaded) { donateLoaded = true; loadDonatePageData(); }
         window.scrollTo(0,0);
     }
 
@@ -993,6 +1038,89 @@
         if (overlay) { overlay.style.display = 'none'; document.body.style.overflow = ''; }
         donationTimeLeft = 10;
     }
+
+    /* ===== Donate Page Data ===== */
+    function loadDonatePageData() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth() + 1;
+        var monthKey = year + '-' + (month < 10 ? '0' + month : month);
+        var monthNames = ['ජනවාරි','පෙබරවාරි','මාර්තු','අප්‍රේල්','මැයි','ජූනි','ජූලි','අගෝස්තු','සැප්තැම්බර්','ඔක්තෝබර්','නොවැම්බර්','දෙසැම්බර්'];
+        var label = monthNames[month-1] + ' ' + year;
+        var el = document.getElementById('donate-month-label');
+        if (el) el.innerText = label + ' මස නඩත්තු ඉලක්කය';
+
+        // Load target for this month
+        db.ref('donate_config/' + monthKey + '/target').once('value').then(function(snap) {
+            var target = snap.exists() ? snap.val() : 0;
+            document.getElementById('donate-target').innerText = 'රු. ' + target.toLocaleString();
+
+            // Load donors for this month and compute total received
+            db.ref('donors/' + monthKey).once('value').then(function(dsnap) {
+                var totalReceived = 0;
+                var donorList = [];
+                if (dsnap.exists()) {
+                    dsnap.forEach(function(child) {
+                        var d = child.val();
+                        totalReceived += (d.amount || 0);
+                        donorList.push(d);
+                    });
+                }
+                // Sort by amount descending
+                donorList.sort(function(a,b){ return (b.amount||0)-(a.amount||0); });
+
+                // Update UI
+                var remaining = Math.max(0, target - totalReceived);
+                var pct = target > 0 ? Math.min(100, Math.round(totalReceived / target * 100)) : 0;
+
+                document.getElementById('donate-received').innerText = 'රු. ' + totalReceived.toLocaleString();
+                document.getElementById('donate-remaining').innerText = 'රු. ' + remaining.toLocaleString();
+                document.getElementById('donate-progress-bar').style.width = pct + '%';
+                document.getElementById('donate-progress-pct').innerText = pct > 5 ? pct + '%' : '';
+
+                var statusEl = document.getElementById('donate-status-msg');
+                if (pct >= 100) {
+                    statusEl.style.background = '#d5f5e3';
+                    statusEl.style.color = '#27ae60';
+                    statusEl.innerText = '🎉 මෙම මස ඉලක්කය සාර්ථකයි! ඔබ සැමට පිං!';
+                } else if (pct >= 50) {
+                    statusEl.style.background = '#fff3e0';
+                    statusEl.style.color = '#f39c12';
+                    statusEl.innerText = '🙏 තවත් රු. ' + remaining.toLocaleString() + ' ක් ඉලක්කයට ළඟා වීමට අවශ්‍යයි';
+                } else {
+                    statusEl.style.background = '#fdecea';
+                    statusEl.style.color = '#e74c3c';
+                    statusEl.innerText = '💛 ඔබේ ආධාරය ඉතා වටිනවා — රු. ' + remaining.toLocaleString() + ' ක් ඉතිරිව ඇත';
+                }
+
+                // Render leaderboard — top 10
+                var lb = document.getElementById('donors-leaderboard');
+                if (donorList.length === 0) {
+                    lb.innerHTML = '<p style="text-align:center;color:#aaa;font-size:14px;">මෙම මාසය සඳහා දායකයෝ නොමැත.</p>';
+                    return;
+                }
+                var medals = ['🥇','🥈','🥉'];
+                var html = '';
+                donorList.slice(0, 10).forEach(function(d, i) {
+                    var medal = medals[i] || ('  ' + (i+1) + '.');
+                    var barW = donorList[0].amount > 0 ? Math.round(d.amount / donorList[0].amount * 100) : 0;
+                    html += '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0;">' +
+                        '<div style="font-size:' + (i<3?'22px':'15px') + ';min-width:30px;text-align:center;">' + medal + '</div>' +
+                        '<div style="flex:1;">' +
+                            '<div style="font-weight:bold;font-size:14px;color:var(--text-main);">' + d.name + '</div>' +
+                            '<div style="background:#f0f0f0;border-radius:20px;height:6px;margin-top:4px;overflow:hidden;">' +
+                                '<div style="width:' + barW + '%;height:100%;background:linear-gradient(90deg,#f39c12,#d35400);border-radius:20px;"></div>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div style="font-weight:900;color:var(--p-color);font-size:14px;min-width:65px;text-align:right;">රු. ' + (d.amount||0).toLocaleString() + '</div>' +
+                    '</div>';
+                });
+                lb.innerHTML = html;
+            });
+        });
+    }
+
+
 
     function sendDonationWhatsApp() {
         clearInterval(donationCountdownTimer);
