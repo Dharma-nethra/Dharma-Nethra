@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <style>
         :root {
             --p-color: #d35400;
@@ -333,87 +332,6 @@
         }
         .ak-wa-btn:active { transform: scale(0.97); }
         .ak-footer { text-align: center; color: #d35400; font-size: 12px; font-weight: bold; padding-top: 10px; border-top: 2px solid #f8e5d0; }
-        /* Google Sign-In */
-        .google-signin-btn {
-            display: flex; align-items: center; gap: 8px;
-            background: white; color: #444; border: none;
-            border-radius: 20px; padding: 6px 14px 6px 8px;
-            font-size: 13px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            transition: all 0.2s; white-space: nowrap;
-        }
-        .google-signin-btn:active { transform: scale(0.97); }
-        .google-signin-btn img { width: 20px; height: 20px; border-radius: 50%; }
-        .google-user-avatar {
-            width: 30px; height: 30px; border-radius: 50%;
-            border: 2px solid white; cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2); object-fit: cover;
-        }
-        #google-signin-overlay {
-            display: none; position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 99999;
-            align-items: center; justify-content: center;
-        }
-        #google-signin-overlay.show { display: flex; }
-        #google-signin-box {
-            background: white; border-radius: 28px;
-            padding: 35px 28px; max-width: 88%; width: 360px;
-            text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-        }
-        .gs-icon { font-size: 52px; margin-bottom: 10px; }
-        .gs-title { font-size: 20px; font-weight: 900; color: #2c3e50; margin-bottom: 6px; }
-        .gs-sub { font-size: 13px; color: #7f8c8d; margin-bottom: 22px; line-height: 1.6; }
-        .gs-benefits { text-align: left; background: #f8f9fa; border-radius: 14px; padding: 14px 18px; margin-bottom: 22px; }
-        .gs-benefits li { font-size: 13px; color: #2c3e50; margin-bottom: 6px; list-style: none; }
-        .gs-google-btn {
-            width: 100%; padding: 14px; border: none; border-radius: 14px;
-            background: #4285F4; color: white; font-size: 16px; font-weight: 800;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            gap: 10px; box-shadow: 0 4px 15px rgba(66,133,244,0.4);
-            transition: all 0.2s; margin-bottom: 12px;
-        }
-        .gs-google-btn:active { transform: scale(0.98); }
-        .gs-skip { background: none; border: none; color: #aaa; font-size: 13px; cursor: pointer; padding: 8px; display: block; width: 100%; }
-        #profile-popup {
-            display: none; position: fixed;
-            top: 65px; right: 12px; z-index: 9999;
-            background: white; border-radius: 18px; padding: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.18);
-            min-width: 220px; text-align: center;
-        }
-        #profile-popup.show { display: block; }
-        .pp-avatar { width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px; border: 3px solid #d35400; }
-        .pp-name { font-weight: 800; color: #2c3e50; font-size: 15px; margin-bottom: 4px; }
-        .pp-email { font-size: 12px; color: #7f8c8d; margin-bottom: 14px; }
-        .pp-signout { background: #e74c3c; color: white; border: none; border-radius: 10px; padding: 8px 20px; font-weight: 700; cursor: pointer; font-size: 13px; width: 100%; }
-        /* Language Toggle */
-        .lang-toggle {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 20px;
-            padding: 4px;
-            width: fit-content;
-        }
-        .lang-btn {
-            padding: 5px 16px;
-            border: none;
-            border-radius: 16px;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            background: transparent;
-            color: rgba(255,255,255,0.75);
-            transition: all 0.2s;
-            letter-spacing: 0.3px;
-        }
-        .lang-btn.active {
-            background: white;
-            color: #d35400;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
         /* Donation Popup */
         #donation-popup-overlay {
             display: none;
@@ -475,25 +393,12 @@
             <h1 class="app-title">ධර්ම නේත්‍රා</h1>
             <div class="dark-icon" onclick="toggleDark()">🌓</div>
         </div>
-        <span class="slogan" id="ui-slogan">"ප්‍රඥාවේ ආලෝකය පතුරුවන සදහම් අවකාශය"</span>
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
-            <div class="lang-toggle">
-                <button class="lang-btn active" id="lang-si" onclick="setLang('si', this)">සිංහල</button>
-                <button class="lang-btn" id="lang-en" onclick="setLang('en', this)">English</button>
-            </div>
-            <!-- Google Sign-In area -->
-            <div id="header-auth-area">
-                <button class="google-signin-btn" id="gs-header-btn" onclick="showGoogleSignIn()">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
-                    <span id="gs-header-label">Sign In</span>
-                </button>
-            </div>
-        </div>
+        <span class="slogan">"ප්‍රඥාවේ ආලෝකය පතුරුවන සදහම් අවකාශය"</span>
         <div class="meditation-bar">
-            <span id="ui-meditation-label">🧘 භාවනා කාලය:</span> <b id="timer-val">00:00:00</b>
+            🧘 භාවනා කාලය: <b id="timer-val">00:00:00</b>
             <div style="display:inline-flex; gap:5px; margin-left:10px;">
                 <button class="timer-ctrl" onclick="controlTimer()" id="timer-btn">අරඹන්න</button>
-                <button class="timer-ctrl" onclick="resetTimer()" id="timer-reset-btn" style="background:rgba(255,255,255,0.2);color:white;">මුලට</button>
+                <button class="timer-ctrl" onclick="resetTimer()" style="background:rgba(255,255,255,0.2);color:white;">මුලට</button>
             </div>
         </div>
         <div class="time-date-row">
@@ -513,7 +418,7 @@
     </div>
 
     <div id="view-fav" class="view-section">
-        <h2 id="ui-fav-title" style="color:var(--p-color);margin-top:0;">❤️ ප්‍රියතම ලිපි</h2>
+        <h2 style="color:var(--p-color);margin-top:0;">❤️ ප්‍රියතම ලිපි</h2>
         <div id="fav-list"><p style="text-align:center;opacity:0.5;">තවමත් ප්‍රියතම ලිපි නැත.</p></div>
     </div>
 
@@ -521,7 +426,7 @@
 
         <!-- මාසික නඩත්තු ඉලක්කය + Progress -->
         <div style="background:linear-gradient(135deg,#fff8f0,#ffffff);border:2px solid #f39c12;border-radius:20px;padding:20px;margin-bottom:15px;box-shadow:0 5px 15px rgba(211,84,0,0.1);">
-            <h2 id="ui-donate-heading" style="color:var(--p-color);text-align:center;margin:0 0 5px 0;font-size:19px;">🙏 මාසික නඩත්තු ආධාර</h2>
+            <h2 style="color:var(--p-color);text-align:center;margin:0 0 5px 0;font-size:19px;">🙏 මාසික නඩත්තු ආධාර</h2>
             <p style="text-align:center;font-size:12px;color:#7f8c8d;margin:0 0 15px 0;" id="donate-month-label">පූරණය වෙමින්...</p>
 
             <!-- Progress bar -->
@@ -534,15 +439,15 @@
             <!-- Amounts row -->
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
                 <div style="text-align:left;">
-                    <div id="ui-donate-received-label" style="font-size:11px;color:#7f8c8d;">ලැබුණු මුදල</div>
+                    <div style="font-size:11px;color:#7f8c8d;">ලැබුණු මුදල</div>
                     <div id="donate-received" style="font-size:22px;font-weight:900;color:#27ae60;">රු. 0</div>
                 </div>
                 <div style="text-align:center;">
-                    <div id="ui-donate-remaining-label" style="font-size:11px;color:#7f8c8d;">ඉතිරි</div>
+                    <div style="font-size:11px;color:#7f8c8d;">ඉතිරි</div>
                     <div id="donate-remaining" style="font-size:18px;font-weight:800;color:#e74c3c;">රු. 0</div>
                 </div>
                 <div style="text-align:right;">
-                    <div id="ui-donate-target-label" style="font-size:11px;color:#7f8c8d;">ඉලක්කය</div>
+                    <div style="font-size:11px;color:#7f8c8d;">ඉලක්කය</div>
                     <div id="donate-target" style="font-size:22px;font-weight:900;color:var(--p-color);">රු. 0</div>
                 </div>
             </div>
@@ -551,8 +456,9 @@
             <div id="donate-status-msg" style="text-align:center;font-size:13px;font-weight:bold;padding:8px;border-radius:10px;background:#fff3e0;color:#d35400;margin-bottom:0;"></div>
         </div>
 
+        <!-- Top Donors Leaderboard -->
         <div style="background:var(--card-bg);border-radius:20px;padding:18px;margin-bottom:15px;box-shadow:0 5px 15px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.05);">
-            <h3 id="ui-leaderboard-title" style="color:var(--p-color);margin:0 0 15px 0;text-align:center;font-size:16px;">🏆 මාසික ප්‍රධාන දායකයින්</h3>
+            <h3 style="color:var(--p-color);margin:0 0 15px 0;text-align:center;font-size:16px;">🏆 මාසික ප්‍රධාන දායකයින්</h3>
             <div id="donors-leaderboard">
                 <p style="text-align:center;color:#aaa;font-size:14px;">පූරණය වෙමින්...</p>
             </div>
@@ -560,18 +466,18 @@
 
         <!-- Bank Details -->
         <div class="merit-box">
-            <h3 id="ui-bank-heading" style="color:var(--p-color);text-align:center;margin-top:0;">🏦 ගිණුම් විස්තර</h3>
-            <p id="ui-bank-desc" style="text-align:justify;line-height:1.7;font-size:14px;color:var(--text-main);opacity:0.8;">ධර්ම නේත්‍රා සදහම් සේවාව ලොව පුරා විසිරී සිටින සැදැහැවතුන් වෙත අඛණ්ඩව සහ නොමිලේ සමීප කරවීම සඳහා මෙම ජංගම යෙදුම නඩත්තු කිරීම සහ එහි නවීකරණ කටයුතු සිදු කිරීමට විශාල පිරිවැයක් වැය වේ. මෙම උතුම් ධර්ම ප්‍රචාරක කටයුත්තට ඔබගේ ශක්ති ප්‍රමාණයෙන් දායක වීම මහා පින්කමකි.</p>
+            <h3 style="color:var(--p-color);text-align:center;margin-top:0;">🏦 ගිණුම් විස්තර</h3>
+            <p style="text-align:justify;line-height:1.7;font-size:14px;color:var(--text-main);opacity:0.8;">ධර්ම නේත්‍රා සදහම් සේවාව ලොව පුරා විසිරී සිටින සැදැහැවතුන් වෙත අඛණ්ඩව සහ නොමිලේ සමීප කරවීම සඳහා මෙම ජංගම යෙදුම නඩත්තු කිරීම සහ එහි නවීකරණ කටයුතු සිදු කිරීමට විශාල පිරිවැයක් වැය වේ. මෙම උතුම් ධර්ම ප්‍රචාරක කටයුත්තට ඔබගේ ශක්ති ප්‍රමාණයෙන් දායක වීම මහා පින්කමකි.</p>
             <table class="chart">
-                <tr><td id="ui-bank-acno" class="c-label">ගිණුම් අංකය</td><td>89862879</td></tr>
-                <tr><td id="ui-bank-owner" class="c-label">හිමිකරු</td><td>A Udara Sandaruwan</td></tr>
-                <tr><td id="ui-bank-name" class="c-label">බැංකුව</td><td>Bank of Ceylon (BOC)</td></tr>
-                <tr><td id="ui-bank-branch" class="c-label">ශාඛාව</td><td>Kiriella Branch</td></tr>
+                <tr><td class="c-label">ගිණුම් අංකය</td><td>89862879</td></tr>
+                <tr><td class="c-label">හිමිකරු</td><td>A Udara Sandaruwan</td></tr>
+                <tr><td class="c-label">බැංකුව</td><td>Bank of Ceylon (BOC)</td></tr>
+                <tr><td class="c-label">ශාඛාව</td><td>Kiriella Branch</td></tr>
             </table>
             <div style="text-align:center;margin-top:25px;">
-                <p id="ui-receipt-text" style="font-size:13px;font-weight:bold;">රිසිට්පත යොමු කිරීම සඳහා:</p>
-                <a id="ui-donate-receipt-link" href="https://wa.me/94763861339?text=පින්කම සඳහා ලබා දුන් ආධාරයේ රිසිට්පතයි:" style="text-decoration:none;background:#25D366;color:white;padding:12px 25px;border-radius:30px;display:inline-flex;align-items:center;gap:10px;font-weight:bold;">
-                    <span style="font-size:20px;">💬</span> <span id="ui-donate-wa-text">WhatsApp එවන්න</span>
+                <p style="font-size:13px;font-weight:bold;">රිසිට්පත යොමු කිරීම සඳහා:</p>
+                <a href="https://wa.me/94763861339?text=පින්කම සඳහා ලබා දුන් ආධාරයේ රිසිට්පතයි:" style="text-decoration:none;background:#25D366;color:white;padding:12px 25px;border-radius:30px;display:inline-flex;align-items:center;gap:10px;font-weight:bold;">
+                    <span style="font-size:20px;">💬</span> WhatsApp එවන්න
                 </a>
             </div>
         </div>
@@ -579,22 +485,22 @@
 
     <div id="view-contact" class="view-section">
         <div class="card" style="border:none;">
-            <h3 id="ui-contact-h1">🙏 ගෞරවණීය ස්වාමින් වහන්සේ</h3>
-            <p id="ui-contact-warning" style="color:#e67e22;font-weight:bold;margin-bottom:10px;">⚠️ කරුණාකර දුරකථන ඇමතුම් ලබා ගැනීමෙන් වළකින්න.</p>
+            <h3>🙏 ගෞරවණීය ස්වාමින් වහන්සේ</h3>
+            <p style="color:#e67e22;font-weight:bold;margin-bottom:10px;">⚠️ කරුණාකර දුරකථන ඇමතුම් ලබා ගැනීමෙන් වළකින්න.</p>
             <a href="https://wa.me/94778803779" style="text-decoration:none;color:#25D366;font-weight:bold;font-size:18px;">💬 +94 77 880 3779 (WhatsApp)</a>
             <p style="margin-top:15px;font-size:13px;">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="583936303d2c2c313f39353928373c313039352d3c2d2a2d2f37183f35393134763b3735">[email&#160;protected]</a></p>
         </div>
         <div class="card" style="border:none;">
-            <h3 id="ui-contact-h2">⚙️ තාක්ෂණික කණ්ඩායම</h3>
-            <p id="ui-contact-tech">යෙදුමෙහි තාක්ෂණික ගැටළු සඳහා සම්බන්ධ වන්න:</p>
+            <h3>⚙️ තාක්ෂණික කණ්ඩායම</h3>
+            <p>යෙදුමෙහි තාක්ෂණික ගැටළු සඳහා සම්බන්ධ වන්න:</p>
             <a href="https://wa.me/94763861339" style="text-decoration:none;color:#34495e;font-weight:bold;font-size:18px;">💬 +94 76 386 1339 (WhatsApp)</a>
         </div>
     </div>
 
     <div id="view-about" class="view-section">
         <div class="merit-box">
-            <h2 id="ui-about-heading" style="color:var(--p-color);text-align:center;margin-top:0;">අප ගැන</h2>
-            <div id="ui-about-text" style="text-align:justify;line-height:1.8;font-size:15px;">
+            <h2 style="color:var(--p-color);text-align:center;margin-top:0;">අප ගැන</h2>
+            <div style="text-align:justify;line-height:1.8;font-size:15px;">
                 <p><b>පූජ්‍යපාද අංහෙට්ටිගම සුගතනන්ද ස්වාමීන් වහන්සේ (අංහෙට්ටිගම පොඩි හාමුදුරුවෝ)</b> යනු මූලික පිරිවෙන් අධ්‍යාපනය, ප්‍රාචීන භාෂා අධ්‍යාපනය සහ ත්‍රිපිටක ධර්ම අධ්‍යාපනය මැනවින් හදාරා ඇති ගෞරවනීය ස්වාමීන් වහන්සේ නමකි. උන්වහන්සේ ලේඛන කලාවෙහි මෙන්ම තොරතුරු තාක්ෂණවේදය (Diploma in Information Technology) පිළිබඳවද හසල දැනුමක් ඇති තරුණ යතිවරයාණන් වහන්සේ නමකි.</p>
                 <p>ගෞරවණීය ස්වාමින් වහන්සේගේ පූර්ණ අවසරය සහ මඟ පෙන්වීම යටතේ <b>GMU STUDIO (PVT) LTD</b> ආයතනය විසින් මෙම "ධර්ම නේත්‍රා" යෙදුම නිර්මාණය කොට පවත්වා ගෙන යනු ලබයි. අපගේ අරමුණ නූතන තාක්ෂණය හරහා පිරිසිදු ශ්‍රී සද්ධර්මය ලොව පුරා ප්‍රචලිත කිරීමයි.</p>
             </div>
@@ -603,17 +509,17 @@
 
     <div id="view-merit" class="view-section">
         <div class="merit-box">
-            <h3 id="ui-merit-heading" style="color:var(--p-color);margin-top:0;">📝 පිං පොත</h3>
+            <h3 style="color:var(--p-color);margin-top:0;">📝 පිං පොත</h3>
             <input type="date" id="merit-date">
             <textarea id="merit-text" placeholder="අද ඔබ සිදුකළ උතුම් පිංකම් මෙතැන ලියන්න..."></textarea>
-            <button id="ui-merit-btn" style="background:var(--p-color);color:white;border:none;padding:12px;width:100%;border-radius:10px;font-weight:bold;" onclick="addMerit()">පිං පොතට එක් කරන්න</button>
+            <button style="background:var(--p-color);color:white;border:none;padding:12px;width:100%;border-radius:10px;font-weight:bold;" onclick="addMerit()">පිං පොතට එක් කරන්න</button>
         </div>
         <div id="merit-list-container"></div>
     </div>
 
     <div id="detail-overlay">
         <div class="control-panel">
-            <button id="ui-detail-back" onclick="closeDetail()" style="background:#34495e;color:white;border:none;padding:8px 15px;border-radius:10px;">⬅ ආපසු</button>
+            <button onclick="closeDetail()" style="background:#34495e;color:white;border:none;padding:8px 15px;border-radius:10px;">⬅ ආපසු</button>
             <div style="display:flex;gap:5px;">
                 <button onclick="zoom(2)" style="border:none;padding:8px 12px;border-radius:8px;">A+</button>
                 <button onclick="zoom(-2)" style="border:none;padding:8px 12px;border-radius:8px;">A-</button>
@@ -624,11 +530,11 @@
         <div id="full-content" class="article-text"></div>
         <div id="pdf-download-section" class="pdf-btn-container">
             <a id="pdf-link" href="#" target="_blank" class="pdf-btn">
-                <span class="material-icons-round">picture_as_pdf</span> <span id="ui-pdf-text">මෙම ලිපියේ PDF එක ලබා ගන්න</span>
+                <span class="material-icons-round">picture_as_pdf</span> මෙම ලිපියේ PDF එක ලබා ගන්න
             </a>
         </div>
         <div style="margin-top:40px;padding:25px;background:var(--card-bg);border-radius:25px;text-align:center;border:1px solid #eee;box-shadow:0 8px 20px rgba(0,0,0,0.05);">
-            <p id="ui-inquiry-text" style="font-weight:bold;margin-bottom:20px;color:#2c3e50;font-size:16px;">ලිපිය පිළිබඳව විමසීමට:</p>
+            <p style="font-weight:bold;margin-bottom:20px;color:#2c3e50;font-size:16px;">ලිපිය පිළිබඳව විමසීමට:</p>
             <div style="display:flex;justify-content:center;gap:40px;">
                 <a id="wa-inquiry" href="#" style="text-decoration:none;">
                     <img src="https://img.icons8.com/color/96/whatsapp.png" style="width:55px;height:55px;" alt="WhatsApp">
@@ -639,49 +545,22 @@
             </div>
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:30px;margin-bottom:50px;">
-            <button id="ui-detail-home" style="background:#7f8c8d;color:white;border:none;padding:10px 20px;border-radius:20px;" onclick="closeDetail()">මුල් පිටුවට</button>
+            <button style="background:#7f8c8d;color:white;border:none;padding:10px 20px;border-radius:20px;" onclick="closeDetail()">මුල් පිටුවට</button>
             <div style="display:flex;gap:10px;">
-                <button id="ui-detail-prev" style="background:var(--p-color);color:white;border:none;padding:10px 20px;border-radius:20px;" onclick="changeArticle(-1)">⬅ පෙර</button>
-                <button id="ui-detail-next" style="background:var(--p-color);color:white;border:none;padding:10px 20px;border-radius:20px;" onclick="changeArticle(1)">මීළඟ ➡</button>
+                <button style="background:var(--p-color);color:white;border:none;padding:10px 20px;border-radius:20px;" onclick="changeArticle(-1)">⬅ පෙර</button>
+                <button style="background:var(--p-color);color:white;border:none;padding:10px 20px;border-radius:20px;" onclick="changeArticle(1)">මීළඟ ➡</button>
             </div>
         </div>
     </div>
 
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="nav('home')"><span class="material-icons-round">home</span><b id="ui-nav-home">මුල</b></div>
-        <div class="nav-item" onclick="nav('fav')"><span class="material-icons-round">favorite</span><b id="ui-nav-fav">ප්‍රියතම</b></div>
-        <div class="nav-item" onclick="nav('merit')"><span class="material-icons-round">auto_stories</span><b id="ui-nav-merit">පිං පොත</b></div>
-        <div class="nav-item" onclick="nav('donate')"><span class="material-icons-round">volunteer_activism</span><b id="ui-nav-donate">ආධාර</b></div>
-        <div class="nav-item" onclick="nav('contact')"><span class="material-icons-round">call</span><b id="ui-nav-contact">සම්බන්ධතා</b></div>
-        <div class="nav-item" onclick="nav('about')"><span class="material-icons-round">info</span><b id="ui-nav-about">අප ගැන</b></div>
+        <div class="nav-item active" onclick="nav('home')"><span class="material-icons-round">home</span><b>මුල</b></div>
+        <div class="nav-item" onclick="nav('fav')"><span class="material-icons-round">favorite</span><b>ප්‍රියතම</b></div>
+        <div class="nav-item" onclick="nav('merit')"><span class="material-icons-round">auto_stories</span><b>පිං පොත</b></div>
+        <div class="nav-item" onclick="nav('donate')"><span class="material-icons-round">volunteer_activism</span><b>ආධාර</b></div>
+        <div class="nav-item" onclick="nav('contact')"><span class="material-icons-round">call</span><b>සම්බන්ධතා</b></div>
+        <div class="nav-item" onclick="nav('about')"><span class="material-icons-round">info</span><b>අප ගැන</b></div>
     </div>
-
-<div id="google-signin-overlay">
-    <div id="google-signin-box">
-        <div class="gs-icon">🔐</div>
-        <div class="gs-title" id="gs-title">ධර්ම නේත්‍රා</div>
-        <div class="gs-sub" id="gs-sub">Google Account එකෙන් Sign In කළ විට ඔබගේ ප්‍රියතම ලිපි, පිං පොත ඕනෑම device එකෙන් access කළ හැකිය.</div>
-        <ul class="gs-benefits" id="gs-benefits">
-            <li>☁️ ඕනෑම phone / device එකෙන් access</li>
-            <li>🛡️ Phone format / change කළත් data safe</li>
-            <li>❤️ Favorites sync across devices</li>
-            <li>📝 Merit book forever preserved</li>
-        </ul>
-        <button class="gs-google-btn" onclick="doGoogleSignIn()">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:24px;height:24px;background:white;border-radius:3px;padding:2px;">
-            <span id="gs-btn-text">Google එකෙන් Sign In වන්න</span>
-        </button>
-        <button class="gs-skip" id="gs-skip-btn" onclick="skipGoogleSignIn()">පසුව කරනවා / Skip</button>
-    </div>
-</div>
-
-<!-- Profile Popup -->
-<div id="profile-popup">
-    <img class="pp-avatar" id="pp-avatar" src="" alt="">
-    <div class="pp-name" id="pp-name"></div>
-    <div class="pp-email" id="pp-email"></div>
-    <button class="pp-signout" onclick="doSignOut()" id="pp-signout-btn">Sign Out</button>
-</div>
 
 <div id="whatsapp-popup-overlay">
     <div id="whatsapp-popup">
@@ -689,18 +568,18 @@
             <div class="popup-icons">✨ 🕉️ 🪔 🕉️ ✨</div>
             <div class="popup-title">ධර්ම නේත්‍රා</div>
         </div>
-        <div id="ui-wa-subtitle" class="popup-subtitle">🔔 විශේෂ දැනුම්දීමක්!</div>
-        <div id="ui-wa-message" class="popup-message">දෛනික ධර්ම දේශනා, යාවත්කාලීන කිරීම් සහ විශේෂ දැනුම්දීම් ලබා ගැනීමට අපගේ WhatsApp Channel එකට ඔබත් අනිවාර්යයෙන් එක්වන්න.</div>
-        <ul class="popup-benefits" id="ui-wa-benefits">
+        <div class="popup-subtitle">🔔 විශේෂ දැනුම්දීමක්!</div>
+        <div class="popup-message">දෛනික ධර්ම දේශනා, යාවත්කාලීන කිරීම් සහ විශේෂ දැනුම්දීම් ලබා ගැනීමට අපගේ WhatsApp Channel එකට ඔබත් අනිවාර්යයෙන් එක්වන්න.</div>
+        <ul class="popup-benefits">
             <li>✅ දෛනික දහම් මතක් කිරීම්</li>
             <li>✅ නව ධර්ම ලිපි දැනුම්දීම්</li>
             <li>✅ යෙදුම් යාවත්කාලීන කිරීම්</li>
             <li>✅ විශේෂ ධර්ම වැඩසටහන්</li>
             <li>✅ භාවනා මතක් කිරීම්</li>
         </ul>
-        <button id="ui-wa-btn" class="popup-button" onclick="joinWhatsAppChannel()">💚 Channel එකට Join වන්න</button>
-        <div class="popup-countdown"><span id="ui-wa-countdown-label">⏳ ස්වයංක්‍රීයව වසා දමයි:</span> <span id="countdown-timer" class="countdown-number countdown-green">6</span>s</div>
-        <div id="ui-wa-footer" class="popup-footer">පින් සිද්ධ වේවා! 🙏</div>
+        <button class="popup-button" onclick="joinWhatsAppChannel()">💚 Channel එකට Join වන්න</button>
+        <div class="popup-countdown">⏳ ස්වයංක්‍රීයව වසා දමයි: <span id="countdown-timer" class="countdown-number countdown-green">6</span>s</div>
+        <div class="popup-footer">පින් සිද්ධ වේවා! 🙏</div>
     </div>
 </div>
 
@@ -709,26 +588,26 @@
         <div class="ak-header">
             <div class="ak-logo">🔐</div>
             <div class="ak-title">ධර්ම නේත්‍රා</div>
-            <div id="ui-ak-subtitle" class="ak-subtitle">ප්‍රවේශ යතුර ලබා දෙන්න</div>
+            <div class="ak-subtitle">ප්‍රවේශ යතුර ලබා දෙන්න</div>
         </div>
         <div class="ak-divider"></div>
         <div class="ak-section">
-            <div id="ui-ak-label" class="ak-label">🗝️ ඔබේ ACCESS KEY එක ලබා දෙන්න</div>
+            <div class="ak-label">🗝️ ඔබේ ACCESS KEY එක ලබා දෙන්න</div>
             <input type="text" id="accessKeyInput" placeholder="ACCESS KEY ඇතුළු කරන්න" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
             <div id="ak-error"></div>
-            <button id="ui-ak-enter-btn" class="ak-enter-btn" onclick="verifyAccessKey()">
+            <button class="ak-enter-btn" onclick="verifyAccessKey()">
                 <span style="font-size:18px;">✅</span> ඇතුළු වන්න
             </button>
         </div>
         <div class="ak-divider"></div>
         <div class="ak-payment-section">
-            <div id="ui-ak-payment-title" class="ak-payment-title">⚠️ ඔබ රු. 150 ක මාසික ගෙවීම සිදු කොට නැද්ද.?</div>
-            <div id="ui-ak-payment-text" class="ak-payment-text">දැන්ම මෙම WhatsApp බොත්තම ඔබා ඔබේ ගෙවීම සිදු කොට ACCESS KEY ලබා ගන්න</div>
-            <button id="ui-ak-wa-btn" class="ak-wa-btn" onclick="openPaymentWhatsApp()">
+            <div class="ak-payment-title">⚠️ ඔබ රු. 150 ක මාසික ගෙවීම සිදු කොට නැද්ද.?</div>
+            <div class="ak-payment-text">දැන්ම මෙම WhatsApp බොත්තම ඔබා ඔබේ ගෙවීම සිදු කොට ACCESS KEY ලබා ගන්න</div>
+            <button class="ak-wa-btn" onclick="openPaymentWhatsApp()">
                 <span style="font-size:20px;">💬</span> WhatsApp හරහා KEY ලබා ගන්න
             </button>
         </div>
-        <div id="ui-ak-footer" class="ak-footer">🙏 ධර්ම නේත්‍රා සදහම් අවකාශය</div>
+        <div class="ak-footer">🙏 ධර්ම නේත්‍රා සදහම් අවකාශය</div>
     </div>
 </div>
 
@@ -736,21 +615,21 @@
     <div id="donation-popup">
         <button class="donation-close-x" onclick="closeDonationPopup()">×</button>
         <div class="donation-icon-box">🙏</div>
-        <h3 id="ui-don-title">ධර්ම නේත්‍රා ආධාර අංශය</h3>
-        <p id="ui-don-desc">මෙම 'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් පින්වත් ඔබටත් සහය විය හැකියි.</p>
+        <h3>ධර්ම නේත්‍රා ආධාර අංශය</h3>
+        <p>මෙම 'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් පින්වත් ඔබටත් සහය විය හැකියි.</p>
         <div class="donation-message-box">
-            <p><strong id="ui-don-msg-title">පිනැති ඔබත් දායක වීමට කැමතිනම්:</strong></p>
-            <p id="ui-don-msg1">✦ 'ආධාර' පිටුවෙහි උපදෙස් අනුගමනය කරන්න</p>
-            <p id="ui-don-msg2">✦ හෝ පහත බොත්තම ඔබා WhatsApp හරහා අප වෙත පණිවිඩයක් යොමු කරන්න</p>
+            <p><strong>පිනැති ඔබත් දායක වීමට කැමතිනම්:</strong></p>
+            <p>✦ 'ආධාර' පිටුවෙහි උපදෙස් අනුගමනය කරන්න</p>
+            <p>✦ හෝ පහත බොත්තම ඔබා WhatsApp හරහා අප වෙත පණිවිඩයක් යොමු කරන්න</p>
         </div>
         <button class="donation-whatsapp-btn" onclick="sendDonationWhatsApp()">
-            <span style="font-size:26px;">💬</span> <span id="ui-don-wa-text">WhatsApp පණිවිඩය යවන්න</span>
+            <span style="font-size:26px;">💬</span> WhatsApp පණිවිඩය යවන්න
         </button>
         <div class="donation-countdown-box">
-            <span id="ui-don-countdown-label">ස්වයංක්‍රීයව වැසෙනතුරු:</span>
+            <span>ස්වයංක්‍රීයව වැසෙනතුරු:</span>
             <div class="donation-countdown-number" id="donation-countdown-timer">10</div>
         </div>
-        <button id="ui-don-later-btn" class="donation-close-btn" onclick="closeDonationPopup()">පසුව</button>
+        <button class="donation-close-btn" onclick="closeDonationPopup()">පසුව</button>
     </div>
 </div>
 
@@ -766,157 +645,9 @@
     };
     firebase.initializeApp(firebaseConfig);
     var db = firebase.database();
-    var auth = firebase.auth();
-    var currentUser = null; // Google signed-in user
-    var userDataId = null;  // uid if signed in, else deviceId
-
-    // ===== GOOGLE SIGN-IN =====
-    function getUserDataId() {
-        return currentUser ? currentUser.uid : deviceId;
-    }
-
-    function showGoogleSignIn() {
-        document.getElementById('google-signin-overlay').classList.add('show');
-        // Close profile popup if open
-        document.getElementById('profile-popup').classList.remove('show');
-    }
-
-    function skipGoogleSignIn() {
-        document.getElementById('google-signin-overlay').classList.remove('show');
-    }
-
-    function doGoogleSignIn() {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).then(function(result) {
-            document.getElementById('google-signin-overlay').classList.remove('show');
-            // migration handled by onAuthStateChanged
-        }).catch(function(err) {
-            var btnText = document.getElementById('gs-btn-text');
-            if (btnText) btnText.innerText = '❌ Error — Try Again';
-            setTimeout(function(){ if (btnText) btnText.innerText = currentLang === 'en' ? 'Sign in with Google' : 'Google එකෙන් Sign In වන්න'; }, 2500);
-        });
-    }
-
-    function doSignOut() {
-        auth.signOut().then(function() {
-            currentUser = null;
-            updateAuthUI(null);
-            document.getElementById('profile-popup').classList.remove('show');
-        });
-    }
-
-    function toggleProfilePopup() {
-        var pp = document.getElementById('profile-popup');
-        pp.classList.toggle('show');
-    }
-
-    // Close profile popup on outside click
-    document.addEventListener('click', function(e) {
-        var pp = document.getElementById('profile-popup');
-        var authArea = document.getElementById('header-auth-area');
-        if (pp.classList.contains('show') && !authArea.contains(e.target)) {
-            pp.classList.remove('show');
-        }
-    });
-
-    function updateAuthUI(user) {
-        var area = document.getElementById('header-auth-area');
-        if (user) {
-            var photoUrl = user.photoURL || 'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg';
-            area.innerHTML = '<img class="google-user-avatar" src="' + photoUrl + '" alt="profile" onclick="toggleProfilePopup()">';
-            // Profile popup
-            var ppAvatar = document.getElementById('pp-avatar');
-            var ppName = document.getElementById('pp-name');
-            var ppEmail = document.getElementById('pp-email');
-            if (ppAvatar) ppAvatar.src = photoUrl;
-            if (ppName) ppName.innerText = user.displayName || '';
-            if (ppEmail) ppEmail.innerText = user.email || '';
-        } else {
-            area.innerHTML = '<button class="google-signin-btn" id="gs-header-btn" onclick="showGoogleSignIn()">'
-                + '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">'
-                + '<span id="gs-header-label">' + (currentLang === 'en' ? 'Sign In' : 'Sign In') + '</span></button>';
-        }
-    }
-
-    // Migrate device data → uid on first sign-in
-    function migrateDeviceDataToUid(uid) {
-        var oldPath = 'user_data/' + deviceId;
-        var newPath = 'user_data/' + uid;
-        db.ref(newPath).once('value').then(function(snap) {
-            if (!snap.exists()) {
-                // No data under uid yet — copy from deviceId
-                db.ref(oldPath).once('value').then(function(oldSnap) {
-                    if (oldSnap.exists()) {
-                        db.ref(newPath).set(oldSnap.val()).then(function() {
-                            db.ref(oldPath).remove(); // clean up old
-                        }).catch(function(){});
-                    }
-                }).catch(function(){});
-            }
-            // If uid data exists, keep it (don't overwrite with possibly older device data)
-        });
-    }
-
-    // Auth state listener
-    auth.onAuthStateChanged(function(user) {
-        currentUser = user;
-        updateAuthUI(user);
-        if (user) {
-            migrateDeviceDataToUid(user.uid);
-            // Reload user data from Firebase under uid
-            loadUserDataFromFirebase(user.uid);
-        }
-    });
 
     var favs = JSON.parse(localStorage.getItem('myFavs') || '[]');
     var readList = JSON.parse(localStorage.getItem('myReads') || '[]');
-
-    // Load user data from Firebase (called on auth state change or page load)
-    function loadUserDataFromFirebase(uid) {
-        var path = 'user_data/' + uid;
-        db.ref(path + '/favs').once('value').then(function(snap) {
-            if (snap.exists() && Array.isArray(snap.val()) && snap.val().length > 0) {
-                favs = snap.val();
-                localStorage.setItem('myFavs', JSON.stringify(favs));
-            }
-        }).catch(function(){});
-        db.ref(path + '/merits').once('value').then(function(snap) {
-            if (snap.exists() && Array.isArray(snap.val()) && snap.val().length > 0) {
-                localStorage.setItem('myMerits', JSON.stringify(snap.val()));
-                renderMerits(snap.val());
-            }
-        }).catch(function(){});
-        db.ref(path + '/reads').once('value').then(function(snap) {
-            if (snap.exists() && Array.isArray(snap.val()) && snap.val().length > 0) {
-                readList = snap.val();
-                localStorage.setItem('myReads', JSON.stringify(readList));
-            }
-        }).catch(function(){});
-    }
-
-    // Firebase restore on page load (for deviceId fallback when not signed in)
-    (function restoreUserDataIfNeeded() {
-        window.addEventListener('load', function() {
-            if (currentUser) return; // handled by onAuthStateChanged
-            var id = deviceId;
-            if (favs.length === 0) {
-                db.ref('user_data/' + id + '/favs').once('value').then(function(snap) {
-                    if (snap.exists() && Array.isArray(snap.val()) && snap.val().length > 0) {
-                        favs = snap.val();
-                        localStorage.setItem('myFavs', JSON.stringify(favs));
-                    }
-                }).catch(function(){});
-            }
-            var localMerits = JSON.parse(localStorage.getItem('myMerits') || '[]');
-            if (localMerits.length === 0) {
-                db.ref('user_data/' + id + '/merits').once('value').then(function(snap) {
-                    if (snap.exists() && Array.isArray(snap.val()) && snap.val().length > 0) {
-                        localStorage.setItem('myMerits', JSON.stringify(snap.val()));
-                    }
-                }).catch(function(){});
-            }
-        });
-    })();
     var timerActive = false;
     var timeCount = 0;
     var timerPtr;
@@ -926,9 +657,8 @@
 
     function updateClock() {
         var now = new Date();
-        var locale = currentLang === 'en' ? 'en-US' : 'si-LK';
-        var time = now.toLocaleTimeString(locale, {hour12:true, hour:'2-digit', minute:'2-digit'});
-        var date = now.toLocaleDateString(locale, {year:'numeric', month:'long', day:'numeric', weekday:'long'});
+        var time = now.toLocaleTimeString('si-LK', {hour12:true, hour:'2-digit', minute:'2-digit'});
+        var date = now.toLocaleDateString('si-LK', {year:'numeric', month:'long', day:'numeric', weekday:'long'});
         document.getElementById('si-time').innerText = "⏱ " + time;
         document.getElementById('si-date').innerText = "📅 " + date;
     }
@@ -938,7 +668,7 @@
     function controlTimer() {
         if (!timerActive) {
             timerActive = true;
-            document.getElementById('timer-btn').innerText = T[currentLang].timerStop;
+            document.getElementById('timer-btn').innerText = "නවතන්න";
             timerPtr = setInterval(function() {
                 timeCount++;
                 var h = Math.floor(timeCount/3600).toString().padStart(2,'0');
@@ -948,7 +678,7 @@
             }, 1000);
         } else {
             timerActive = false;
-            document.getElementById('timer-btn').innerText = T[currentLang].timerStart;
+            document.getElementById('timer-btn').innerText = "අරඹන්න";
             clearInterval(timerPtr);
         }
     }
@@ -958,367 +688,37 @@
         clearInterval(timerPtr);
         timeCount = 0;
         document.getElementById('timer-val').innerText = "00:00:00";
-        document.getElementById('timer-btn').innerText = T[currentLang].timerStart;
+        document.getElementById('timer-btn').innerText = "අරඹන්න";
     }
-
-    var currentLang = sessionStorage.getItem('dharma_lang') || 'si';
-    var allArticlesData = [];
 
     function filterArticles() {
         var input = document.getElementById('searchInput').value.toLowerCase();
-        if (!input) { renderArticlesByLang(currentLang); return; }
-        var list = document.getElementById('article-list');
-        list.innerHTML = '';
-        allArticleIds = [];
-        allArticlesData.forEach(function(item) {
-            var id = item.id;
-            var a = item.data;
-            if ((a.lang || 'si') !== currentLang) return;
-            if (!a.title.toLowerCase().includes(input) && !a.content.toLowerCase().includes(input)) return;
-            allArticleIds.push(id);
-            var favClass = favs.includes(id) ? 'fav-on' : '';
-            var readBadge = readList.includes(id) ? '<span class="read-status">'+T[currentLang].readBadge+'</span>' : '';
-            var pdfTag = (a.pdf_link && a.pdf_link !== "") ? '<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-tag">' : '';
-            list.innerHTML += '<div class="card" onclick="openFull(\''+id+'\')" style="cursor:pointer;">' +
-                '<span class="material-icons-round heart-icon '+favClass+'" onclick="doFav(\''+id+'\',event)">favorite</span>' +
-                '<h3>'+a.title+' '+readBadge+' '+pdfTag+'</h3>' +
-                '<p style="font-size:14px;opacity:0.8;">'+a.content.substring(0,100)+'...</p></div>';
-        });
-    }
-
-    // ==================== TRANSLATION SYSTEM ====================
-    var T = {
-        si: {
-            slogan: '"ප්‍රඥාවේ ආලෝකය පතුරුවන සදහම් අවකාශය"',
-            meditation: '🧘 භාවනා කාලය:',
-            timerStart: 'අරඹන්න', timerStop: 'නවතන්න', timerReset: 'මුලට',
-            search: 'ලිපි සොයන්න...',
-            navHome: 'මුල', navFav: 'ප්‍රියතම', navMerit: 'පිං පොත',
-            navDonate: 'ආධාර', navContact: 'සම්බන්ධතා', navAbout: 'අප ගැන',
-            favTitle: '❤️ ප්‍රියතම ලිපි',
-            favEmpty: 'තවමත් ප්‍රියතම ලිපි නැත.',
-            donateHeading: '🙏 මාසික නඩත්තු ආධාර',
-            donateReceived: 'ලැබුණු මුදල', donateRemaining: 'ඉතිරි', donateTarget: 'ඉලක්කය',
-            leaderboardTitle: '🏆 මාසික ප්‍රධාන දායකයින්',
-            leaderboardEmpty: 'මෙම මාසය සඳහා දායකයෝ නොමැත.',
-            bankHeading: '🏦 ගිණුම් විස්තර',
-            bankDesc: 'ධර්ම නේත්‍රා සදහම් සේවාව ලොව පුරා විසිරී සිටින සැදැහැවතුන් වෙත අඛණ්ඩව සහ නොමිලේ සමීප කරවීම සඳහා මෙම ජංගම යෙදුම නඩත්තු කිරීම සහ එහි නවීකරණ කටයුතු සිදු කිරීමට විශාල පිරිවැයක් වැය වේ. මෙම උතුම් ධර්ම ප්‍රචාරක කටයුත්තට ඔබගේ ශක්ති ප්‍රමාණයෙන් දායක වීම මහා පින්කමකි.',
-            bankAcNo: 'ගිණුම් අංකය', bankOwner: 'හිමිකරු', bankName: 'බැංකුව', bankBranch: 'ශාඛාව',
-            receiptText: 'රිසිට්පත යොමු කිරීම සඳහා:', donateWaText: 'WhatsApp එවන්න',
-            contactH1: '🙏 ගෞරවණීය ස්වාමින් වහන්සේ',
-            contactWarning: '⚠️ කරුණාකර දුරකථන ඇමතුම් ලබා ගැනීමෙන් වළකින්න.',
-            contactH2: '⚙️ තාක්ෂණික කණ්ඩායම',
-            contactTech: 'යෙදුමෙහි තාක්ෂණික ගැටළු සඳහා සම්බන්ධ වන්න:',
-            aboutHeading: 'අප ගැන',
-            aboutText: '<p><b>පූජ්‍යපාද අංහෙට්ටිගම සුගතනන්ද ස්වාමීන් වහන්සේ (අංහෙට්ටිගම පොඩි හාමුදුරුවෝ)</b> යනු මූලික පිරිවෙන් අධ්‍යාපනය, ප්‍රාචීන භාෂා අධ්‍යාපනය සහ ත්‍රිපිටක ධර්ම අධ්‍යාපනය මැනවින් හදාරා ඇති ගෞරවනීය ස්වාමීන් වහන්සේ නමකි. උන්වහන්සේ ලේඛන කලාවෙහි මෙන්ම තොරතුරු තාක්ෂණවේදය (Diploma in Information Technology) පිළිබඳවද හසල දැනුමක් ඇති තරුණ යතිවරයාණන් වහන්සේ නමකි.</p><p>ගෞරවණීය ස්වාමින් වහන්සේගේ පූර්ණ අවසරය සහ මඟ පෙන්වීම යටතේ <b>GMU STUDIO (PVT) LTD</b> ආයතනය විසින් මෙම "ධර්ම නේත්‍රා" යෙදුම නිර්මාණය කොට පවත්වා ගෙන යනු ලබයි. අපගේ අරමුණ නූතන තාක්ෂණය හරහා පිරිසිදු ශ්‍රී සද්ධර්මය ලොව පුරා ප්‍රචලිත කිරීමයි.</p>',
-            meritHeading: '📝 පිං පොත',
-            meritPlaceholder: 'අද ඔබ සිදුකළ උතුම් පිංකම් මෙතැන ලියන්න...',
-            meritBtn: 'පිං පොතට එක් කරන්න',
-            detailBack: '⬅ ආපසු', listenStart: '🔊 ශ්‍රවණය', listenStop: '🛑 නවතන්න',
-            pdfText: 'මෙම ලිපියේ PDF එක ලබා ගන්න',
-            inquiryText: 'ලිපිය පිළිබඳව විමසීමට:',
-            detailHome: 'මුල් පිටුවට', detailPrev: '⬅ පෙර', detailNext: 'මීළඟ ➡',
-            readBadge: 'කියවන ලදී',
-            articleEmpty: 'තවමත් ලිපි ඇතුළත් කර නැත.',
-            waSubtitle: '🔔 විශේෂ දැනුම්දීමක්!',
-            waMessage: 'දෛනික ධර්ම දේශනා, යාවත්කාලීන කිරීම් සහ විශේෂ දැනුම්දීම් ලබා ගැනීමට අපගේ WhatsApp Channel එකට ඔබත් අනිවාර්යයෙන් එක්වන්න.',
-            waBenefits: ['✅ දෛනික දහම් මතක් කිරීම්','✅ නව ධර්ම ලිපි දැනුම්දීම්','✅ යෙදුම් යාවත්කාලීන කිරීම්','✅ විශේෂ ධර්ම වැඩසටහන්','✅ භාවනා මතක් කිරීම්'],
-            waBtn: '💚 Channel එකට Join වන්න',
-            waCountdown: '⏳ ස්වයංක්‍රීයව වසා දමයි:',
-            waFooter: 'පින් සිද්ධ වේවා! 🙏',
-            akSubtitle: 'ප්‍රවේශ යතුර ලබා දෙන්න',
-            akLabel: '🗝️ ඔබේ ACCESS KEY එක ලබා දෙන්න',
-            akPlaceholder: 'ACCESS KEY ඇතුළු කරන්න',
-            akEnterBtn: '✅ ඇතුළු වන්න',
-            akPayTitle: '⚠️ ඔබ රු. 150 ක මාසික ගෙවීම සිදු කොට නැද්ද.?',
-            akPayText: 'දැන්ම මෙම WhatsApp බොත්තම ඔබා ඔබේ ගෙවීම සිදු කොට ACCESS KEY ලබා ගන්න',
-            akWaBtn: '💬 WhatsApp හරහා KEY ලබා ගන්න',
-            akFooter: '🙏 ධර්ම නේත්‍රා සදහම් අවකාශය',
-            donTitle: 'ධර්ම නේත්‍රා ආධාර අංශය',
-            donDesc: 'මෙම \'ධර්ම නේත්‍රා\' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් පින්වත් ඔබටත් සහය විය හැකියි.',
-            donMsgTitle: 'පිනැති ඔබත් දායක වීමට කැමතිනම්:',
-            donMsg1: '✦ \'ආධාර\' පිටුවෙහි උපදෙස් අනුගමනය කරන්න',
-            donMsg2: '✦ හෝ පහත බොත්තම ඔබා WhatsApp හරහා අප වෙත පණිවිඩයක් යොමු කරන්න',
-            donWaText: 'WhatsApp පණිවිඩය යවන්න',
-            donCountdown: 'ස්වයංක්‍රීයව වැසෙනතුරු:', donLater: 'පසුව',
-            donStatus100: '🎉 මෙම මස ඉලක්කය සාර්ථකයි! ඔබ සැමට පිං!',
-            donStatus50: '🙏 තවත් රු. {n} ක් ඉලක්කයට ළඟා වීමට අවශ්‍යයි',
-            donStatusLow: '💛 ඔබේ ආධාරය ඉතා වටිනවා — රු. {n} ක් ඉතිරිව ඇත',
-            akErrEmpty: '⚠️ කරුණාකර ACCESS KEY එක ඇතුළු කරන්න.',
-            akErrInvalid: '❌ ACCESS KEY වැරදිය. නැවත උත්සාහ කරන්න.',
-            akErrInactive: '❌ ACCESS KEY අක්රිය කර ඇත. නව KEY එකක් ලබා ගන්න.',
-            akErrExpired: '❌ ACCESS KEY කාලය ඉකුත් වී ඇත. නව KEY එකක් ලබා ගන්න.',
-            akErrConn: '⚠️ සම්බන්ධතා දෝෂයක්. නැවත උත්සාහ කරන්න.',
-            akSuccess: '✅ ස්වාගතයි! ඇතුළු වෙමින්...',
-            monthNames: ['ජනවාරි','පෙබරවාරි','මාර්තු','අප්‍රේල්','මැයි','ජූනි','ජූලි','අගෝස්තු','සැප්තැම්බර්','ඔක්තෝබර්','නොවැම්බර්','දෙසැම්බර්'],
-            donateMonthSuffix: 'මස නඩත්තු ඉලක්කය',
-            currency: 'රු. ',
-            waInquiryText: 'ගෞරවනීය ස්වාමින් වහන්ස, ',
-            waInquirySuffix: ' ලිපිය පිළිබඳවයි:',
-            mailSubject: 'ලිපිය පිළිබඳ විමසීම',
-            mailBody: 'ගෞරවනීය ස්වාමින් වහන්ස, ',
-            mailBodySuffix: ' ලිපිය පිළිබඳවයි:',
-            donReceiptWaText: 'පින්කම සඳහා ලබා දුන් ආධාරයේ රිසිට්පතයි:',
-            donWaMsgFull: "පින්වත් තාක්ෂණික කණ්ඩායම වෙත,\n\n'ධර්ම නේත්‍රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් මා දායක වීමට කැමැත්තෙමි.\n\nකරුණාකර අදාළ විස්තර මා වෙත යොමු කරන ලෙස කාරුණිකව ඉල්ලා සිටිමි.",
-            printScreenAlert: 'ආරක්ෂිත හේතූන් මත මෙය අවහිර කර ඇත.',
-            gsTitle: 'ධර්ම නේත්‍රා',
-            gsSub: 'Google Account එකෙන් Sign In කළ විට ඔබගේ ප්‍රියතම ලිපි සහ පිං පොත ඕනෑම device එකෙන් access කළ හැකිය.',
-            gsBenefits: ['☁️ ඕනෑම phone / device එකෙන් access','🛡️ Phone format / change කළත් data safe','❤️ ප්‍රියතම ලිපි sync','📝 පිං පොත සදහටම ආරක්ෂිතයි'],
-            gsBtn: 'Google එකෙන් Sign In වන්න',
-            gsSkip: 'පසුව කරනවා / Skip',
-            gsSignIn: 'Sign In',
-            gsSignOut: 'Sign Out',
-            meritEmpty: 'පිං පොත හිස්ය.',
-            akPayWaMsg: "ආයුබෝවන්.!\n\nමා හට ධර්ම නේත්‍රා යෙදුම සඳහා වන මාසික රුපියල් 150 ක ගෙවීම සිදු කොට මෙම මස ACCESS KEY එක ලබා ගැනීමට අවශ්‍යයි.\n\nස්තූතියි.!",
-        },
-        en: {
-            slogan: '"The Sacred Space Spreading the Light of Wisdom"',
-            meditation: '🧘 Meditation Time:',
-            timerStart: 'Start', timerStop: 'Stop', timerReset: 'Reset',
-            search: 'Search articles...',
-            navHome: 'Home', navFav: 'Favourites', navMerit: 'Merit Book',
-            navDonate: 'Donate', navContact: 'Contact', navAbout: 'About',
-            favTitle: '❤️ Favourite Articles',
-            favEmpty: 'No favourite articles yet.',
-            donateHeading: '🙏 Monthly Maintenance Support',
-            donateReceived: 'Received', donateRemaining: 'Remaining', donateTarget: 'Target',
-            leaderboardTitle: '🏆 Monthly Top Donors',
-            leaderboardEmpty: 'No donors for this month yet.',
-            bankHeading: '🏦 Bank Details',
-            bankDesc: 'Maintaining and upgrading the Dharma Nethra app to freely deliver the Dhamma to devotees around the world requires significant resources. Contributing according to your ability to this noble mission of spreading the Dhamma is a great act of merit.',
-            bankAcNo: 'Account Number', bankOwner: 'Account Holder', bankName: 'Bank', bankBranch: 'Branch',
-            receiptText: 'To send your receipt:', donateWaText: 'Send via WhatsApp',
-            contactH1: '🙏 The Venerable Thero',
-            contactWarning: '⚠️ Please refrain from making phone calls.',
-            contactH2: '⚙️ Technical Team',
-            contactTech: 'Contact us for technical issues with the app:',
-            aboutHeading: 'About Us',
-            aboutText: '<p><b>Venerable Anhettigama Sugathananda Thero (Anhettigama Podi Hamuduruwo)</b> is a respected monk who has thoroughly studied monastic education, ancient languages, and Tripitaka Dhamma. He is a young scholar monk with expertise in both literary arts and Information Technology (Diploma in IT).</p><p>Under the full guidance and blessings of the Venerable Thero, <b>GMU STUDIO (PVT) LTD</b> has created and maintains the "Dharma Nethra" app. Our mission is to spread the pure Sri Saddharma throughout the world through modern technology.</p>',
-            meritHeading: '📝 Merit Book',
-            meritPlaceholder: 'Write your meritorious deeds for today here...',
-            meritBtn: 'Add to Merit Book',
-            detailBack: '⬅ Back', listenStart: '🔊 Listen', listenStop: '🛑 Stop',
-            pdfText: 'Download PDF of this Article',
-            inquiryText: 'Inquire about this article:',
-            detailHome: 'Home', detailPrev: '⬅ Prev', detailNext: 'Next ➡',
-            readBadge: 'Read',
-            articleEmpty: 'No articles added yet.',
-            waSubtitle: '🔔 Special Announcement!',
-            waMessage: 'Join our WhatsApp Channel to receive daily Dhamma teachings, updates, and special notifications.',
-            waBenefits: ['✅ Daily Dhamma reminders','✅ New article notifications','✅ App updates','✅ Special Dhamma programs','✅ Meditation reminders'],
-            waBtn: '💚 Join our Channel',
-            waCountdown: '⏳ Auto-closes in:',
-            waFooter: 'May you be blessed! 🙏',
-            akSubtitle: 'Enter your Access Key',
-            akLabel: '🗝️ Enter your ACCESS KEY',
-            akPlaceholder: 'Enter ACCESS KEY here',
-            akEnterBtn: '✅ Enter',
-            akPayTitle: '⚠️ Haven\'t made your monthly payment of Rs. 150 yet?',
-            akPayText: 'Tap the WhatsApp button below to make your payment and receive your ACCESS KEY',
-            akWaBtn: '💬 Get KEY via WhatsApp',
-            akFooter: '🙏 Dharma Nethra — Sacred Dhamma Space',
-            donTitle: 'Dharma Nethra Donation Section',
-            donDesc: 'You can help support the technical maintenance of the \'Dharma Nethra\' app.',
-            donMsgTitle: 'If you wish to contribute:',
-            donMsg1: '✦ Follow the instructions on the \'Donate\' page',
-            donMsg2: '✦ Or tap the button below to send us a message via WhatsApp',
-            donWaText: 'Send WhatsApp Message',
-            donCountdown: 'Auto-closes in:', donLater: 'Later',
-            donStatus100: '🎉 This month\'s target has been reached! Thank you all!',
-            donStatus50: '🙏 Rs. {n} more needed to reach the target',
-            donStatusLow: '💛 Your support is greatly valued — Rs. {n} still remaining',
-            akErrEmpty: '⚠️ Please enter your ACCESS KEY.',
-            akErrInvalid: '❌ Invalid ACCESS KEY. Please try again.',
-            akErrInactive: '❌ ACCESS KEY has been deactivated. Please get a new KEY.',
-            akErrExpired: '❌ ACCESS KEY has expired. Please get a new KEY.',
-            akErrConn: '⚠️ Connection error. Please try again.',
-            akSuccess: '✅ Welcome! Logging in...',
-            monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'],
-            donateMonthSuffix: 'Monthly Maintenance Target',
-            currency: 'Rs. ',
-            waInquiryText: 'Venerable Thero, regarding the article \'',
-            waInquirySuffix: '\':',
-            mailSubject: 'Inquiry about an article',
-            mailBody: 'Venerable Thero, regarding the article \'',
-            mailBodySuffix: '\':',
-            donReceiptWaText: 'Receipt for the donation made:',
-            donWaMsgFull: "Dear Technical Team,\n\nI would like to contribute towards the technical maintenance of the 'Dharma Nethra' app.\n\nPlease send me the relevant details at your earliest convenience.",
-            printScreenAlert: 'This action is blocked for security reasons.',
-            gsTitle: 'Dharma Nethra',
-            gsSub: 'Sign in with Google to access your favourite articles and Merit Book from any device.',
-            gsBenefits: ['☁️ Access from any phone or device','🛡️ Safe even after phone format or change','❤️ Favourites synced across devices','📝 Merit Book preserved forever'],
-            gsBtn: 'Sign in with Google',
-            gsSkip: 'Skip for now',
-            gsSignIn: 'Sign In',
-            gsSignOut: 'Sign Out',
-            meritEmpty: 'Your Merit Book is empty.',
-            akPayWaMsg: "Hello!\n\nI would like to make the monthly payment of Rs. 150 for the Dharma Nethra app and receive this month's ACCESS KEY.\n\nThank you!",
-        }
-    };
-
-    function applyLang(lang) {
-        var t = T[lang];
-        function setText(id, val) { var el = document.getElementById(id); if (el) el.innerText = val; }
-        function setHtml(id, val) { var el = document.getElementById(id); if (el) el.innerHTML = val; }
-        function setPlaceholder(id, val) { var el = document.getElementById(id); if (el) el.placeholder = val; }
-
-        setText('ui-slogan', t.slogan);
-        setText('ui-meditation-label', t.meditation);
-        // Timer button — only change if not mid-session
-        var tb = document.getElementById('timer-btn');
-        if (tb) tb.innerText = timerActive ? t.timerStop : t.timerStart;
-        setText('timer-reset-btn', t.timerReset);
-        setPlaceholder('searchInput', t.search);
-        // Nav
-        setText('ui-nav-home', t.navHome); setText('ui-nav-fav', t.navFav);
-        setText('ui-nav-merit', t.navMerit); setText('ui-nav-donate', t.navDonate);
-        setText('ui-nav-contact', t.navContact); setText('ui-nav-about', t.navAbout);
-        // Favourites
-        setText('ui-fav-title', t.favTitle);
-        // Donate page
-        setText('ui-donate-heading', t.donateHeading);
-        setText('ui-donate-received-label', t.donateReceived);
-        setText('ui-donate-remaining-label', t.donateRemaining);
-        setText('ui-donate-target-label', t.donateTarget);
-        setText('ui-leaderboard-title', t.leaderboardTitle);
-        setText('ui-bank-heading', t.bankHeading);
-        setText('ui-bank-desc', t.bankDesc);
-        setText('ui-bank-acno', t.bankAcNo); setText('ui-bank-owner', t.bankOwner);
-        setText('ui-bank-name', t.bankName); setText('ui-bank-branch', t.bankBranch);
-        setText('ui-receipt-text', t.receiptText);
-        setText('ui-donate-wa-text', t.donateWaText);
-        var rLink = document.getElementById('ui-donate-receipt-link');
-        if (rLink) rLink.href = 'https://wa.me/94763861339?text=' + encodeURIComponent(t.donReceiptWaText);
-        // Contact
-        setText('ui-contact-h1', t.contactH1);
-        setText('ui-contact-warning', t.contactWarning);
-        setText('ui-contact-h2', t.contactH2);
-        setText('ui-contact-tech', t.contactTech);
-        // About
-        setText('ui-about-heading', t.aboutHeading);
-        setHtml('ui-about-text', t.aboutText);
-        // Merit
-        setText('ui-merit-heading', t.meritHeading);
-        setPlaceholder('merit-text', t.meritPlaceholder);
-        setText('ui-merit-btn', t.meritBtn);
-        // Detail overlay
-        setText('ui-detail-back', t.detailBack);
-        var lb = document.getElementById('listen-btn');
-        if (lb && lb.innerText !== t.listenStop) lb.innerText = t.listenStart;
-        setText('ui-pdf-text', t.pdfText);
-        setText('ui-inquiry-text', t.inquiryText);
-        setText('ui-detail-home', t.detailHome);
-        setText('ui-detail-prev', t.detailPrev);
-        setText('ui-detail-next', t.detailNext);
-        // WhatsApp popup
-        setText('ui-wa-subtitle', t.waSubtitle);
-        setText('ui-wa-message', t.waMessage);
-        var bList = document.getElementById('ui-wa-benefits');
-        if (bList) bList.innerHTML = t.waBenefits.map(function(b){ return '<li>'+b+'</li>'; }).join('');
-        setText('ui-wa-btn', t.waBtn);
-        setText('ui-wa-countdown-label', t.waCountdown);
-        setText('ui-wa-footer', t.waFooter);
-        // Access Key popup
-        setText('ui-ak-subtitle', t.akSubtitle);
-        setText('ui-ak-label', t.akLabel);
-        setPlaceholder('accessKeyInput', t.akPlaceholder);
-        setText('ui-ak-enter-btn', t.akEnterBtn);
-        setText('ui-ak-payment-title', t.akPayTitle);
-        setText('ui-ak-payment-text', t.akPayText);
-        setText('ui-ak-wa-btn', t.akWaBtn);
-        setText('ui-ak-footer', t.akFooter);
-        // Donation popup
-        setText('ui-don-title', t.donTitle);
-        setText('ui-don-desc', t.donDesc);
-        setText('ui-don-msg-title', t.donMsgTitle);
-        setText('ui-don-msg1', t.donMsg1);
-        setText('ui-don-msg2', t.donMsg2);
-        setText('ui-don-wa-text', t.donWaText);
-        setText('ui-don-countdown-label', t.donCountdown);
-        setText('ui-don-later-btn', t.donLater);
-        // Google Sign-In overlay
-        var gsT = document.getElementById('gs-title');
-        var gsSb = document.getElementById('gs-sub');
-        var gsBn = document.getElementById('gs-btn-text');
-        var gsSk = document.getElementById('gs-skip-btn');
-        var gsBl = document.getElementById('gs-benefits');
-        if (gsT) gsT.innerText = t.gsTitle;
-        if (gsSb) gsSb.innerText = t.gsSub;
-        if (gsBn) gsBn.innerText = t.gsBtn;
-        if (gsSk) gsSk.innerText = t.gsSkip;
-        if (gsBl) gsBl.innerHTML = t.gsBenefits.map(function(b){ return '<li>'+b+'</li>'; }).join('');
-        // Profile popup sign out button
-        var ppSo = document.getElementById('pp-signout-btn');
-        if (ppSo) ppSo.innerText = t.gsSignOut;
-        // Header sign-in label
-        var gsHl = document.getElementById('gs-header-label');
-        if (gsHl) gsHl.innerText = t.gsSignIn;
-        // Donate month label + currency amounts update on lang switch
-        if (donateLoaded) {
-            var now = new Date();
-            updateDonateMonthLabel(now.getMonth() + 1, now.getFullYear());
-            // Re-render currency prefix in amounts (no Firebase re-read needed)
-            var cur = t.currency;
-            var recEl = document.getElementById('donate-received');
-            var remEl = document.getElementById('donate-remaining');
-            var tarEl = document.getElementById('donate-target');
-            if (recEl && recEl._rawValue !== undefined) recEl.innerText = cur + recEl._rawValue.toLocaleString();
-            if (remEl && remEl._rawValue !== undefined) remEl.innerText = cur + remEl._rawValue.toLocaleString();
-            if (tarEl && tarEl._rawValue !== undefined) tarEl.innerText = cur + tarEl._rawValue.toLocaleString();
-        }
-    }
-
-    function setLang(lang, btn) {
-        currentLang = lang;
-        sessionStorage.setItem('dharma_lang', lang);
-        document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
-        btn.classList.add('active');
-        applyLang(lang);
-        renderArticlesByLang(lang);
-    }
-
-    // Restore active lang button on load (after reload)
-    (function restoreLangBtn() {
-        if (currentLang === 'en') {
-            var btnSi = document.getElementById('lang-si');
-            var btnEn = document.getElementById('lang-en');
-            if (btnSi) btnSi.classList.remove('active');
-            if (btnEn) btnEn.classList.add('active');
-            applyLang('en');
-        }
-    })();
-
-    function renderArticlesByLang(lang) {
-        var list = document.getElementById('article-list');
-        list.innerHTML = '';
-        allArticleIds = [];
-        allArticlesData.forEach(function(item) {
-            var id = item.id;
-            var a = item.data;
-            var artLang = a.lang || 'si'; // default = සිංහල
-            if (artLang !== lang) return;
-            allArticleIds.push(id);
-            var favClass = favs.includes(id) ? 'fav-on' : '';
-            var readBadge = readList.includes(id) ? '<span class="read-status">'+T[lang].readBadge+'</span>' : '';
-            var pdfTag = (a.pdf_link && a.pdf_link !== "") ? '<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-tag">' : '';
-            list.innerHTML += '<div class="card" onclick="openFull(\''+id+'\')" style="cursor:pointer;">' +
-                '<span class="material-icons-round heart-icon '+favClass+'" onclick="doFav(\''+id+'\',event)">favorite</span>' +
-                '<h3>'+a.title+' '+readBadge+' '+pdfTag+'</h3>' +
-                '<p style="font-size:14px;opacity:0.8;">'+a.content.substring(0,100)+'...</p></div>';
-        });
-        if (allArticleIds.length === 0) {
-            list.innerHTML = '<p style="text-align:center;opacity:0.5;">'+T[lang].articleEmpty+'</p>';
+        var cards = document.getElementById('article-list').getElementsByClassName('card');
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].style.display = cards[i].innerText.toLowerCase().includes(input) ? "" : "none";
         }
     }
 
     db.ref('articles').on('value', function(snap) {
-        allArticlesData = [];
+        var list = document.getElementById('article-list');
+        list.innerHTML = '';
+        allArticleIds = [];
         if (snap.exists()) {
             snap.forEach(function(child) {
-                allArticlesData.push({ id: child.key, data: child.val() });
+                var a = child.val();
+                var id = child.key;
+                allArticleIds.push(id);
+                var favClass = favs.includes(id) ? 'fav-on' : '';
+                var readBadge = readList.includes(id) ? '<span class="read-status">කියවන ලදී</span>' : '';
+                var pdfTag = (a.pdf_link && a.pdf_link !== "") ? '<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-tag">' : '';
+                list.innerHTML += '<div class="card" onclick="openFull(\''+id+'\')" style="cursor:pointer;">' +
+                    '<span class="material-icons-round heart-icon '+favClass+'" onclick="doFav(\''+id+'\',event)">favorite</span>' +
+                    '<h3>'+a.title+' '+readBadge+' '+pdfTag+'</h3>' +
+                    '<p style="font-size:14px;opacity:0.8;">'+a.content.substring(0,100)+'...</p></div>';
             });
+        } else {
+            list.innerHTML = '<p style="text-align:center;opacity:0.5;">තවමත් ලිපි ඇතුළත් කර නැත.</p>';
         }
-        renderArticlesByLang(currentLang);
     });
 
     var donateLoaded = false;
@@ -1348,12 +748,11 @@
             } else {
                 pdfSection.style.display = 'none';
             }
-            document.getElementById('wa-inquiry').href = 'https://wa.me/94778803779?text=' + encodeURIComponent(T[currentLang].waInquiryText + a.title + T[currentLang].waInquirySuffix);
-            document.getElementById('mail-inquiry').href = 'mailto:anhettigamapodihamuduruwo@gmail.com?subject=' + encodeURIComponent(T[currentLang].mailSubject) + '&body=' + encodeURIComponent(T[currentLang].mailBody + a.title + T[currentLang].mailBodySuffix);
+            document.getElementById('wa-inquiry').href = 'https://wa.me/94778803779?text=ගෞරවනීය ස්වාමින් වහන්ස, \''+a.title+'\' ලිපිය පිළිබඳවයි:';
+            document.getElementById('mail-inquiry').href = 'mailto:anhettigamapodihamuduruwo@gmail.com?subject=ලිපිය පිළිබඳ විමසීම&body=ගෞරවනීය ස්වාමින් වහන්ස, \''+a.title+'\' ලිපිය පිළිබඳවයි:';
             if (!readList.includes(id)) {
                 readList.push(id);
                 localStorage.setItem('myReads', JSON.stringify(readList));
-                db.ref('user_data/' + getUserDataId() + '/reads').set(readList).catch(function(){});
             }
             document.getElementById('detail-overlay').style.display = 'block';
             document.getElementById('detail-overlay').scrollTop = 0;
@@ -1369,7 +768,7 @@
     function closeDetail() {
         document.getElementById('detail-overlay').style.display = 'none';
         synth.cancel();
-        document.getElementById('listen-btn').innerText = T[currentLang].listenStart;
+        document.getElementById('listen-btn').innerText = "🔊 ශ්‍රවණය";
         location.reload();
     }
 
@@ -1381,14 +780,13 @@
             favs.push(id);
         }
         localStorage.setItem('myFavs', JSON.stringify(favs));
-        db.ref('user_data/' + getUserDataId() + '/favs').set(favs).catch(function(){});
         location.reload();
     }
 
     function showFavs() {
         var list = document.getElementById('fav-list');
         list.innerHTML = '';
-        if (favs.length === 0) { list.innerHTML = '<p style="text-align:center;opacity:0.5;">' + T[currentLang].favEmpty + '</p>'; return; }
+        if (favs.length === 0) { list.innerHTML = '<p style="text-align:center;opacity:0.5;">තවමත් ප්‍රියතම ලිපි නැත.</p>'; return; }
         favs.forEach(function(id) {
             db.ref('articles/'+id).once('value').then(function(s) {
                 var a = s.val();
@@ -1399,23 +797,13 @@
         });
     }
 
-    // ===== DEVICE ID for Firebase user backup =====
-    var deviceId = localStorage.getItem('dharma_device_id');
-    if (!deviceId) {
-        deviceId = 'dev_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('dharma_device_id', deviceId);
-    }
-
     function addMerit() {
         var date = document.getElementById('merit-date').value;
         var text = document.getElementById('merit-text').value;
         if (date && text) {
             var m = JSON.parse(localStorage.getItem('myMerits') || '[]');
-            var entry = { date: date, text: text, saved: Date.now() };
-            m.push(entry);
+            m.push({date:date, text:text});
             localStorage.setItem('myMerits', JSON.stringify(m));
-            // Firebase backup — uid if signed in, else deviceId
-            db.ref('user_data/' + getUserDataId() + '/merits').set(m).catch(function(){});
             document.getElementById('merit-text').value = '';
             showMerits();
         }
@@ -1423,26 +811,9 @@
 
     function showMerits() {
         var m = JSON.parse(localStorage.getItem('myMerits') || '[]');
-        // If localStorage empty, try restore from Firebase
-        if (m.length === 0) {
-            db.ref('user_data/' + getUserDataId() + '/merits').once('value').then(function(snap) {
-                if (snap.exists()) {
-                    var fbMerits = snap.val();
-                    localStorage.setItem('myMerits', JSON.stringify(fbMerits));
-                    renderMerits(fbMerits);
-                } else {
-                    renderMerits([]);
-                }
-            }).catch(function(){ renderMerits([]); });
-        } else {
-            renderMerits(m);
-        }
-    }
-
-    function renderMerits(m) {
-        document.getElementById('merit-list-container').innerHTML = m.slice().reverse().map(function(i) {
+        document.getElementById('merit-list-container').innerHTML = m.reverse().map(function(i) {
             return '<div style="background:#eafaf1;padding:15px;border-radius:15px;margin-bottom:10px;border-left:4px solid #2ecc71;color:#2c3e50;"><b>'+i.date+'</b><br>'+i.text+'</div>';
-        }).join('') || '<p style="text-align:center;opacity:0.5;">' + T[currentLang].meritEmpty + '</p>';
+        }).join('');
     }
 
     function toggleDark() { document.body.classList.toggle('dark-mode'); }
@@ -1456,19 +827,19 @@
     function toggleAudio() {
         if (synth.speaking) {
             synth.cancel();
-            document.getElementById('listen-btn').innerText = T[currentLang].listenStart;
+            document.getElementById('listen-btn').innerText = "🔊 ශ්‍රවණය";
         } else {
             var utter = new SpeechSynthesisUtterance(document.getElementById('full-content').innerText);
-            utter.lang = currentLang === 'en' ? 'en-US' : 'si-LK';
+            utter.lang = 'si-LK';
             synth.speak(utter);
-            document.getElementById('listen-btn').innerText = T[currentLang].listenStop;
+            document.getElementById('listen-btn').innerText = "🛑 නවතන්න";
         }
     }
 
     document.addEventListener('keydown', function(e) {
         if (e.key === "PrintScreen" || (e.ctrlKey && (e.key === 'p' || e.key === 's'))) {
             e.preventDefault();
-            alert(T[currentLang].printScreenAlert);
+            alert("ආරක්ෂිත හේතූන් මත මෙය අවහිර කර ඇත.");
         }
     });
 
@@ -1501,7 +872,7 @@
     function verifyAccessKey() {
         var inputKey = document.getElementById('accessKeyInput').value.trim().toUpperCase();
         if (!inputKey) {
-            showKeyError(T[currentLang].akErrEmpty);
+            showKeyError("⚠️ කරුණාකර ACCESS KEY එක ඇතුළු කරන්න.");
             return;
         }
         db.ref('access_keys').once('value').then(function(snap) {
@@ -1519,12 +890,12 @@
                 });
             }
             if (!found) {
-                showKeyError(T[currentLang].akErrInvalid);
+                showKeyError("❌ ACCESS KEY වැරදිය. නැවත උත්සාහ කරන්න.");
                 shakeInput();
                 return;
             }
             if (matchData.active === false) {
-                showKeyError(T[currentLang].akErrInactive);
+                showKeyError("❌ ACCESS KEY අක්රිය කර ඇත. නව KEY එකක් ලබා ගන්න.");
                 shakeInput();
                 return;
             }
@@ -1535,7 +906,7 @@
                     localStorage.setItem(AK_EXP, matchData.expiry.toString());
                     onKeySuccess();
                 } else {
-                    showKeyError(T[currentLang].akErrExpired);
+                    showKeyError("❌ ACCESS KEY කාලය ඉකුත් වී ඇත. නව KEY එකක් ලබා ගන්න.");
                     shakeInput();
                 }
             } else {
@@ -1551,7 +922,7 @@
                 onKeySuccess();
             }
         }).catch(function() {
-            showKeyError(T[currentLang].akErrConn);
+            showKeyError("⚠️ සම්බන්ධතා දෝෂයක්. නැවත උත්සාහ කරන්න.");
         });
     }
 
@@ -1559,7 +930,7 @@
         var e = document.getElementById('ak-error');
         e.style.display = 'block';
         e.style.color = '#27ae60';
-        e.innerText = T[currentLang].akSuccess;
+        e.innerText = "✅ ස්වාගතයි! ඇතුළු වෙමින්...";
         setTimeout(function() {
             hideAccessKeyPopup();
             setTimeout(showWhatsAppPopup, 500);
@@ -1585,7 +956,7 @@
     });
 
     function openPaymentWhatsApp() {
-        var msg = encodeURIComponent(T[currentLang].akPayWaMsg);
+        var msg = encodeURIComponent("ආයුබෝවන්.!\n\nමා හට ධර්ම නේත්රා යෙදුම සඳහා වන මාසික රුපියල් 150 ක ගෙවීම සිදු කොට මෙම මස ACCESS KEY එක ලබා ගැනීමට අවශ්යයි.\n\nස්තූතියි.!");
         window.open('https://wa.me/94763861339?text='+msg, '_blank');
     }
 
@@ -1674,15 +1045,15 @@
         var year = now.getFullYear();
         var month = now.getMonth() + 1;
         var monthKey = year + '-' + (month < 10 ? '0' + month : month);
-        updateDonateMonthLabel(month, year);
+        var monthNames = ['ජනවාරි','පෙබරවාරි','මාර්තු','අප්‍රේල්','මැයි','ජූනි','ජූලි','අගෝස්තු','සැප්තැම්බර්','ඔක්තෝබර්','නොවැම්බර්','දෙසැම්බර්'];
+        var label = monthNames[month-1] + ' ' + year;
+        var el = document.getElementById('donate-month-label');
+        if (el) el.innerText = label + ' මස නඩත්තු ඉලක්කය';
 
         // Load target for this month
         db.ref('donate_config/' + monthKey + '/target').once('value').then(function(snap) {
             var target = snap.exists() ? snap.val() : 0;
-            var cur = T[currentLang].currency;
-            var tarEl = document.getElementById('donate-target');
-            tarEl.innerText = cur + target.toLocaleString();
-            tarEl._rawValue = target;
+            document.getElementById('donate-target').innerText = 'රු. ' + target.toLocaleString();
 
             // Load donors for this month and compute total received
             db.ref('donors/' + monthKey).once('value').then(function(dsnap) {
@@ -1702,12 +1073,8 @@
                 var remaining = Math.max(0, target - totalReceived);
                 var pct = target > 0 ? Math.min(100, Math.round(totalReceived / target * 100)) : 0;
 
-                var recEl = document.getElementById('donate-received');
-                var remEl = document.getElementById('donate-remaining');
-                recEl.innerText = cur + totalReceived.toLocaleString();
-                recEl._rawValue = totalReceived;
-                remEl.innerText = cur + remaining.toLocaleString();
-                remEl._rawValue = remaining;
+                document.getElementById('donate-received').innerText = 'රු. ' + totalReceived.toLocaleString();
+                document.getElementById('donate-remaining').innerText = 'රු. ' + remaining.toLocaleString();
                 document.getElementById('donate-progress-bar').style.width = pct + '%';
                 document.getElementById('donate-progress-pct').innerText = pct > 5 ? pct + '%' : '';
 
@@ -1715,21 +1082,21 @@
                 if (pct >= 100) {
                     statusEl.style.background = '#d5f5e3';
                     statusEl.style.color = '#27ae60';
-                    statusEl.innerText = T[currentLang].donStatus100;
+                    statusEl.innerText = '🎉 මෙම මස ඉලක්කය සාර්ථකයි! ඔබ සැමට පිං!';
                 } else if (pct >= 50) {
                     statusEl.style.background = '#fff3e0';
                     statusEl.style.color = '#f39c12';
-                    statusEl.innerText = T[currentLang].donStatus50.replace('{n}', remaining.toLocaleString());
+                    statusEl.innerText = '🙏 තවත් රු. ' + remaining.toLocaleString() + ' ක් ඉලක්කයට ළඟා වීමට අවශ්‍යයි';
                 } else {
                     statusEl.style.background = '#fdecea';
                     statusEl.style.color = '#e74c3c';
-                    statusEl.innerText = T[currentLang].donStatusLow.replace('{n}', remaining.toLocaleString());
+                    statusEl.innerText = '💛 ඔබේ ආධාරය ඉතා වටිනවා — රු. ' + remaining.toLocaleString() + ' ක් ඉතිරිව ඇත';
                 }
 
                 // Render leaderboard — top 10
                 var lb = document.getElementById('donors-leaderboard');
                 if (donorList.length === 0) {
-                    lb.innerHTML = '<p style="text-align:center;color:#aaa;font-size:14px;">'+T[currentLang].leaderboardEmpty+'</p>';
+                    lb.innerHTML = '<p style="text-align:center;color:#aaa;font-size:14px;">මෙම මාසය සඳහා දායකයෝ නොමැත.</p>';
                     return;
                 }
                 var medals = ['🥇','🥈','🥉'];
@@ -1745,7 +1112,7 @@
                                 '<div style="width:' + barW + '%;height:100%;background:linear-gradient(90deg,#f39c12,#d35400);border-radius:20px;"></div>' +
                             '</div>' +
                         '</div>' +
-                        '<div style="font-weight:900;color:var(--p-color);font-size:14px;min-width:65px;text-align:right;">' + cur + (d.amount||0).toLocaleString() + '</div>' +
+                        '<div style="font-weight:900;color:var(--p-color);font-size:14px;min-width:65px;text-align:right;">රු. ' + (d.amount||0).toLocaleString() + '</div>' +
                     '</div>';
                 });
                 lb.innerHTML = html;
@@ -1753,19 +1120,11 @@
         });
     }
 
-    // Update donate month label based on current lang
-    function updateDonateMonthLabel(month, year) {
-        var el = document.getElementById('donate-month-label');
-        if (!el) return;
-        var t = T[currentLang];
-        el.innerText = t.monthNames[month-1] + ' ' + year + ' — ' + t.donateMonthSuffix;
-    }
-
 
 
     function sendDonationWhatsApp() {
         clearInterval(donationCountdownTimer);
-        var msg = encodeURIComponent(T[currentLang].donWaMsgFull);
+        var msg = encodeURIComponent("පින්වත් තාක්ෂණික කණ්ඩායම වෙත,\n\n'ධර්ම නේත්රා' ඇප් එකෙහි තාක්ෂණික නඩත්තු කටයුතු වෙනුවෙන් මා දායක වීමට කැමැත්තෙමි.\n\nකරුණාකර අදාළ විස්තර මා වෙත යොමු කරන ලෙස කාරුණිකව ඉල්ලා සිටිමි.");
         window.open('https://wa.me/94763861339?text='+msg, '_blank');
         closeDonationPopup();
     }
