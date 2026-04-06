@@ -926,7 +926,7 @@
         e.innerText = "✅ ස්වාගතයි! ඇතුළු වෙමින්...";
         setTimeout(function() {
             hideAccessKeyPopup();
-            setTimeout(showWhatsAppPopup, 500);
+            setTimeout(showWhatsAppPopup, 7000);
             setTimeout(showDonationPopup, 120000);
         }, 1000);
     }
@@ -955,7 +955,7 @@
 
     window.addEventListener('load', function() {
         if (isAccessGranted()) {
-            setTimeout(showWhatsAppPopup, 500);
+            setTimeout(showWhatsAppPopup, 7000);
             setTimeout(showDonationPopup, 120000);
         } else {
             setTimeout(showAccessKeyPopup, 300);
