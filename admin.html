@@ -102,6 +102,34 @@
         }
         .pdf-badge { display: inline-block; vertical-align: middle; margin-left: 6px; }
 
+        /* Article search bar */
+        .article-search-wrap {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        .article-search-wrap .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 15px;
+        }
+        #article-search {
+            padding-left: 36px;
+            margin: 0;
+            border: 2px solid #f0dcc4;
+        }
+        #article-search:focus {
+            outline: none;
+            border-color: #d35400;
+        }
+        #article-search-count {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin: 4px 2px 10px 2px;
+        }
+
         /* ACCESS KEY Panel Styles */
         .ak-generate-box {
             background: linear-gradient(135deg, #fff8f0, #fff3e0);
@@ -260,6 +288,13 @@
 
             <hr style="margin:20px 0; border:none; border-top:1px solid #eee;">
             <h3 style="color:#d35400; margin-top:0;">📚 දැනට ඇති ලිපි ලැයිස්තුව</h3>
+
+            <div class="article-search-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="article-search" placeholder="ලිපියක් සොයන්න (මාතෘකාව අනුව)..." oninput="searchArticles()">
+            </div>
+            <div id="article-search-count"></div>
+
             <div id="article-list">පූරණය වෙමින් පවතී...</div>
         </div>
     </div>
@@ -428,6 +463,7 @@
 
     // ==================== ARTICLES ====================
     let editingArticleId = null;
+    let allArticles = []; // holds all articles loaded from Firebase, used for searching
 
     function save() {
         const title = document.getElementById('t').value;
@@ -479,27 +515,70 @@
         document.getElementById('saveBtn').style.background = '#d35400';
     }
 
-    db.ref('articles').on('value', (snap) => {
+    // Renders a given list of articles into the #article-list container.
+    // Used both for the full list (from Firebase) and for filtered search results.
+    function renderArticleList(articles) {
         const list = document.getElementById('article-list');
+        const countEl = document.getElementById('article-search-count');
+        const searchTerm = document.getElementById('article-search') ? document.getElementById('article-search').value.trim() : '';
+
         list.innerHTML = '';
+
+        if (articles.length === 0) {
+            if (allArticles.length === 0) {
+                list.innerHTML = "තවමත් ලිපි කිසිවක් නැත.";
+            } else {
+                list.innerHTML = "🔍 ගැළපෙන ලිපි නොමැත.";
+            }
+            if (countEl) countEl.innerText = '';
+            return;
+        }
+
+        articles.forEach(a => {
+            const pdfBadge = (a.pdf_link && a.pdf_link !== "")
+                ? `<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-badge" title="PDF ඇතුළත් කර ඇත">`
+                : '';
+            list.innerHTML += `
+                <div class="list-item">
+                    <div class="list-item-title">${a.title} ${pdfBadge}</div>
+                    <div class="list-item-buttons">
+                        <button onclick="editArticle('${a.id}')" class="btn-edit">✏️ සංස්කරණය</button>
+                        <button onclick="del('${a.id}')" class="btn-delete">🗑️ මකන්න</button>
+                    </div>
+                </div>`;
+        });
+
+        if (countEl) {
+            countEl.innerText = searchTerm
+                ? `${articles.length} ලිපි ගැළපේ`
+                : '';
+        }
+    }
+
+    // Filters allArticles by the search box value (matches against title) and re-renders the list.
+    function searchArticles() {
+        const searchBox = document.getElementById('article-search');
+        const term = searchBox.value.trim().toLowerCase();
+
+        if (!term) {
+            renderArticleList(allArticles);
+            return;
+        }
+
+        const filtered = allArticles.filter(a => a.title && a.title.toLowerCase().includes(term));
+        renderArticleList(filtered);
+    }
+
+    db.ref('articles').on('value', (snap) => {
+        allArticles = [];
         if (snap.exists()) {
             snap.forEach(child => {
-                const a = child.val();
-                const pdfBadge = (a.pdf_link && a.pdf_link !== "")
-                    ? `<img src="https://img.icons8.com/color/24/pdf.png" class="pdf-badge" title="PDF ඇතුළත් කර ඇත">`
-                    : '';
-                list.innerHTML += `
-                    <div class="list-item">
-                        <div class="list-item-title">${a.title} ${pdfBadge}</div>
-                        <div class="list-item-buttons">
-                            <button onclick="editArticle('${child.key}')" class="btn-edit">✏️ සංස්කරණය</button>
-                            <button onclick="del('${child.key}')" class="btn-delete">🗑️ මකන්න</button>
-                        </div>
-                    </div>`;
+                allArticles.push({ id: child.key, ...child.val() });
             });
-        } else {
-            list.innerHTML = "තවමත් ලිපි කිසිවක් නැත.";
         }
+        // Re-apply whatever search term (if any) is currently in the search box,
+        // so live Firebase updates don't wipe out an active search.
+        searchArticles();
     }, err => {
         document.getElementById('article-list').innerText = "දෝෂයක්: " + err.message;
     });
